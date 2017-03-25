@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="action_visibility" format="boolean"/>
+    <attr name="type_view" format="integer"/>
+    <attr name="iconImage" format="integer"/>
+    <attr name="text1" format="string"/>
+    <attr name="text2" format="string"/>
+
+    <declare-styleable name="ImageProfile">
+        <attr name="action_visibility"/>
+    </declare-styleable>
+
+    <declare-styleable name="FavoriteView">
+        <attr name="is_favorite" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextImageView">
+        <attr name="iconImage"/>
+        <attr name="text1"/>
+        <attr name="text2"/>
+        <attr name="text3" format="string"/>
+        <attr name="iconButton" format="integer"/>
+        <attr name="android:maxLines"/>
+        <attr name="android:textStyle"/>
+        <attr name="android:background"/>
+        <attr name="android:textColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="InputTextView">
+        <attr name="iconImage"/>
+        <attr name="errorEnabled" format="boolean"/>
+        <attr name="maxLengthEnabled" format="boolean"/>
+        <attr name="maxLength" format="integer"/>
+        <attr name="hint" format="string"/>
+        <attr name="android:text"/>
+        <attr name="android:inputType"/>
+        <attr name="android:lines"/>
+    </declare-styleable>
+
+    <declare-styleable name="BlankView">
+        <attr name="image" format="integer"/>
+        <attr name="text1"/>
+        <attr name="text2"/>
+        <attr name="textButton" format="string"/>
+    </declare-styleable>
+
+</resources>
