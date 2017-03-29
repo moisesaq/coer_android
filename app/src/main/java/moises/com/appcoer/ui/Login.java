@@ -1,12 +1,11 @@
 package moises.com.appcoer.ui;
 
-/**
- * Created by moises on 3/28/17.
- */
+import moises.com.appcoer.ui.base.BasePresenter;
+import moises.com.appcoer.ui.base.BaseView;
 
 public class Login {
 
-    interface View extends BaseView<Presenter>{
+    interface View extends BaseView<Presenter> {
         void showProgress(boolean show);
 
         void setEmailError(String error);
@@ -22,7 +21,7 @@ public class Login {
         void showNetworkError();
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter {
         void attemptLogin(String email, String password);
     }
 }

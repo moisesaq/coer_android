@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_vertical_margin"
+    xmlns:moi="http://schemas.android.com/apk/res-auto"
+    tools:context="moises.com.appcoer.ui.fragments.LoginFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/margin_max_global"/>
+
+    <moises.com.appcoer.ui.view.InputTextView
+        android:id="@+id/itv_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        moi:iconImage="@drawable/svg_email"
+        moi:hint="@string/prompt_email"
+        android:text="12345"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="@dimen/margin_min_global"/>
+
+    <moises.com.appcoer.ui.view.InputTextView
+        android:id="@+id/itv_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        moi:iconImage="@drawable/svg_lock"
+        moi:hint="@string/prompt_password"
+        android:text="12345"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/b_login"
+        style="@style/ButtonTechno"
+        android:layout_marginTop="@dimen/margin_max_global"
+        android:text="@string/action_sign_in_short" />
+
+    <Button
+        android:id="@+id/b_guest"
+        style="@style/ButtonTechno"
+        android:layout_marginTop="@dimen/margin_max_global"
+        android:text="@string/action_guest" />
+
+    <TextView
+        android:id="@+id/tv_forgot_password"
+        style="@style/TextViewSmall"
+        android:text="@string/forgot_password"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_marginTop="@dimen/margin_medium_global"
+        android:background="?selectableItemBackground"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>
