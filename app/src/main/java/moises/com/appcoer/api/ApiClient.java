@@ -2,6 +2,7 @@ package moises.com.appcoer.api;
 
 import com.google.gson.JsonObject;
 
+import moises.com.appcoer.model.NewsList;
 import moises.com.appcoer.model.User;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -17,6 +18,10 @@ public interface ApiClient {
 
     @POST(API.LOGIN)
     Call<User> login(@Query("username") String userName, @Query("password") String password);
+
+    @GET(API.NEWS)
+    Call<NewsList> getNews(@Query("per_page") Integer perPage, @Query("page") Integer page,
+                           @Query("destacado") Integer outstanding, @Query("api_token") String apiToken);
 
     /*@PUT(ApiClient.ApiRest.ME)
     Call<User> updateProfile(@Body JSONObject jsonObject);

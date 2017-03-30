@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import moises.com.appcoer.model.NewsList;
 import moises.com.appcoer.model.User;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -71,6 +72,12 @@ public class RestApiAdapter {
     public static Gson buildUserDeserializer(){
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(User.class, new ApiClientDeserializer.UserDeserializer());
+        return gsonBuilder.create();
+    }
+
+    public static Gson buildNewsListDeserializer(){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(NewsList.class, new ApiClientDeserializer.UserDeserializer());
         return gsonBuilder.create();
     }
 }

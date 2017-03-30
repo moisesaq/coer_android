@@ -1,8 +1,12 @@
 package moises.com.appcoer.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,8 +23,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
+import moises.com.appcoer.ui.fragments.NewsListFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+                                                        NewsListFragment.OnFragmentInteractionListener{
 
     private CircleImageView mImageUser;
     private TextView mFullName;
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setupNavMenu(toolbar);
+        showFragment(NewsListFragment.newInstance(), false);
     }
 
     private void setupNavMenu(Toolbar toolbar){
@@ -55,6 +62,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         mFullName.setText(user.getFullName());
         mEmail.setText(user.getEmail());
+    }
+
+    private void showFragment(Fragment fragment, boolean stack){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if(stack)
+            ft.addToBackStack(fragment.getClass().getSimpleName());
+        ft.replace(R.id.content_main, fragment);
+        ft.commit();
     }
 
     @Override
@@ -108,5 +124,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

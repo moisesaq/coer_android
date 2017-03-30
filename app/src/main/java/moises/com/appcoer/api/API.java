@@ -7,4 +7,5 @@ public interface API {
     String API = "/api";
     String USERS = API + "/users";
     String LOGIN = USERS + "/login";
+    String NEWS = API + "/noticias";
 }

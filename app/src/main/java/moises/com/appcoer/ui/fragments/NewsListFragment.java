@@ -4,75 +4,77 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import moises.com.appcoer.R;
+import moises.com.appcoer.api.ApiClient;
+import moises.com.appcoer.api.RestApiAdapter;
+import moises.com.appcoer.global.Session;
+import moises.com.appcoer.model.News;
+import moises.com.appcoer.model.NewsList;
+import moises.com.appcoer.ui.fragments.adapters.NewsListAdapter;
+import moises.com.appcoer.ui.view.LoadingView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link NewsListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link NewsListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class NewsListFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class NewsListFragment extends Fragment implements NewsListAdapter.CallBack{
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private static final String TAG = NewsListFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
+
+    private View view;
+    private RecyclerView mRecyclerView;
+    private LoadingView mLoadingView;
+    private NewsListAdapter mNewsListAdapter;
 
     public NewsListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static NewsListFragment newInstance(String param1, String param2) {
-        NewsListFragment fragment = new NewsListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static NewsListFragment newInstance() {
+        return new NewsListFragment();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_news_list, container, false);
+        setupView();
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news_list, container, false);
+    private void setupView(){
+        mLoadingView = (LoadingView)view.findViewById(R.id.loading_view);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mNewsListAdapter = new NewsListAdapter(new ArrayList<News>(), this);
+        mRecyclerView.setAdapter(mNewsListAdapter);
+        getNews();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private void getNews() {
+        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        Call<NewsList> newsListCall = apiClient.getNews(3, 1, 1, Session.getInstance().getUser().getApiToken());
+        newsListCall.enqueue(new Callback<NewsList>() {
+            @Override
+            public void onResponse(Call<NewsList> call, Response<NewsList> response) {
+                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
+                mNewsListAdapter.addItems(response.body().getNews());
+            }
+
+            @Override
+            public void onFailure(Call<NewsList> call, Throwable t) {
+                Log.d(TAG, " FAILED >>> " + t.toString());
+            }
+        });
     }
 
     @Override
@@ -92,16 +94,11 @@ public class NewsListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onNewsClick(News news) {
+
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
