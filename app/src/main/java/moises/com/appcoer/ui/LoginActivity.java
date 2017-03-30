@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import moises.com.appcoer.R;
+import moises.com.appcoer.global.Session;
+import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.fragments.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener{
@@ -32,8 +34,9 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
     /*LOGIN FRAGMENT LISTENER*/
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onFragmentInteraction(User user) {
+        Session.getInstance().setUser(user);
+        goToMainActivity();
     }
 
     private void goToMainActivity(){

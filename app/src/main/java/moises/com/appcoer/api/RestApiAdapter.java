@@ -18,6 +18,17 @@ public class RestApiAdapter {
         return new RestApiAdapter();
     }
 
+    public ApiClient startConnection(){
+        OkHttpClient.Builder httBuilder = new OkHttpClient.Builder();
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(API.COER)
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.client(httBuilder.build()).build();
+        return retrofit.create(ApiClient.class);
+    }
+
     public ApiClient startConnection(Gson gson){
         return startConnection(gson, CONTENT_TYPE_APPLICATION);
     }

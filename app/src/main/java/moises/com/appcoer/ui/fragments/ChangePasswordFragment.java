@@ -48,12 +48,6 @@ public class ChangePasswordFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_change_password, container, false);
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -72,7 +66,6 @@ public class ChangePasswordFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

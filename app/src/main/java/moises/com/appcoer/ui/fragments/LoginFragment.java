@@ -17,6 +17,7 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.ApiClientDeserializer;
 import moises.com.appcoer.api.RestApiAdapter;
+import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.LoginActivity;
 import moises.com.appcoer.ui.MainActivity;
 import moises.com.appcoer.ui.view.InputTextView;
@@ -83,16 +84,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     }
 
     private void login(String userName, String password){
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection(RestApiAdapter.buildGenericDeserializer());
-        Call<JsonObject> jsonObjectCall = apiClient.login(userName, password);
-        jsonObjectCall.enqueue(new Callback<JsonObject>() {
+        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        Call<User> jsonObjectCall = apiClient.login(userName, password);
+        jsonObjectCall.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 Log.d(TAG, "SUCCESS >>> " + response.body().toString());
+                mListener.onFragmentInteraction(response.body());
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.d(TAG, "ERROR >>> " + t.toString());
             }
         });
@@ -117,6 +119,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(User user);
     }
 }

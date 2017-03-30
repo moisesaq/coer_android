@@ -2,6 +2,7 @@ package moises.com.appcoer.api;
 
 import com.google.gson.JsonObject;
 
+import moises.com.appcoer.model.User;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,7 +16,7 @@ import retrofit2.http.Query;
 public interface ApiClient {
 
     @POST(API.LOGIN)
-    Call<JsonObject> login(@Query("username") String userName, @Query("password") String password);
+    Call<User> login(@Query("username") String userName, @Query("password") String password);
 
     /*@PUT(ApiClient.ApiRest.ME)
     Call<User> updateProfile(@Body JSONObject jsonObject);

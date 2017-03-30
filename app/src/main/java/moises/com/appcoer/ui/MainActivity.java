@@ -12,11 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import moises.com.appcoer.R;
+import moises.com.appcoer.global.Session;
+import moises.com.appcoer.model.User;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private CircleImageView mImageUser;
+    private TextView mFullName;
+    private TextView mEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,24 +32,29 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setupNavMenu(toolbar);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+    private void setupNavMenu(Toolbar toolbar){
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        mImageUser = (CircleImageView)headerView.findViewById(R.id.civ_image_user);
+        mFullName = (TextView)headerView.findViewById(R.id.tv_fullname);
+        mEmail = (TextView)headerView.findViewById(R.id.tv_email);
+        loadUser();
+    }
+
+    public void loadUser(){
+        User user = Session.getInstance().getUser();
+        if(user == null)
+            return;
+        mFullName.setText(user.getFullName());
+        mEmail.setText(user.getEmail());
     }
 
     @Override
@@ -78,17 +91,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_account) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_reserves) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_news) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_courses) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_method_payments) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_formalities) {
 
         }
 

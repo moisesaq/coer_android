@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import moises.com.appcoer.R;
+import moises.com.appcoer.global.Session;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -22,24 +23,31 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startSplash(){
-        new CountDownTimer(3000, 1000){
+        new CountDownTimer(2000, 1000){
             @Override
             public void onTick(long l) {
-
             }
 
             @Override
             public void onFinish() {
-                showLoginActivity();
+                recoverSession();
             }
         }.start();
     }
 
     private void recoverSession(){
-
+        if(Session.getInstance().getUser() != null){
+            showMainActivity();
+        }else {
+            showLoginActivity();
+        }
     }
 
     private void showLoginActivity(){
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    private void showMainActivity(){
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
