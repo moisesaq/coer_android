@@ -43,7 +43,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
                 .into(holder.mImage);
         holder.mTitle.setText(news.getTitle());
         holder.mDate.setText(news.getDate());
-        holder.mContent.setText(news.getContent().replace("\n", " ").replace("\r", ""));
+        holder.mContent.setText(news.getContent().replace("\n", " ").replace("\r", "").replace("&nbsp;",""));
     }
 
     @Override

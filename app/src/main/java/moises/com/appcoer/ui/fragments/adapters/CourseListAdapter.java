@@ -44,7 +44,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
                 .into(holder.mImage);
         holder.mTitle.setText(course.getTitle());
         holder.mDate.setText(course.getDate());
-        holder.mContent.setText(course.getContent());
+        holder.mContent.setText(course.getContent().replace("\n", " ").replace("\r", "").replace("&nbsp;",""));
     }
 
     @Override

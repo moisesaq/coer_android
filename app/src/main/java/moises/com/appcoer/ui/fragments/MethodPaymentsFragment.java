@@ -61,7 +61,7 @@ public class MethodPaymentsFragment extends BaseFragment{
     }
 
     private void showComingSoon(){
-        mLoadingView.hideLoading("Method payments coming soon", mRecyclerView, R.mipmap.working);
+        mLoadingView.hideLoading("Medios de pago\nPróximamente", mRecyclerView, R.mipmap.working);
     }
 
     private void getNews() {

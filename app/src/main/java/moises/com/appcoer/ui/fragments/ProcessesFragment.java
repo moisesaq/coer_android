@@ -59,7 +59,7 @@ public class ProcessesFragment extends BaseFragment{
     }
 
     private void showComingSoon(){
-        mLoadingView.hideLoading("Processes coming soon", mRecyclerView, R.mipmap.working);
+        mLoadingView.hideLoading("Tramites\npróximamente", mRecyclerView, R.mipmap.working);
     }
 
     private void getNews() {

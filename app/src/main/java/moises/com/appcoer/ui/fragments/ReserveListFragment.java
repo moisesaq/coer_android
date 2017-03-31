@@ -62,7 +62,7 @@ public class ReserveListFragment extends BaseFragment{
     }
 
     private void showComingSoon(){
-        mLoadingView.hideLoading("Reserves coming soon", mRecyclerView, R.mipmap.working);
+        mLoadingView.hideLoading("Reservaciones\npróximamente", mRecyclerView, R.mipmap.working);
     }
 
     private void getNews() {

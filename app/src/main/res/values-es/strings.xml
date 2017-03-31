@@ -6,4 +6,13 @@
     <string name="guest">Invitado</string>
     <string name="password">Contraseña</string>
     <string name="forgot_password">Se te olvidó tu contraseña</string>
+    <string name="nav_logout">Cerrar sesión</string>
+    <string name="nav_courses">Cursos</string>
+    <string name="nav_account">Mi cuenta</string>
+    <string name="nav_method_payments">Medios de pago</string>
+    <string name="nav_news">Noticias</string>
+    <string name="nav_processes">Trámites</string>
+    <string name="nav_reservations">Reservaciones</string>
+    <string name="email">Correo electrónico</string>
+    <string name="action_settings">Configuraciones</string>
 </resources>

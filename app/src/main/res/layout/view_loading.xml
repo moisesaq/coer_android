@@ -28,6 +28,7 @@
             style="@style/TextViewMedium"
             android:textStyle="normal"
             android:id="@+id/tv_message"
+            android:gravity="center_horizontal"
             android:padding="@dimen/padding_min_global"/>
     </LinearLayout>
 </RelativeLayout>

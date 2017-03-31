@@ -5,35 +5,35 @@
         <item
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Account" />
+            android:title="@string/nav_account" />
         <item
             android:id="@+id/nav_reserves"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Reserves" />
+            android:title="@string/nav_reservations" />
         <item
             android:id="@+id/nav_news"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="News" />
+            android:title="@string/nav_news" />
         <item
             android:id="@+id/nav_courses"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Courses" />
+            android:title="@string/nav_courses" />
 
         <item
             android:id="@+id/nav_method_payments"
             android:icon="@drawable/ic_menu_share"
-            android:title="Method payments" />
+            android:title="@string/nav_method_payments" />
         <item
             android:id="@+id/nav_processes"
             android:icon="@drawable/ic_menu_send"
-            android:title="Processes" />
+            android:title="@string/nav_processes" />
     </group>
 
-    <group android:checkableBehavior="none">
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_send"
-            android:title="Logout" />
+            android:title="@string/nav_logout" />
     </group>
 
 </menu>
