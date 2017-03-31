@@ -24,16 +24,16 @@
             android:icon="@drawable/ic_menu_share"
             android:title="Method payments" />
         <item
-            android:id="@+id/nav_formalities"
+            android:id="@+id/nav_processes"
             android:icon="@drawable/ic_menu_send"
-            android:title="Formalities" />
+            android:title="Processes" />
     </group>
 
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_setting"
+            android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_send"
-            android:title="Setting" />
+            android:title="Logout" />
     </group>
 
 </menu>

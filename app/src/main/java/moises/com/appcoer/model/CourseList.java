@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class NewsList {
+public class CourseList extends BaseList{
     @SerializedName("data")
-    private List<News> news;
+    private List<Course> courses;
 
-    public List<News> getNews() {
-        return news;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setNews(List<News> news) {
-        this.news = news;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override

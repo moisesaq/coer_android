@@ -25,22 +25,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CourseListFragment extends BaseFragment implements NewsListAdapter.CallBack, CourseListAdapter.CallBack{
+public class MethodPaymentsFragment extends BaseFragment{
 
-    private static final String TAG = CourseListFragment.class.getSimpleName();
-    private OnCoursesFragmentListener mListener;
-
+    private static final String TAG = MethodPaymentsFragment.class.getSimpleName();
     private View view;
     private RecyclerView mRecyclerView;
     private LoadingView mLoadingView;
-    private CourseListAdapter mCourseListAdapter;
+    //private CourseListAdapter mCourseListAdapter;
 
-    public CourseListFragment() {
+    public MethodPaymentsFragment() {
         // Required empty public constructor
     }
 
-    public static CourseListFragment newInstance() {
-        return new CourseListFragment();
+    public static MethodPaymentsFragment newInstance() {
+        return new MethodPaymentsFragment();
     }
 
     @Override
@@ -57,21 +55,23 @@ public class CourseListFragment extends BaseFragment implements NewsListAdapter.
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mCourseListAdapter = new CourseListAdapter(getContext(), new ArrayList<Course>(), this);
-        mRecyclerView.setAdapter(mCourseListAdapter);
-        mLoadingView.showLoading(mRecyclerView);
-        getCourses();
+        /*mCourseListAdapter = new CourseListAdapter(new ArrayList<Course>(), this);
+        mRecyclerView.setAdapter(mCourseListAdapter);*/
+        showComingSoon();
     }
 
-    private void getCourses() {
+    private void showComingSoon(){
+        mLoadingView.hideLoading("Method payments coming soon", mRecyclerView, R.mipmap.working);
+    }
+
+    private void getNews() {
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         Call<CourseList> courseListCall = apiClient.getCourses(null, 1);
         courseListCall.enqueue(new Callback<CourseList>() {
             @Override
             public void onResponse(Call<CourseList> call, Response<CourseList> response) {
                 Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                mCourseListAdapter.addItems(response.body().getCourses());
-                mLoadingView.hideLoading("", mRecyclerView);
+                //mCourseListAdapter.addItems(response.body().getCourses());
             }
 
             @Override
@@ -79,36 +79,5 @@ public class CourseListFragment extends BaseFragment implements NewsListAdapter.
                 Log.d(TAG, " FAILED >>> " + t.toString());
             }
         });
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnCoursesFragmentListener) {
-            mListener = (OnCoursesFragmentListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
-    public void onNewsClick(News news) {
-        replaceFragment(NewsFragment.newInstance(news), true);
-    }
-
-    @Override
-    public void onCourseClick(Course course) {
-        replaceFragment(CourseFragment.newInstance(course), true);
-    }
-
-    public interface OnCoursesFragmentListener {
-        void onCourseClick(Course course);
     }
 }

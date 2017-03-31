@@ -1,11 +1,14 @@
 package moises.com.appcoer.ui.fragments.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -14,10 +17,12 @@ import moises.com.appcoer.model.News;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>{
 
+    private Context mContext;
     private List<News> newsList;
     private CallBack mCallBack;
 
-    public NewsListAdapter(List<News> newsList, CallBack callBack){
+    public NewsListAdapter(Context context, List<News> newsList, CallBack callBack){
+        this.mContext = context;
         this.newsList = newsList;
         mCallBack = callBack;
     }
@@ -31,9 +36,14 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
         News news = newsList.get(position);
+        Picasso.with(mContext)
+                .load(news.getImage().getImage())
+                .placeholder(R.mipmap.image_load)
+                .error(R.drawable.example_coer)
+                .into(holder.mImage);
         holder.mTitle.setText(news.getTitle());
         holder.mDate.setText(news.getDate());
-        holder.mContent.setText(news.getContent());
+        holder.mContent.setText(news.getContent().replace("\n", " ").replace("\r", ""));
     }
 
     @Override
@@ -53,7 +63,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
         TextView mTitle, mDate, mContent;
         public NewsViewHolder(View view) {
             super(view);
-            mImage = (ImageView)view.findViewById(R.id.iv_image);
+            mImage = (ImageView)view.findViewById(R.id.iv_news);
             mTitle = (TextView)view.findViewById(R.id.tv_title);
             mDate = (TextView)view.findViewById(R.id.tv_date);
             mContent = (TextView)view.findViewById(R.id.tv_content);

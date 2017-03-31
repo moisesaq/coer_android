@@ -8,4 +8,5 @@ public interface API {
     String USERS = API + "/users";
     String LOGIN = USERS + "/login";
     String NEWS = API + "/noticias";
+    String COURSES = API + "/cursos";
 }

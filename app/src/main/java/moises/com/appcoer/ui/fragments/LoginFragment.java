@@ -79,6 +79,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 login(mUserName.getText(), mPassword.getText());
                 break;
             case R.id.b_guest:
+                mListener.onFragmentInteraction(null);
                 break;
         }
     }

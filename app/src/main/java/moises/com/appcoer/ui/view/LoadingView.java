@@ -43,7 +43,7 @@ public class LoadingView extends LinearLayout{
         ivImage.setVisibility(View.GONE);
         pbLoading.setVisibility(View.VISIBLE);
         if(hideView != null)
-            hideView.setVisibility(View.VISIBLE);
+            hideView.setVisibility(View.GONE);
     }
 
     public void hideLoading(String message, View view){
@@ -83,7 +83,7 @@ public class LoadingView extends LinearLayout{
             tvMessage.setVisibility(View.VISIBLE);
             tvMessage.setText(message);
             view.setVisibility(View.GONE);
-            if(image!=0){
+            if(image != 0){
                 ivImage.setVisibility(VISIBLE);
                 ivImage.setImageResource(image);
             }

@@ -1,5 +1,7 @@
 package moises.com.appcoer.ui;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,11 +25,16 @@ import android.widget.TextView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.Session;
+import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.User;
+import moises.com.appcoer.ui.fragments.CourseListFragment;
+import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
+import moises.com.appcoer.ui.fragments.ProcessesFragment;
+import moises.com.appcoer.ui.fragments.ReserveListFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-                                                        NewsListFragment.OnFragmentInteractionListener{
+                                                        NewsListFragment.OnFragmentInteractionListener, CourseListFragment.OnCoursesFragmentListener{
 
     private CircleImageView mImageUser;
     private TextView mFullName;
@@ -64,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mEmail.setText(user.getEmail());
     }
 
-    private void showFragment(Fragment fragment, boolean stack){
+    public void showFragment(Fragment fragment, boolean stack){
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if(stack)
@@ -110,15 +118,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_account) {
             // Handle the camera action
         } else if (id == R.id.nav_reserves) {
-
+            showFragment(ReserveListFragment.newInstance(), true);
         } else if (id == R.id.nav_news) {
-
+            showFragment(NewsListFragment.newInstance(), true);
         } else if (id == R.id.nav_courses) {
-
+            showFragment(CourseListFragment.newInstance(), true);
         } else if (id == R.id.nav_method_payments) {
-
-        } else if (id == R.id.nav_formalities) {
-
+            showFragment(MethodPaymentsFragment.newInstance(), true);
+        } else if (id == R.id.nav_processes) {
+            showFragment(ProcessesFragment.newInstance(), true);
+        } else if(id == R.id.nav_logout){
+            logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -126,8 +136,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    private void logout(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you safe do you want exit?");
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Session.clearSession();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
+    /*FRAGMENT LISTENERS*/
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onCourseClick(Course course) {
 
     }
 }

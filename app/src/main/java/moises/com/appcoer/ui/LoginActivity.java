@@ -1,7 +1,6 @@
 package moises.com.appcoer.ui;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -41,5 +40,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
     private void goToMainActivity(){
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }

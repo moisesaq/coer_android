@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AppCOER</string>
+    <string name="log_in">Iniciar sesión</string>
+    <string name="registration_number">Matricula</string>
+    <string name="guest">Invitado</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">Se te olvidó tu contraseña</string>
+</resources>
