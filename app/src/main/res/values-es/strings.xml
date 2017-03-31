@@ -12,7 +12,18 @@
     <string name="nav_method_payments">Medios de pago</string>
     <string name="nav_news">Noticias</string>
     <string name="nav_processes">Trámites</string>
-    <string name="nav_reservations">Reservaciones</string>
+    <string name="nav_reservations">Mis reservaciones</string>
     <string name="email">Correo electrónico</string>
     <string name="action_settings">Configuraciones</string>
+    <string name="on_boarding_description1">Últimas novedades de nuestra institución</string>
+    <string name="on_boarding_title1">Noticias</string>
+    <string name="on_boarding_description2">Enterate de nuestros cursos</string>
+    <string name="on_boarding_title2">Cursos</string>
+    <string name="on_boarding_title3">Tu cuenta</string>
+    <string name="on_boarding_description3">Gestiona tus cuentas y reservas</string>
+    <string name="on_boarding_description4">Reserve habitaciones en nuestros alojamientos</string>
+    <string name="on_boarding_title4">Reservaciones</string>
+    <string name="get_started">EMPEZAR</string>
+    <string name="message_logout">¿Estás seguro quieres salir?</string>
+    <string name="today">Hoy</string>
 </resources>

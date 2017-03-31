@@ -4,35 +4,35 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_account"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/svg_account_circle"
             android:title="@string/nav_account" />
         <item
             android:id="@+id/nav_reserves"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/svg_hotel"
             android:title="@string/nav_reservations" />
         <item
             android:id="@+id/nav_news"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/svg_newspaper"
             android:title="@string/nav_news" />
         <item
             android:id="@+id/nav_courses"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/svg_lead_pencil"
             android:title="@string/nav_courses" />
 
         <item
             android:id="@+id/nav_method_payments"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/svg_credit_card"
             android:title="@string/nav_method_payments" />
         <item
             android:id="@+id/nav_processes"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/svg_doc"
             android:title="@string/nav_processes" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/svg_exit_to_app"
             android:title="@string/nav_logout" />
     </group>
 

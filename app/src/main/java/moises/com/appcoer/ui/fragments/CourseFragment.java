@@ -19,6 +19,7 @@ import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.News;
+import moises.com.appcoer.tools.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,11 +65,26 @@ public class CourseFragment extends Fragment {
                 .error(R.drawable.example_course)
                 .into(mImage);
         TextView mTitle = (TextView)view.findViewById(R.id.tv_title);
-        mTitle.setText(course.getTitle());
+        mTitle.setText(course.getTitle().trim());
         TextView mDate = (TextView)view.findViewById(R.id.tv_date);
-        mDate.setText(course.getDate());
+        mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(course.getDate(), Utils.DATE_FORMAT_INPUT)));
         TextView mCost = (TextView)view.findViewById(R.id.tv_cost);
-        mCost.setText(course.getCost() != null ? course.getCost() : " --- ");
+        mCost.setText(course.getCost().equals("0") ? "Costo: Gratis": "Costo: " + course.getCost());
+
+        /*TextView mDiscount = (TextView)view.findViewById(R.id.tv_discount);
+        if(course.getDiscount().equals("")){
+            mDiscount.setText(String.format("%s %s ", "Descuento: ", course.getDiscount()));
+        }else {
+            mDiscount.setVisibility(View.GONE);
+        }
+
+        TextView mDiscountToDate = (TextView)view.findViewById(R.id.tv_discount_to_date);
+        if(course.getDiscount().equals("")){
+            mDiscountToDate.setText(course.getDiscountToDate());
+        }else {
+            mDiscountToDate.setVisibility(View.GONE);
+        }*/
+
         mContent = (TextView)view.findViewById(R.id.tv_content);
         mContent.setText(course.getContent());
         getDescription();

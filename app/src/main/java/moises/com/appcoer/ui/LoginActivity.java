@@ -6,20 +6,34 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import moises.com.appcoer.R;
+import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.fragments.LoginFragment;
+import moises.com.appcoer.ui.fragments.OnBoardingFragment;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener{
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, OnBoardingFragment.OnBoardingFragmentListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        GlobalManager.setActivityGlobal(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        showFragment(OnBoardingFragment.newInstance(), true);
+        //setup();
+    }
 
-        showFragment(LoginFragment.newInstance(""), false);
+    private void setup(){
+        if(OnBoardingFragment.isOnBoardingCompleted()){
+            showFragment(OnBoardingFragment.newInstance(), true);
+        }else{
+            showFragment(LoginFragment.newInstance(""), true);
+        }
     }
 
     private void showFragment(Fragment fragment, boolean stack){
@@ -41,5 +55,10 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     private void goToMainActivity(){
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    @Override
+    public void onGetStartClick() {
+        showFragment(LoginFragment.newInstance(""), true);
     }
 }

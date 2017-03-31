@@ -24,6 +24,7 @@
         <attr name="android:textStyle"/>
         <attr name="android:background"/>
         <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
     </declare-styleable>
 
     <declare-styleable name="InputTextView">

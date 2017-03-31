@@ -37,4 +37,10 @@ dependencies {
 
     /*CIRCLE IMAGE VIEW*/
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
+    /*VIEW PAGER INDICATOR*/
+    compile 'me.relex:circleindicator:1.1.8@aar'
+
+    /*TAP TARGET VIEW*/
+    compile 'com.getkeepsafe.taptargetview:taptargetview:1.6.1'
 }

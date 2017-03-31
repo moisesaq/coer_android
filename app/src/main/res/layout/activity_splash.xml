@@ -12,11 +12,13 @@
     android:background="@color/colorPrimary"
     tools:context="moises.com.appcoer.ui.SplashActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:src="@mipmap/logo"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/imageView" />
+        android:id="@+id/imageView"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorPrimaryLight"/>
 </RelativeLayout>

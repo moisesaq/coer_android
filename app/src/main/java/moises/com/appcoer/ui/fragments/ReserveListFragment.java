@@ -13,8 +13,11 @@ import android.view.ViewGroup;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
+import moises.com.appcoer.global.GlobalManager;
+import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.CourseList;
 import moises.com.appcoer.model.News;
+import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.fragments.adapters.NewsListAdapter;
 import moises.com.appcoer.ui.view.LoadingView;
@@ -59,10 +62,20 @@ public class ReserveListFragment extends BaseFragment{
         mAddReserve = (FloatingActionButton)view.findViewById(R.id.floatingActionButton);
         mAddReserve.setVisibility(View.VISIBLE);
         showComingSoon();
+        showUserGuide();
     }
 
     private void showComingSoon(){
-        mLoadingView.hideLoading("Reservaciones\npróximamente", mRecyclerView, R.mipmap.working);
+        mLoadingView.hideLoading("Mis reservaciones\npróximamente", mRecyclerView, R.mipmap.working);
+    }
+
+    private void showUserGuide(){
+        UserGuide.getInstance(GlobalManager.getActivityGlobal()).showStageWithView(UserGuide.StageGuide.STAGE_2, mAddReserve, new UserGuide.CallBack() {
+            @Override
+            public void onUserGuideOnClick() {
+                Utils.showToastMessage("Próximamente");
+            }
+        });
     }
 
     private void getNews() {

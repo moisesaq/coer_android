@@ -18,6 +18,7 @@ import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.News;
+import moises.com.appcoer.tools.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,9 +64,9 @@ public class NewsFragment extends Fragment {
                 .error(R.drawable.example_coer)
                 .into(mImage);
         TextView mTitle = (TextView)view.findViewById(R.id.tv_title);
-        mTitle.setText(news.getTitle());
+        mTitle.setText(news.getTitle().trim());
         TextView mDate = (TextView)view.findViewById(R.id.tv_date);
-        mDate.setText(news.getDate());
+        mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(news.getDate(), Utils.DATE_FORMAT_INPUT_2)));
         mContent = (TextView)view.findViewById(R.id.tv_content);
 
 

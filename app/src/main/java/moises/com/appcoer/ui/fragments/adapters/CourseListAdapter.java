@@ -15,6 +15,7 @@ import java.util.List;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.News;
+import moises.com.appcoer.tools.Utils;
 
 public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.CourseViewHolder>{
 
@@ -42,8 +43,22 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
                 .placeholder(R.mipmap.image_load)
                 .error(R.drawable.example_course)
                 .into(holder.mImage);
-        holder.mTitle.setText(course.getTitle());
-        holder.mDate.setText(course.getDate());
+        holder.mTitle.setText(course.getTitle().trim());
+        holder.mCost.setText(course.getCost().equals("0") ? "Gratis": "Costo: " + course.getCost());
+        holder.mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(course.getDate(), Utils.DATE_FORMAT_INPUT)));
+        /*if(course.getDiscount().equals("")){
+            holder.mDiscount.setText(String.format("%s %s ", "Descuento: ", course.getDiscount()));
+        }else {
+            holder.mDiscount.setVisibility(View.GONE);
+        }
+
+        if(course.getDiscount().equals("")){
+            holder.mDiscountToDate.setText(course.getDiscountToDate());
+        }else {
+            holder.mDiscountToDate.setVisibility(View.GONE);
+        }*/
+
+
         holder.mContent.setText(course.getContent().replace("\n", " ").replace("\r", "").replace("&nbsp;",""));
     }
 
@@ -61,13 +76,16 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
 
     public class CourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView mImage;
-        TextView mTitle, mDate, mContent;
+        TextView mTitle, mCost, mDate, mContent, mDiscount, mDiscountToDate;
         public CourseViewHolder(View view) {
             super(view);
             mImage = (ImageView)view.findViewById(R.id.iv_course);
             mTitle = (TextView)view.findViewById(R.id.tv_title);
             mDate = (TextView)view.findViewById(R.id.tv_date);
             mContent = (TextView)view.findViewById(R.id.tv_content);
+            mCost = (TextView)view.findViewById(R.id.tv_cost);
+            mDiscount = (TextView)view.findViewById(R.id.tv_discount);
+            mDiscountToDate = (TextView)view.findViewById(R.id.tv_discount_to_date);
             view.setOnClickListener(this);
         }
 

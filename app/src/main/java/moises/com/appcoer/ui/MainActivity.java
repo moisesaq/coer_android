@@ -24,10 +24,13 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import moises.com.appcoer.R;
+import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.fragments.CourseListFragment;
+import moises.com.appcoer.ui.fragments.MenuFragment;
 import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
 import moises.com.appcoer.ui.fragments.ProcessesFragment;
@@ -35,33 +38,47 @@ import moises.com.appcoer.ui.fragments.ReserveListFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
                                                         NewsListFragment.OnFragmentInteractionListener, CourseListFragment.OnCoursesFragmentListener{
-
-    private CircleImageView mImageUser;
     private TextView mFullName;
     private TextView mEmail;
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        GlobalManager.setActivityGlobal(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setupNavMenu(toolbar);
-        showFragment(NewsListFragment.newInstance(), false);
+        showFragment(MenuFragment.newInstance(), false);
     }
 
     private void setupNavMenu(Toolbar toolbar){
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        mImageUser = (CircleImageView)headerView.findViewById(R.id.civ_image_user);
         mFullName = (TextView)headerView.findViewById(R.id.tv_fullname);
         mEmail = (TextView)headerView.findViewById(R.id.tv_email);
         loadUser();
+        showUserGuide();
+    }
+
+    public void openNavigationView(){
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    private void showUserGuide(){
+        UserGuide.getInstance(GlobalManager.getActivityGlobal()).showStageWithToolbar(UserGuide.StageGuide.STAGE_1, toolbar, new UserGuide.CallBack() {
+            @Override
+            public void onUserGuideOnClick() {
+                openNavigationView();
+            }
+        });
     }
 
     public void loadUser(){
@@ -138,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void logout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you safe do you want exit?");
+        builder.setMessage(R.string.message_logout);
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

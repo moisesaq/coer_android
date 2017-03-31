@@ -31,4 +31,16 @@
     <string name="nav_logout">Log Out</string>
     <string name="loading">Loading...</string>
     <string name="today">Today</string>
+
+    <!--ON BOARDING-->
+    <string name="on_boarding_title1">News</string>
+    <string name="on_boarding_title3">Account</string>
+    <string name="on_boarding_description1">Latest news from our institution</string>
+    <string name="on_boarding_description2">Learn about our courses</string>
+    <string name="on_boarding_description3">Manage your accounts and reservations</string>
+    <string name="on_boarding_title2">Courses</string>
+    <string name="on_boarding_title4">Reservations</string>
+    <string name="on_boarding_description4">Reserve habitaciones en nuestros alimentos Reserve rooms in our accommodations</string>
+    <string name="get_started">GET STARTED</string>
+    <string name="message_logout">Are you safe do you want exit?</string>
 </resources>

@@ -140,7 +140,7 @@ public class Utils {
 
         String text = formatter.format(date);
         if (difference == 0){
-            return GlobalManager.getActivityGlobal().getString(R.string.today)+ ", "+ text;
+            return GlobalManager.getActivityGlobal().getString(R.string.today) + " "+ text;
         }
         return text;
     }

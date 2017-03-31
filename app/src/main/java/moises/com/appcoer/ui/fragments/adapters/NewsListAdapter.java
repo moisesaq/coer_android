@@ -14,6 +14,7 @@ import java.util.List;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.News;
+import moises.com.appcoer.tools.Utils;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>{
 
@@ -41,8 +42,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
                 .placeholder(R.mipmap.image_load)
                 .error(R.drawable.example_coer)
                 .into(holder.mImage);
-        holder.mTitle.setText(news.getTitle());
-        holder.mDate.setText(news.getDate());
+        holder.mTitle.setText(news.getTitle().trim());
+        holder.mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(news.getDate(), Utils.DATE_FORMAT_INPUT_2)));
         holder.mContent.setText(news.getContent().replace("\n", " ").replace("\r", "").replace("&nbsp;",""));
     }
 

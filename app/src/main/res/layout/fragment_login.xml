@@ -3,21 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:moi="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="moises.com.appcoer.ui.fragments.LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:padding="@dimen/activity_vertical_margin">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/logo"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_max_global"/>
+            android:layout_margin="@dimen/margin_max_global"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/colorPrimaryLight"/>
 
         <moises.com.appcoer.ui.view.InputTextView
             android:id="@+id/itv_user_name"

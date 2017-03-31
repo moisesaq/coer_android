@@ -54,6 +54,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
