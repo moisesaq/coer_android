@@ -90,11 +90,20 @@
         <item name="android:background">@drawable/image_button</item>
     </style>
 
-    <style name="StyleMenuContainer">
-        <item name="android:paddingLeft">@dimen/padding_max_global</item>
-        <item name="android:paddingRight">@dimen/padding_min_global</item>
-        <item name="android:paddingBottom">@dimen/padding_medium_global</item>
-        <item name="android:paddingTop">@dimen/padding_min_global</item>
+    <style name="StyleDivideVertical">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+
+    <!--STYLE HOME-->
+    <style name="HomeCardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/margin_medium_global</item>
+    </style>
+
+    <style name="HomeLinearLayout">
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -102,10 +111,22 @@
         <item name="android:background">@drawable/background_transparent</item>
     </style>
 
-    <style name="StyleDivideVertical">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/divider</item>
+   <!-- <item name="android:paddingLeft">@dimen/padding_max_global</item>
+    <item name="android:paddingRight">@dimen/padding_min_global</item>
+    <item name="android:paddingBottom">@dimen/padding_medium_global</item>
+    <item name="android:paddingTop">@dimen/padding_min_global</item>-->
+    <style name="HomeImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:padding">@dimen/padding_max_global</item>
+    </style>
+
+    <style name="HomeTextView" parent="TextViewMedium">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:layout_marginLeft">@dimen/margin_max_global</item>
+        <item name="android:textStyle">normal</item>
+
     </style>
 
 </resources>
