@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -60,11 +61,11 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        ImageView mImage;
+        RoundedImageView mImage;
         TextView mTitle, mDate, mContent;
         public NewsViewHolder(View view) {
             super(view);
-            mImage = (ImageView)view.findViewById(R.id.iv_news);
+            mImage = (RoundedImageView) view.findViewById(R.id.riv_news);
             mTitle = (TextView)view.findViewById(R.id.tv_title);
             mDate = (TextView)view.findViewById(R.id.tv_date);
             mContent = (TextView)view.findViewById(R.id.tv_content);

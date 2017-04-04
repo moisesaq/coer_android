@@ -20,25 +20,18 @@ import moises.com.appcoer.ui.App;
 import moises.com.appcoer.ui.base.IntroduceItem;
 import moises.com.appcoer.ui.base.IntroducePageAdapter;
 
-public class OnBoardingFragment extends Fragment implements View.OnClickListener{
+public class OnBoardingFragment extends BaseLoginFragment implements View.OnClickListener{
     private View view;
     private OnBoardingFragmentListener listener;
-    private Toolbar toolbar;
 
     public static OnBoardingFragment newInstance() {
         return new OnBoardingFragment();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_on_boarding, container, false);
-        toolbar.setVisibility(View.GONE);
+        hideToolbar();
         setup();
         return view;
     }
@@ -92,7 +85,7 @@ public class OnBoardingFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        toolbar.setVisibility(View.VISIBLE);
+        showToolbar();
     }
 
     private List<IntroduceItem> getItemsOnBoarding(){

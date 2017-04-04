@@ -5,7 +5,8 @@
         <item
             android:id="@+id/nav_account"
             android:icon="@drawable/svg_account_circle"
-            android:title="@string/nav_account" />
+            android:title="@string/nav_account"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_reserves"
             android:icon="@drawable/svg_hotel"

@@ -3,7 +3,6 @@ package moises.com.appcoer.ui.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.view.InputTextView;
 
-public class ChangePasswordFragment extends BaseLoginFragment implements View.OnClickListener{
+public class ReserveRoomFragment extends BaseLoginFragment implements View.OnClickListener{
     private static final String ARG_PARAM1 = "param1";
 
     private String mParam1;
@@ -21,11 +20,11 @@ public class ChangePasswordFragment extends BaseLoginFragment implements View.On
 
     private InputTextView mDNI, mEmail, mNewPassword, mRepeatNewPassword;
 
-    public ChangePasswordFragment() {
+    public ReserveRoomFragment() {
     }
 
-    public static ChangePasswordFragment newInstance(String param1) {
-        ChangePasswordFragment fragment = new ChangePasswordFragment();
+    public static ReserveRoomFragment newInstance(String param1) {
+        ReserveRoomFragment fragment = new ReserveRoomFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);

@@ -43,4 +43,7 @@ dependencies {
 
     /*TAP TARGET VIEW*/
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.6.1'
+
+    /*CIRCLE IMAGE VIEW*/
+    compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 }

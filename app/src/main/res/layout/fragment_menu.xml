@@ -51,7 +51,8 @@
             style="@style/HomeCardView"
             card_view:cardCornerRadius="1dp"
             card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="false">
+            card_view:cardUseCompatPadding="false"
+            android:visibility="gone">
             <LinearLayout
                 android:id="@+id/ly_account"
                 style="@style/HomeLinearLayout">

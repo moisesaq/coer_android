@@ -15,7 +15,7 @@ import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.fragments.LoginFragment;
 import moises.com.appcoer.ui.fragments.OnBoardingFragment;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, OnBoardingFragment.OnBoardingFragmentListener{
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnLoginFragmentListener, OnBoardingFragment.OnBoardingFragmentListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         if(OnBoardingFragment.isOnBoardingCompleted()){
             showFragment(OnBoardingFragment.newInstance(), true);
         }else{
-            showFragment(LoginFragment.newInstance(""), true);
+            showFragment(LoginFragment.newInstance(), true);
         }
     }
 
@@ -47,18 +47,19 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
     /*LOGIN FRAGMENT LISTENER*/
     @Override
-    public void onFragmentInteraction(User user) {
+    public void onLoginFinished(User user) {
         Session.getInstance().setUser(user);
-        goToMainActivity();
+        goToMainActivity(user != null);
     }
 
-    private void goToMainActivity(){
+    private void goToMainActivity(boolean close){
         startActivity(new Intent(this, MainActivity.class));
-        finish();
+        if(close)
+            finish();
     }
 
     @Override
     public void onGetStartClick() {
-        showFragment(LoginFragment.newInstance(""), true);
+        showFragment(LoginFragment.newInstance(), true);
     }
 }

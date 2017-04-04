@@ -41,7 +41,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
     }
 
     private void setupView(View view){
-        LinearLayout mNews = (LinearLayout) view.findViewById(R.id.ly_news);
+        LinearLayout mNews = (LinearLayout)view.findViewById(R.id.ly_news);
         mNews.setOnClickListener(this);
         LinearLayout mCourses = (LinearLayout)view.findViewById(R.id.ly_courses);
         mCourses.setOnClickListener(this);
