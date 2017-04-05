@@ -17,7 +17,7 @@ import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.NewsList;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.base.BaseFragment;
-import moises.com.appcoer.ui.fragments.adapters.NewsListAdapter;
+import moises.com.appcoer.ui.adapters.NewsListAdapter;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -26,6 +26,20 @@
         <item name="android:background">@drawable/background_button</item>
     </style>
 
+    <style name="ButtonCustom.Transparent" parent="ButtonCustom">
+        <item name="android:textColor">@color/divider</item>
+        <item name="android:paddingLeft">@dimen/padding_medium_global</item>
+        <item name="android:paddingRight">@dimen/padding_medium_global</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/background_transparent</item>
+    </style>
+
+    <style name="DialogButton" parent="ButtonCustom.Transparent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <!--CUSTOM TEXT VIEW-->
     <style name="TextViewMedium">
         <item name="android:layout_width">wrap_content</item>
@@ -126,7 +140,10 @@
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:layout_marginLeft">@dimen/margin_max_global</item>
         <item name="android:textStyle">normal</item>
+    </style>
 
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
 </resources>

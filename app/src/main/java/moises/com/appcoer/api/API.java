@@ -10,4 +10,5 @@ public interface API {
     String NEWS = API + "/noticias";
     String COURSES = API + "/cursos";
     String LODGINGS = API + "/alojamientos";
+    String ROOMS = "/habitaciones";
 }

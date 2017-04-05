@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Lodging extends BaseResponse implements Serializable{
+    @SerializedName("title")
+    private String title;
     @SerializedName("info")
     private String info;
     private String warning;
@@ -64,6 +66,16 @@ public class Lodging extends BaseResponse implements Serializable{
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override

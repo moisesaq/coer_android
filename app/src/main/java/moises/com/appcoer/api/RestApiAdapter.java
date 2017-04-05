@@ -74,10 +74,4 @@ public class RestApiAdapter {
         gsonBuilder.registerTypeAdapter(User.class, new ApiClientDeserializer.UserDeserializer());
         return gsonBuilder.create();
     }
-
-    public static Gson buildNewsListDeserializer(){
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(NewsList.class, new ApiClientDeserializer.UserDeserializer());
-        return gsonBuilder.create();
-    }
 }

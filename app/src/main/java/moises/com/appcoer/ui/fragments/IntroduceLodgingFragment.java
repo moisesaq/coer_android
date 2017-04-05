@@ -1,8 +1,6 @@
 package moises.com.appcoer.ui.fragments;
-
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +9,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Lodging;
-import moises.com.appcoer.model.LodgingList;
-import moises.com.appcoer.tools.Utils;
+import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
-public class DetailLodgingFragment extends Fragment implements View.OnClickListener{
-    private static final String TAG = DetailLodgingFragment.class.getSimpleName();
+public class IntroduceLodgingFragment extends BaseFragment{
+    private static final String TAG = IntroduceLodgingFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "idLodging";
 
     private int idLodging;
@@ -33,15 +32,15 @@ public class DetailLodgingFragment extends Fragment implements View.OnClickListe
     private LinearLayout mContentDetail;
     private LoadingView mLoadingView;
     private ImageView mImage;
-    private TextView mTitle, mRate, mRateFrom, mContent, mWarning;
+    private TextView mTitle, mRate, mRateFrom, mContent, mInfo, mWarning;
     private FloatingTextButton mFloatingTextButton;
 
-    public DetailLodgingFragment() {
+    public IntroduceLodgingFragment() {
         // Required empty public constructor
     }
 
-    public static DetailLodgingFragment newInstance(int idLodging) {
-        DetailLodgingFragment fragment = new DetailLodgingFragment();
+    public static IntroduceLodgingFragment newInstance(int idLodging) {
+        IntroduceLodgingFragment fragment = new IntroduceLodgingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, idLodging);
         fragment.setArguments(args);
@@ -57,7 +56,7 @@ public class DetailLodgingFragment extends Fragment implements View.OnClickListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail_lodging, container, false);
+        View view = inflater.inflate(R.layout.fragment_introduce_lodging, container, false);
         setupView(view);
         return view;
     }
@@ -70,21 +69,27 @@ public class DetailLodgingFragment extends Fragment implements View.OnClickListe
         mRate = (TextView)view.findViewById(R.id.tv_rate);
         mRateFrom = (TextView)view.findViewById(R.id.tv_rate_from);
         mContent = (TextView)view.findViewById(R.id.tv_content);
+        mInfo = (TextView)view.findViewById(R.id.tv_info);
         mWarning = (TextView)view.findViewById(R.id.tv_warning);
         mFloatingTextButton = (FloatingTextButton)view.findViewById(R.id.ftb_reserve);
-        mFloatingTextButton.setOnClickListener(this);
+        mFloatingTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            replaceFragment(ReserveRoomFragment.newInstance(mLodging), true);
+            }
+        });
         getDescriptionLodging();
     }
 
     private void getDescriptionLodging(){
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<LodgingList> lodgingListCall = apiClient.getLodgingList(Session.getInstance().getUser().getApiToken());
-        lodgingListCall.enqueue(new Callback<LodgingList>() {
+        Call<List<Lodging>> lodgingListCall = apiClient.getLodgingList(Session.getInstance().getUser().getApiToken());
+        lodgingListCall.enqueue(new Callback<List<Lodging>>() {
             @Override
-            public void onResponse(Call<LodgingList> call, Response<LodgingList> response) {
-                Log.d(TAG, " SUCCESS >>> " + response.body().getLodgings().toString());
-                if(response.body() != null && response.body().getLodgings() != null && response.body().getLodgings().size() > 0){
-                    for (Lodging lodging: response.body().getLodgings()){
+            public void onResponse(Call<List<Lodging>> call, Response<List<Lodging>> response) {
+                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
+                if(response.body() != null && response.body().size() > 0){
+                    for (Lodging lodging: response.body()){
                         if(lodging.getId() == idLodging)
                             mLodging = lodging;
                     }
@@ -95,7 +100,7 @@ public class DetailLodgingFragment extends Fragment implements View.OnClickListe
             }
 
             @Override
-            public void onFailure(Call<LodgingList> call, Throwable t) {
+            public void onFailure(Call<List<Lodging>> call, Throwable t) {
                 Log.d(TAG, " SUCCESS >>> " + t.toString());
             }
         });
@@ -108,21 +113,17 @@ public class DetailLodgingFragment extends Fragment implements View.OnClickListe
         }
         /*Picasso.with(getContext())
                 .load(news.getImage().getImage())
-                .placeholder(R.mipmap.image_load)
+                .placeholder(R.mipmap.image_load)\
                 .error(R.drawable.example_coer)
                 .into(mImage);*/
+        Log.d(TAG, " Lodging >>> " + mLodging.toString());
         mLoadingView.hideLoading("", mContentDetail);
         mTitle.setText(mLodging.getTitle());
-        mRate.setText(mLodging.getRate());
+        CharSequence text = Html.fromHtml(mLodging.getRate());
+        mRate.setText(text);
         mRateFrom.setText((mLodging.getRateFrom()));
         mContent.setText((mLodging.getContent()));
+        mInfo.setText(mLodging.getInfo());
         mWarning.setText(mLodging.getWarning());
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view.getId() == mFloatingTextButton.getId()){
-            Utils.showToastMessage("Reserve");
-        }
     }
 }

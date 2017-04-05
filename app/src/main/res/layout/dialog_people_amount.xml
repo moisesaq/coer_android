@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_medium_global"
+        android:orientation="vertical"
+        android:gravity="start"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextViewTechnoMedium"
+            android:text="@string/count_people"
+            android:textStyle="normal"
+            android:textColor="@color/colorPrimaryText"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/subtitle"
+        style="@style/TextViewTechnoSmall"
+        android:text="Lodging: 4 people max"
+        android:textStyle="normal"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_marginLeft="25dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <NumberPicker
+            android:id="@+id/np_number_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/TextViewTechnoMedium"
+            android:text="@string/count_people"
+            android:textStyle="normal"
+            android:textColor="@color/colorPrimaryText"
+            android:padding="@dimen/padding_min_global"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_medium_global"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/cancel"
+            style="@style/DialogButton"
+            android:layout_width="wrap_content"
+            android:text="@android:string/cancel"/>
+
+        <Button
+            android:id="@+id/save"
+            style="@style/DialogButton"
+            android:layout_width="wrap_content"
+            android:text="@android:string/ok"
+            android:textColor="@color/colorPrimary"/>
+    </LinearLayout>
+
+</LinearLayout>

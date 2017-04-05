@@ -1,6 +1,5 @@
 package moises.com.appcoer.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,10 +15,9 @@ import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.CourseList;
-import moises.com.appcoer.model.News;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseFragment;
-import moises.com.appcoer.ui.fragments.adapters.NewsListAdapter;
+import moises.com.appcoer.ui.adapters.NewsListAdapter;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;

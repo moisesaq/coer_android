@@ -17,8 +17,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="log_in">Login</string>
     <string name="registration_number">Registration number</string>
     <string name="guest">Guest</string>
@@ -53,5 +51,14 @@
     <string name="title_change_password">Change password</string>
     <string name="free">Free</string>
     <string name="reserve">Reserve</string>
-    <string name="message_not_logged">You aren\'t logged</string>
+    <string name="message_not_logged">Unauthorized user, you must log in to make the reservation</string>
+    <string name="dates">Dates</string>
+    <string name="enrollment">Enrollment</string>
+    <string name="name">Name</string>
+    <string name="last_name">Lastname</string>
+    <string name="phone">Phone</string>
+    <string name="count_people">Count people</string>
+    <string name="additional_information">Additional information</string>
+    <string name="title_reserve_room">Reserve room</string>
+    <string name="select_room">Select room</string>
 </resources>

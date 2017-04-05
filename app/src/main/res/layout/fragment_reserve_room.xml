@@ -11,13 +11,43 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_max_global">
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_rooms" />
+
         <moises.com.appcoer.ui.view.InputTextView
-            android:id="@+id/itv_dni"
+            android:id="@+id/itv_dates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             moi:iconImage="@drawable/svg_lock"
-            moi:hint="@string/dni"
-            android:inputType="textPassword"/>
+            moi:hint="@string/dates"
+            android:inputType="text"/>
+
+        <moises.com.appcoer.ui.view.InputTextView
+            android:id="@+id/itv_enrollment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            moi:iconImage="@drawable/svg_email"
+            moi:hint="@string/enrollment"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="@dimen/margin_min_global"/>
+
+        <moises.com.appcoer.ui.view.InputTextView
+            android:id="@+id/itv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            moi:iconImage="@drawable/svg_lock"
+            moi:hint="@string/name"
+            android:inputType="textCapSentences"/>
+
+        <moises.com.appcoer.ui.view.InputTextView
+            android:id="@+id/itv_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            moi:iconImage="@drawable/svg_lock"
+            moi:hint="@string/last_name"
+            android:inputType="textCapSentences"/>
 
         <moises.com.appcoer.ui.view.InputTextView
             android:id="@+id/itv_email"
@@ -29,26 +59,39 @@
             android:layout_marginTop="@dimen/margin_min_global"/>
 
         <moises.com.appcoer.ui.view.InputTextView
-            android:id="@+id/itv_new_password"
+            android:id="@+id/itv_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            moi:iconImage="@drawable/svg_lock"
-            moi:hint="@string/new_password"
-            android:inputType="textPassword"/>
+            moi:iconImage="@drawable/svg_email"
+            moi:hint="@string/phone"
+            android:inputType="phone"
+            android:layout_marginTop="@dimen/margin_min_global"/>
 
         <moises.com.appcoer.ui.view.InputTextView
-            android:id="@+id/itv_repeat_new_password"
+            android:id="@+id/itv_amount_people"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            moi:iconImage="@drawable/svg_lock"
-            moi:hint="@string/repeat_new_password"
-            android:inputType="textPassword"/>
+            moi:iconImage="@drawable/svg_email"
+            moi:hint="@string/count_people"
+            android:inputType="number"
+            android:layout_marginTop="@dimen/margin_min_global"/>
+
+        <moises.com.appcoer.ui.view.InputTextView
+            android:id="@+id/itv_additional_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            moi:iconImage="@drawable/svg_email"
+            moi:hint="@string/additional_information"
+            android:inputType="textCapSentences"
+            android:lines="3"
+            android:layout_marginTop="@dimen/margin_min_global"/>
 
         <Button
             android:id="@+id/b_confirm"
             style="@style/ButtonCustom"
             android:layout_marginTop="@dimen/margin_max_global"
-            android:text="@string/confirm" />
+            android:text="@string/reserve" />
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

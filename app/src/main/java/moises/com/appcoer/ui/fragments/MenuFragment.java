@@ -2,26 +2,15 @@ package moises.com.appcoer.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
-import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
-import moises.com.appcoer.model.CourseList;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseFragment;
-import moises.com.appcoer.ui.view.LoadingView;
-import moises.com.appcoer.ui.view.TextImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MenuFragment extends BaseFragment implements View.OnClickListener{
 
@@ -83,7 +72,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
 
     private void showDetailLodgingFragment(int id){
         if(Session.getInstance().getUser() != null){
-            replaceFragment(DetailLodgingFragment.newInstance(2), true);
+            replaceFragment(IntroduceLodgingFragment.newInstance(2), true);
         }else {
 
         }

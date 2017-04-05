@@ -2,10 +2,7 @@ package moises.com.appcoer.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,10 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
@@ -30,15 +25,15 @@ import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.fragments.CourseListFragment;
-import moises.com.appcoer.ui.fragments.DetailLodgingFragment;
+import moises.com.appcoer.ui.fragments.IntroduceLodgingFragment;
 import moises.com.appcoer.ui.fragments.MenuFragment;
 import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
-import moises.com.appcoer.ui.fragments.ProcessesFragment;
 import moises.com.appcoer.ui.fragments.ReserveListFragment;
+import moises.com.appcoer.ui.fragments.ReserveRoomFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-                                                            CourseListFragment.OnCoursesFragmentListener, MenuFragment.Callback{
+                                                            CourseListFragment.OnCoursesFragmentListener, MenuFragment.Callback, ReserveRoomFragment.OnReserveRoomFragmentListener{
     private TextView mFullName;
     private TextView mEmail;
     private Toolbar toolbar;
@@ -66,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFullName = (TextView)headerView.findViewById(R.id.tv_fullname);
         mEmail = (TextView)headerView.findViewById(R.id.tv_email);
         loadUser();
-        showUserGuide();
+        //showUserGuide();
     }
 
     public void openNavigationView(){
@@ -144,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_method_payments) {
             showFragment(MethodPaymentsFragment.newInstance(), true);
         } else if (id == R.id.nav_processes) {
-            showFragment(ProcessesFragment.newInstance(), true);
         } else if(id == R.id.nav_logout){
             logout();
         }
@@ -200,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onLodgingClick(int id) {
         if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
-            showFragment(DetailLodgingFragment.newInstance(id), true);
+            showFragment(IntroduceLodgingFragment.newInstance(id), true);
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.message_not_logged);
@@ -217,5 +211,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onMethodPaymentsClick() {
         showFragment(MethodPaymentsFragment.newInstance(), true);
+    }
+
+    /*RESERVE ROOM FRAGMENT LISTENER*/
+    @Override
+    public void onReserveRoomSuccessful() {
+
     }
 }

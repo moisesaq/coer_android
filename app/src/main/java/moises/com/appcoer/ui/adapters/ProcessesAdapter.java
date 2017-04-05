@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.fragments.adapters;
+package moises.com.appcoer.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
