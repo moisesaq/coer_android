@@ -1,7 +1,4 @@
 package moises.com.appcoer.ui.fragments;
-
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +26,6 @@ import retrofit2.Response;
 public class NewsListFragment extends BaseFragment implements NewsListAdapter.CallBack{
 
     private static final String TAG = NewsListFragment.class.getSimpleName();
-    private OnFragmentInteractionListener mListener;
 
     private View view;
     private RecyclerView mRecyclerView;
@@ -84,29 +80,8 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
     public void onNewsClick(News news) {
         replaceFragment(NewsFragment.newInstance(news), true);
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

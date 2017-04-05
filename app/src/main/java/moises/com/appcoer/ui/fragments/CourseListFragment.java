@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CourseListFragment extends BaseFragment implements NewsListAdapter.CallBack, CourseListAdapter.CallBack{
+public class CourseListFragment extends BaseFragment implements CourseListAdapter.CallBack{
 
     private static final String TAG = CourseListFragment.class.getSimpleName();
     private OnCoursesFragmentListener mListener;
@@ -96,11 +96,6 @@ public class CourseListFragment extends BaseFragment implements NewsListAdapter.
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onNewsClick(News news) {
-        replaceFragment(NewsFragment.newInstance(news), true);
     }
 
     @Override

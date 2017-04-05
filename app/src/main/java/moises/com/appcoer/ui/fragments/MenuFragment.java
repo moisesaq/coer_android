@@ -1,5 +1,6 @@
 package moises.com.appcoer.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
+import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.CourseList;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseFragment;
@@ -24,7 +26,7 @@ import retrofit2.Response;
 public class MenuFragment extends BaseFragment implements View.OnClickListener{
 
     private static final String TAG = MenuFragment.class.getSimpleName();
-
+    private Callback mCallback;
     public MenuFragment() {
         // Required empty public constructor
     }
@@ -59,24 +61,56 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ly_news:
-                replaceFragment(NewsListFragment.newInstance(), true);
+                mCallback.onNewsClick();
                 break;
             case R.id.ly_courses:
-                replaceFragment(CourseListFragment.newInstance(), true);
+                mCallback.onCoursesClick();
                 break;
             case R.id.ly_account:
                 Utils.showToastMessage("Próximamente");
                 break;
             case R.id.ly_lodging_house:
-                replaceFragment(ReserveListFragment.newInstance(), true);
+                mCallback.onLodgingClick(1);
                 break;
             case R.id.ly_timbue:
-                replaceFragment(ReserveListFragment.newInstance(), true);
+                mCallback.onLodgingClick(2);
                 break;
             case R.id.ly_method_payment:
-                replaceFragment(MethodPaymentsFragment.newInstance(), true);
+                mCallback.onMethodPaymentsClick();
                 break;
         }
+    }
+
+    private void showDetailLodgingFragment(int id){
+        if(Session.getInstance().getUser() != null){
+            replaceFragment(DetailLodgingFragment.newInstance(2), true);
+        }else {
+
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MenuFragment.Callback) {
+            mCallback = (MenuFragment.Callback) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement Callback");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback = null;
+    }
+
+    public interface Callback{
+        void onNewsClick();
+        void onCoursesClick();
+        void onLodgingClick(int id);
+        void onMethodPaymentsClick();
     }
 
     /*-Noticias

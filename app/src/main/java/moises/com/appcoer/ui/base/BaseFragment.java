@@ -29,7 +29,8 @@ public class BaseFragment extends Fragment{
     }
 
     protected void replaceFragment(Fragment fragment, boolean stack){
-        mainActivity.showFragment(fragment, stack);
+        if(mainActivity != null)
+            mainActivity.showFragment(fragment, stack);
     }
 
 }

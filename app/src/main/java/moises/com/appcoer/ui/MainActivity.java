@@ -30,6 +30,7 @@ import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.fragments.CourseListFragment;
+import moises.com.appcoer.ui.fragments.DetailLodgingFragment;
 import moises.com.appcoer.ui.fragments.MenuFragment;
 import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
@@ -37,7 +38,7 @@ import moises.com.appcoer.ui.fragments.ProcessesFragment;
 import moises.com.appcoer.ui.fragments.ReserveListFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-                                                        NewsListFragment.OnFragmentInteractionListener, CourseListFragment.OnCoursesFragmentListener{
+                                                            CourseListFragment.OnCoursesFragmentListener, MenuFragment.Callback{
     private TextView mFullName;
     private TextView mEmail;
     private Toolbar toolbar;
@@ -178,14 +179,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    /*FRAGMENT LISTENERS*/
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
+    /*FRAGMENT COURSE LISTENER*/
 
     @Override
     public void onCourseClick(Course course) {
 
+    }
+
+    /*FRAGMENT MENU LISTENER*/
+    @Override
+    public void onNewsClick() {
+        showFragment(NewsListFragment.newInstance(), true);
+    }
+
+    @Override
+    public void onCoursesClick() {
+        showFragment(CourseListFragment.newInstance(), true);
+    }
+
+    @Override
+    public void onLodgingClick(int id) {
+        if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
+            showFragment(DetailLodgingFragment.newInstance(id), true);
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.message_not_logged);
+            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            });
+            builder.create().show();
+        }
+    }
+
+    @Override
+    public void onMethodPaymentsClick() {
+        showFragment(MethodPaymentsFragment.newInstance(), true);
     }
 }

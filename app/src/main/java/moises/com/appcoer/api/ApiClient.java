@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.CourseList;
+import moises.com.appcoer.model.LodgingList;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.NewsList;
 import moises.com.appcoer.model.User;
@@ -35,6 +36,9 @@ public interface ApiClient {
 
     @GET
     Call<Course> getCourseDescription(@Url String urlNews);
+
+    @GET(API.LODGINGS)
+    Call<LodgingList> getLodgingList(@Query("api_token") String apiToken);
 
     /*@PUT(ApiClient.ApiRest.ME)
     Call<User> updateProfile(@Body JSONObject jsonObject);

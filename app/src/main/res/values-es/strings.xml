@@ -26,4 +26,5 @@
     <string name="get_started">EMPEZAR</string>
     <string name="message_logout">¿Estás seguro quieres salir?</string>
     <string name="today">Hoy</string>
+    <string name="message_not_logged">No ha iniciado sesión</string>
 </resources>

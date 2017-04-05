@@ -1,0 +1,90 @@
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="moises.com.appcoer.ui.fragments.NewsListFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <moises.com.appcoer.ui.view.LoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/content_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/iv_lodging"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/example_coer" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Example"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/tv_rate"
+                    style="@style/TextViewSmall"
+                    android:maxLines="1"
+                    android:text="Rate" />
+
+                <TextView
+                    android:id="@+id/tv_rate_from"
+                    style="@style/TextViewSmall"
+                    android:maxLines="1"
+                    android:text="Rate from" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    style="@style/TextViewSmall"
+                    android:text="Large user information, to explain user skills and more that's interesting for other users" />
+
+                <TextView
+                    android:id="@+id/tv_warning"
+                    style="@style/TextViewSmall"
+                    android:maxLines="1"
+                    android:text="Warning" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ru.dimorinny.floatingtextbutton.FloatingTextButton
+            android:id="@+id/ftb_reserve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            app:floating_background_color="@color/colorAccent"
+            app:floating_icon="@drawable/svg_hotel"
+            app:floating_title="@string/reserve"
+            app:floating_title_color="@android:color/white" />
+
+    </FrameLayout>
+
+</android.support.v4.widget.NestedScrollView>
