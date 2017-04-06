@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Reservation implements Serializable{
     private int id;
@@ -46,7 +47,7 @@ public class Reservation implements Serializable{
 
     /*@SerializedName("fechas")
     @Nullable
-    private String dates;*/
+    private List<String> dates;*/
 
     public int getMp() {
         return mp;
@@ -128,11 +129,12 @@ public class Reservation implements Serializable{
         this.id = id;
     }
 
-    /*public String getDates() {
+    /*@Nullable
+    public List<String> getDates() {
         return dates;
     }
 
-    public void setDates(String dates) {
+    public void setDates(@Nullable List<String> dates) {
         this.dates = dates;
     }*/
 

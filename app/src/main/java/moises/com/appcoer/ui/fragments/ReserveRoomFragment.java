@@ -42,6 +42,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     private SpinnerRoomsAdapter mSpinnerRoomsAdapter;
     private InputTextView mDates, mName, mLastName, mEmail, mPhone, mAmountPeople, mAdditionalInformation;
     private Room mRoom;
+    private List<String> dateList;
 
     public ReserveRoomFragment() {
     }
@@ -60,6 +61,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         if (getArguments() != null) {
             mLodging = (Lodging) getArguments().getSerializable(ARG_PARAM1);
         }
+        dateList = new ArrayList<>();
     }
 
     @Override
@@ -167,7 +169,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
     private Reservation createReservation(){
         Reservation reservation = new Reservation();
-        //reservation.setDates(mDates.getText());
+        //reservation.setDates(dateList);
         //reservation.setMp(Session.getInstance().getUser().getMp());
         reservation.setName(mName.getText());
         reservation.setLastName(mLastName.getText());
@@ -177,6 +179,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         reservation.setDetail(mAdditionalInformation.getText());
         return reservation;
     }
+
     @Override
     public void onDateSelected(String textDate, Date date) {
         if(mDates.getText().isEmpty()){
@@ -184,7 +187,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         }else {
             mDates.setText(String.format("%s%s%s", mDates.getText(), ",", textDate));
         }
-
+        dateList.add(textDate);
     }
 
     @Override
