@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import moises.com.appcoer.R;
@@ -27,6 +29,7 @@ public class IntroduceLodgingFragment extends BaseFragment{
     private static final String TAG = IntroduceLodgingFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "idLodging";
 
+    private View view;
     private int idLodging;
     private Lodging mLodging;
     private LinearLayout mContentDetail;
@@ -56,15 +59,17 @@ public class IntroduceLodgingFragment extends BaseFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_introduce_lodging, container, false);
-        setupView(view);
+        if(view == null){
+            view = inflater.inflate(R.layout.fragment_introduce_lodging, container, false);
+            setupView(view);
+        }
         return view;
     }
 
     private void setupView(View view){
         mLoadingView = (LoadingView)view.findViewById(R.id.loading_view);
         mContentDetail = (LinearLayout)view.findViewById(R.id.content_detail);
-        mImage = (ImageView)view.findViewById(R.id.iv_news);
+        mImage = (ImageView)view.findViewById(R.id.iv_lodging);
         mTitle = (TextView)view.findViewById(R.id.tv_title);
         mRate = (TextView)view.findViewById(R.id.tv_rate);
         mRateFrom = (TextView)view.findViewById(R.id.tv_rate_from);
@@ -87,7 +92,7 @@ public class IntroduceLodgingFragment extends BaseFragment{
         lodgingListCall.enqueue(new Callback<List<Lodging>>() {
             @Override
             public void onResponse(Call<List<Lodging>> call, Response<List<Lodging>> response) {
-                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
+                //Log.d(TAG, " SUCCESS >>> " + response.body().toString());
                 if(response.body() != null && response.body().size() > 0){
                     for (Lodging lodging: response.body()){
                         if(lodging.getId() == idLodging)
@@ -95,13 +100,13 @@ public class IntroduceLodgingFragment extends BaseFragment{
                     }
                     showDetail();
                 }else{
-                    mLoadingView.hideLoading("Error", mContentDetail);
+                    mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mContentDetail);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Lodging>> call, Throwable t) {
-                Log.d(TAG, " SUCCESS >>> " + t.toString());
+                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mContentDetail);
             }
         });
     }
@@ -111,16 +116,15 @@ public class IntroduceLodgingFragment extends BaseFragment{
             mLoadingView.hideLoading("Error", mContentDetail);
             return;
         }
-        /*Picasso.with(getContext())
-                .load(news.getImage().getImage())
-                .placeholder(R.mipmap.image_load)\
-                .error(R.drawable.example_coer)
-                .into(mImage);*/
-        Log.d(TAG, " Lodging >>> " + mLodging.toString());
+        Picasso.with(getContext())
+                .load(mLodging.getImage())
+                .placeholder(R.mipmap.image_load)
+                .error(R.mipmap.image_load)
+                .into(mImage);
         mLoadingView.hideLoading("", mContentDetail);
         mTitle.setText(mLodging.getTitle());
-        CharSequence text = Html.fromHtml(mLodging.getRate());
-        mRate.setText(text);
+        //CharSequence text = Html.fromHtml(mLodging.getRate());
+        mRate.setText(mLodging.getRate());
         mRateFrom.setText((mLodging.getRateFrom()));
         mContent.setText((mLodging.getContent()));
         mInfo.setText(mLodging.getInfo());

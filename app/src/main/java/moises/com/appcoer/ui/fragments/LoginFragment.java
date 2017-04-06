@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.User;
+import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.view.InputTextView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +59,8 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
         bLogin.setOnClickListener(this);
         Button bGuest = (Button)view.findViewById(R.id.b_guest);
         bGuest.setOnClickListener(this);
+        TextView mForgotPassword = (TextView)view.findViewById(R.id.tv_forgot_password);
+        mForgotPassword.setOnClickListener(this);
     }
 
     @Override
@@ -66,19 +70,26 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
                 login(mUserName.getText(), mPassword.getText());
                 break;
             case R.id.b_guest:
-                mListener.onLoginFinished(null);
+                mListener.onStartGuest();
+                break;
+            case R.id.tv_forgot_password:
+                mListener.onForgotPasswordClick();
                 break;
         }
     }
 
     private void login(String userName, String password){
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<User> jsonObjectCall = apiClient.login(userName, password);
-        jsonObjectCall.enqueue(new Callback<User>() {
+        Call<User> userCall = apiClient.login(userName, password);
+        userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.d(TAG, "SUCCESS >>> " + response.body().toString());
-                mListener.onLoginFinished(response.body());
+                Log.d(TAG, "SUCCESS >>> " + response.message() + " code " + response.code());
+                if(response.body() != null){
+                    mListener.onLoginSuccessful(response.body());
+                }else{
+                    Utils.showDialogMessage("", getString(R.string.error_incorrect_password), null);
+                }
             }
 
             @Override
@@ -86,7 +97,6 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
                 Log.d(TAG, "ERROR >>> " + t.toString());
             }
         });
-
     }
 
     @Override
@@ -96,7 +106,7 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
             mListener = (OnLoginFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnLoginFragmentListener");
         }
     }
 
@@ -107,6 +117,8 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
     }
 
     public interface OnLoginFragmentListener {
-        void onLoginFinished(User user);
+        void onLoginSuccessful(User user);
+        void onStartGuest();
+        void onForgotPasswordClick();
     }
 }

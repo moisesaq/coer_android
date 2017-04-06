@@ -6,9 +6,19 @@ public interface API {
 
     String API = "/api";
     String USERS = API + "/users";
+    String CHANGE_PASSWORD = USERS + "/changepassword";
+    String RESET_PASSWORD = USERS + "/resetpassword";
+
     String LOGIN = USERS + "/login";
     String NEWS = API + "/noticias";
     String COURSES = API + "/cursos";
     String LODGINGS = API + "/alojamientos";
-    String ROOMS = "/habitaciones";
+    String ROOMS = API + "/habitaciones";
+    String ROOM_LIST = LODGINGS + "/{id}/habitaciones";
+    String RESERVES = ROOMS + "/{id}/reservas";
+    String RESERVES_LIST = USERS + "/reservas";
+
+    String SITES = API + "/sites";
+    String ENROLLMENT_DATE = SITES + "/matriculation";
+    String METHOD_PAYMENTS = SITES + "/mediosdepago";
 }

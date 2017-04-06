@@ -9,36 +9,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
+import moises.com.appcoer.global.Session;
 import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.CourseList;
+import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.tools.Utils;
+import moises.com.appcoer.ui.adapters.ReservationListAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
-import moises.com.appcoer.ui.adapters.NewsListAdapter;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReserveListFragment extends BaseFragment{
+public class ReservationListFragment extends BaseFragment implements ReservationListAdapter.CallBack{
 
-    private static final String TAG = ReserveListFragment.class.getSimpleName();
+    private static final String TAG = ReservationListFragment.class.getSimpleName();
 
     private View view;
     private RecyclerView mRecyclerView;
     private LoadingView mLoadingView;
     private FloatingActionButton mAddReserve;
-    //private CourseListAdapter mCourseListAdapter;
+    private ReservationListAdapter mReservationListAdapter;
 
-    public ReserveListFragment() {
+    public ReservationListFragment() {
         // Required empty public constructor
     }
 
-    public static ReserveListFragment newInstance() {
-        return new ReserveListFragment();
+    public static ReservationListFragment newInstance() {
+        return new ReservationListFragment();
     }
 
     @Override
@@ -55,12 +60,12 @@ public class ReserveListFragment extends BaseFragment{
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        /*mCourseListAdapter = new CourseListAdapter(new ArrayList<Course>(), this);
-        mRecyclerView.setAdapter(mCourseListAdapter);*/
+        mReservationListAdapter = new ReservationListAdapter(new ArrayList<Reservation>(), this);
+        mRecyclerView.setAdapter(mReservationListAdapter);
         mAddReserve = (FloatingActionButton)view.findViewById(R.id.floatingActionButton);
         mAddReserve.setVisibility(View.VISIBLE);
-        showComingSoon();
-        showUserGuide();
+        getReservations();
+        //showUserGuide();
     }
 
     private void showComingSoon(){
@@ -76,20 +81,30 @@ public class ReserveListFragment extends BaseFragment{
         });
     }
 
-    private void getNews() {
+    private void getReservations(){
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<CourseList> courseListCall = apiClient.getCourses(null, 1);
-        courseListCall.enqueue(new Callback<CourseList>() {
+        Call<List<Reservation>> listCall = apiClient.getReservations(Session.getInstance().getUser().getApiToken());
+        listCall.enqueue(new Callback<List<Reservation>>() {
             @Override
-            public void onResponse(Call<CourseList> call, Response<CourseList> response) {
-                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                //mCourseListAdapter.addItems(response.body().getCourses());
+            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
+                Log.d(TAG, " Success >>>> " + response.message() + "code " +response.code());
+                if(response.body() != null && response.body().size() > 0){
+                    mLoadingView.hideLoading("", mRecyclerView);
+                    mReservationListAdapter.addItems(response.body());
+                }else{
+                    mLoadingView.hideLoading(getString(R.string.message_withot_reservation), mRecyclerView);
+                }
             }
 
             @Override
-            public void onFailure(Call<CourseList> call, Throwable t) {
-                Log.d(TAG, " FAILED >>> " + t.toString());
+            public void onFailure(Call<List<Reservation>> call, Throwable t) {
+                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
+    }
+
+    @Override
+    public void onReservationClick(Reservation reservation) {
+
     }
 }

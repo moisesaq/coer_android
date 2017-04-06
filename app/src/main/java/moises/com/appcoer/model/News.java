@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import moises.com.appcoer.model.base.BaseResponse;
+
 public class News extends BaseResponse implements Serializable{
     @SerializedName("id_user")
     private int idUser;

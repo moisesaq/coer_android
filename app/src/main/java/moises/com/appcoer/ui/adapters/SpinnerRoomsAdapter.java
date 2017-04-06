@@ -66,7 +66,10 @@ public class SpinnerRoomsAdapter extends ArrayAdapter<Room>{
 
     @Override
     public long getItemId(int position) {
-        return super.getItemId(position);
+        Room room = getItem(position);
+        if(room != null)
+            return room.getId();
+        return 0;
     }
 
     public class ViewHolder{

@@ -150,15 +150,19 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
                 //setVisibilityPassword();
                 break;
         }*/
-
     }
+
+    public boolean isTextValid(){
+        return isTextValid("");
+    }
+
 
     public boolean isTextValid(String textError){
         String text = editText.getText().toString();
         Pattern pattern = Pattern.compile("^[a-zA-Z ]+$");
 
         if(text.isEmpty()){
-            textInputLayout.setError(textInputLayout.getHint() + getContext().getString(R.string.error_field_required));
+            textInputLayout.setError(getContext().getString(R.string.error_field_required));
             return false;
         }
 
@@ -195,7 +199,7 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
     public boolean isEmailValid(){
         String email = editText.getText().toString().trim();
         if(email.isEmpty()){
-            textInputLayout.setError(textInputLayout.getHint() + getContext().getString(R.string.error_field_required));
+            textInputLayout.setError(getContext().getString(R.string.error_field_required));
             return false;
         }
 

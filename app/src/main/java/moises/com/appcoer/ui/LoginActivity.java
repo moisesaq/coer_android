@@ -12,10 +12,13 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
+import moises.com.appcoer.ui.dialogs.ResetPasswordDialog;
+import moises.com.appcoer.ui.fragments.ChangePasswordFragment;
 import moises.com.appcoer.ui.fragments.LoginFragment;
 import moises.com.appcoer.ui.fragments.OnBoardingFragment;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.OnLoginFragmentListener, OnBoardingFragment.OnBoardingFragmentListener{
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnLoginFragmentListener,
+                                                        OnBoardingFragment.OnBoardingFragmentListener, ChangePasswordFragment.OnChangePasswordFragmentListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +28,9 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         showFragment(OnBoardingFragment.newInstance(), true);
-        //setup();
+        setup();
+        /*if(Session.getInstance().getUser() != null)
+            showFragment(ChangePasswordFragment.newInstance(""), true);*/
     }
 
     private void setup(){
@@ -47,9 +52,23 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
     /*LOGIN FRAGMENT LISTENER*/
     @Override
-    public void onLoginFinished(User user) {
+    public void onLoginSuccessful(User user) {
         Session.getInstance().setUser(user);
-        goToMainActivity(user != null);
+        if(user.getFirstTime() == 1){
+            showFragment(ChangePasswordFragment.newInstance(""), true);
+        }else{
+            goToMainActivity(false);
+        }
+    }
+
+    @Override
+    public void onStartGuest() {
+        goToMainActivity(false);
+    }
+
+    @Override
+    public void onForgotPasswordClick() {
+        ResetPasswordDialog.newInstance().show(getSupportFragmentManager(), ResetPasswordDialog.TAG);
     }
 
     private void goToMainActivity(boolean close){
@@ -61,5 +80,11 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     @Override
     public void onGetStartClick() {
         showFragment(LoginFragment.newInstance(), true);
+    }
+
+    @Override
+    public void onChangePasswordSuccessful(User user) {
+        Session.getInstance().setUser(user);
+        goToMainActivity(true);
     }
 }

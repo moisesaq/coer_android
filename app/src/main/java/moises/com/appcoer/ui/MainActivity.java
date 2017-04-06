@@ -29,7 +29,7 @@ import moises.com.appcoer.ui.fragments.IntroduceLodgingFragment;
 import moises.com.appcoer.ui.fragments.MenuFragment;
 import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
-import moises.com.appcoer.ui.fragments.ReserveListFragment;
+import moises.com.appcoer.ui.fragments.ReservationListFragment;
 import moises.com.appcoer.ui.fragments.ReserveRoomFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(user == null)
             return;
         mFullName.setText(user.getFullName());
-        mEmail.setText(user.getEmail());
+        mEmail.setText(user.getEmail() != null ? user.getEmail() : "");
     }
 
     public void showFragment(Fragment fragment, boolean stack){
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_account) {
             // Handle the camera action
         } else if (id == R.id.nav_reserves) {
-            showFragment(ReserveListFragment.newInstance(), true);
+            showMyReservations();
         } else if (id == R.id.nav_news) {
             showFragment(NewsListFragment.newInstance(), true);
         } else if (id == R.id.nav_courses) {
@@ -146,6 +146,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showMyReservations(){
+        if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
+            showFragment(ReservationListFragment.newInstance(), true);
+        }else{
+            showMessageNeedSignUp();
+        }
     }
 
     private void logout(){
@@ -196,15 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
             showFragment(IntroduceLodgingFragment.newInstance(id), true);
         }else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.message_not_logged);
-            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
-                }
-            });
-            builder.create().show();
+            showMessageNeedSignUp();
         }
     }
 
@@ -216,6 +216,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /*RESERVE ROOM FRAGMENT LISTENER*/
     @Override
     public void onReserveRoomSuccessful() {
+    }
 
+    private void showMessageNeedSignUp(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.message_not_logged);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        builder.create().show();
     }
 }

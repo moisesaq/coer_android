@@ -8,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.CourseList;
+import moises.com.appcoer.model.MethodPayment;
+import moises.com.appcoer.ui.adapters.MethodPaymentsAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
-import moises.com.appcoer.ui.adapters.CourseListAdapter;
-import moises.com.appcoer.ui.adapters.NewsListAdapter;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,10 +29,9 @@ public class MethodPaymentsFragment extends BaseFragment{
     private View view;
     private RecyclerView mRecyclerView;
     private LoadingView mLoadingView;
-    //private CourseListAdapter mCourseListAdapter;
+    private MethodPaymentsAdapter mMethodPaymentsAdapter;
 
     public MethodPaymentsFragment() {
-        // Required empty public constructor
     }
 
     public static MethodPaymentsFragment newInstance() {
@@ -50,28 +52,28 @@ public class MethodPaymentsFragment extends BaseFragment{
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        /*mCourseListAdapter = new CourseListAdapter(new ArrayList<Course>(), this);
-        mRecyclerView.setAdapter(mCourseListAdapter);*/
-        showComingSoon();
+        mMethodPaymentsAdapter = new MethodPaymentsAdapter(getContext(), new ArrayList<MethodPayment>());
+        mRecyclerView.setAdapter(mMethodPaymentsAdapter);
+        getMethodPayments();
     }
 
-    private void showComingSoon(){
-        mLoadingView.hideLoading("Medios de pago\nPróximamente", mRecyclerView, R.mipmap.working);
-    }
-
-    private void getNews() {
+    private void getMethodPayments(){
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<CourseList> courseListCall = apiClient.getCourses(null, 1);
-        courseListCall.enqueue(new Callback<CourseList>() {
+        Call<List<MethodPayment>> listCall = apiClient.getMethodPayments();
+        listCall.enqueue(new Callback<List<MethodPayment>>() {
             @Override
-            public void onResponse(Call<CourseList> call, Response<CourseList> response) {
-                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                //mCourseListAdapter.addItems(response.body().getCourses());
+            public void onResponse(Call<List<MethodPayment>> call, Response<List<MethodPayment>> response) {
+                if(response.body() != null && response.body().size() > 0){
+                    mLoadingView.hideLoading("", mRecyclerView);
+                    mMethodPaymentsAdapter.addItems(response.body());
+                }else{
+                    mLoadingView.hideLoading("There aren't any method payments", mRecyclerView);
+                }
             }
 
             @Override
-            public void onFailure(Call<CourseList> call, Throwable t) {
-                Log.d(TAG, " FAILED >>> " + t.toString());
+            public void onFailure(Call<List<MethodPayment>> call, Throwable t) {
+                mLoadingView.hideLoading("Error", mRecyclerView);
             }
         });
     }

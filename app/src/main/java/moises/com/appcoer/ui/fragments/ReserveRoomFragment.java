@@ -1,11 +1,11 @@
 package moises.com.appcoer.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -19,6 +19,7 @@ import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Lodging;
+import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.adapters.SpinnerRoomsAdapter;
@@ -30,16 +31,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReserveRoomFragment extends BaseFragment implements View.OnClickListener, DateDialog.OnDateDialogListener, AmountPeopleDialog.OnAmountPeopleDialogListener {
+public class ReserveRoomFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener,
+                                                                        DateDialog.OnDateDialogListener, AmountPeopleDialog.OnAmountPeopleDialogListener {
     private static final String TAG = ReserveRoomFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "lodging";
 
     private Lodging mLodging;
-    private OnReserveRoomFragmentListener mListener;
 
     private Spinner spinnerRooms;
     private SpinnerRoomsAdapter mSpinnerRoomsAdapter;
-    private InputTextView mDates, mEnrollment, mName, mLastName, mEmail, mPhone, mAmountPeople, mAdditionalInformation;
+    private InputTextView mDates, mName, mLastName, mEmail, mPhone, mAmountPeople, mAdditionalInformation;
+    private Room mRoom;
 
     public ReserveRoomFragment() {
     }
@@ -70,6 +72,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     private void setupView(View view){
         setTitle(getString(R.string.title_reserve_room));
         spinnerRooms = (Spinner)view.findViewById(R.id.spinner_rooms);
+        spinnerRooms.setOnItemSelectedListener(this);
         List<Room> list = new ArrayList<>();
         list.add(getDefaultRoom());
         mSpinnerRoomsAdapter = new SpinnerRoomsAdapter(getContext(), list);
@@ -77,7 +80,6 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
         mDates = (InputTextView)view.findViewById(R.id.itv_dates);
         mDates.setOnClickListener(this);
-        mEnrollment = (InputTextView)view.findViewById(R.id.itv_enrollment);
         mName = (InputTextView)view.findViewById(R.id.itv_name);
         mLastName = (InputTextView)view.findViewById(R.id.itv_last_name);
         mEmail = (InputTextView)view.findViewById(R.id.itv_email);
@@ -87,12 +89,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         mAdditionalInformation = (InputTextView)view.findViewById(R.id.itv_additional_information);
 
         Button mConfirm = (Button)view.findViewById(R.id.b_confirm);
-        mConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utils.showToastMessage("Confirm test");
-            }
-        });
+        mConfirm.setOnClickListener(this);
         getRooms();
     }
 
@@ -105,14 +102,15 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
     private void getRooms(){
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        String urlLodging = String.format("%s%s%s%s", API.LODGINGS, "/", mLodging.getId(), API.ROOMS);
-        Call<List<Room>> listCall = apiClient.getRoomList(urlLodging, Session.getInstance().getUser().getApiToken());
+        //String urlLodging = String.format("%s%s%s%s", API.LODGINGS, "/", mLodging.getId(), API.ROOM_LIST);
+        Call<List<Room>> listCall = apiClient.getRoomList(mLodging.getId(), Session.getInstance().getUser().getApiToken());
         listCall.enqueue(new Callback<List<Room>>() {
             @Override
             public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
                 Log.d(TAG, " Success >>>> " + response.body().toString());
                 if(response.body() != null && response.body().size() > 0){
                     mSpinnerRoomsAdapter.addAll(response.body());
+
                 }else {
                     Log.d(TAG, " >>>> Error");
                 }
@@ -125,27 +123,6 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         });
     }
 
-    private void reserveRoom(){
-
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnReserveRoomFragmentListener) {
-            mListener = (OnReserveRoomFragmentListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnReserveRoomFragmentListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -155,9 +132,51 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
             case R.id.itv_amount_people:
                 AmountPeopleDialog.newInstance(1, 4, this).show(getFragmentManager(), AmountPeopleDialog.TAG);
                 break;
+            case R.id.b_confirm:
+                if(mDates.isTextValid() && mName.isTextValid() && mLastName.isTextValid()
+                            && mEmail.isEmailValid() && mPhone.isPhoneValid() && mAmountPeople.isTextValid() && mAdditionalInformation.isTextValid()){
+                    reserveRoom(createReservation());
+                }
+                break;
         }
     }
 
+    private void reserveRoom(final Reservation reservation){
+        if(mRoom == null || mRoom.getId() == 0)
+            return;
+        Log.d(TAG, " Reservation >>>> " + reservation.toString());
+        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        Call<Reservation> reservationCall = apiClient.reserveRoom(mRoom.getId(), Session.getInstance().getUser().getApiToken(), reservation);
+        reservationCall.enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                Log.d(TAG, " Success >>>> " + response.message() + "code " +response.code());
+                if(response.isSuccessful()){
+                    Log.d(TAG, " Success >>>> " + response.body().toString());
+                    Utils.showDialogMessage("", getString(R.string.message_reservation_successful), null);
+                }else {
+                    Utils.showDialogMessage("", getString(R.string.message_reservation_failed), null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+            }
+        });
+    }
+
+    private Reservation createReservation(){
+        Reservation reservation = new Reservation();
+        //reservation.setDates(mDates.getText());
+        //reservation.setMp(Session.getInstance().getUser().getMp());
+        reservation.setName(mName.getText());
+        reservation.setLastName(mLastName.getText());
+        reservation.setEmail(mEmail.getText());
+        reservation.setPhone(mPhone.getText());
+        reservation.setAmountPeople(Integer.parseInt(mAmountPeople.getText()));
+        reservation.setDetail(mAdditionalInformation.getText());
+        return reservation;
+    }
     @Override
     public void onDateSelected(String textDate, Date date) {
         if(mDates.getText().isEmpty()){
@@ -171,6 +190,16 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onNumberPeopleSelected(int numberPeople) {
         mAmountPeople.setText(String.valueOf(numberPeople));
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        mRoom = (Room) adapterView.getAdapter().getItem(i);
+        Log.d(TAG, " >>>> ID ROOM >>> " + mRoom.getId());
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
     public interface OnReserveRoomFragmentListener {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AppCOER</string>
+    <string name="app_name">COER</string>
     <string name="log_in">Iniciar sesión</string>
     <string name="registration_number">Matricula</string>
     <string name="guest">Invitado</string>
@@ -28,4 +28,32 @@
     <string name="today">Hoy</string>
     <string name="message_not_logged">Usuario no autorizado, tiene que loguearse para hacer la reserva</string>
     <string name="select_room">Seleccionar habitación</string>
+    <string name="message_reset_password_successful">Contraseña reseteado y enviado a su email</string>
+    <string name="message_reset_password_failed">No se pudo restaurar su contraseña</string>
+    <string name="restore">Restablecer</string>
+    <string name="reserve">Reservar</string>
+    <string name="loading">Cargando...</string>
+    <string name="free">Gratis</string>
+    <string name="last_name">Apellido</string>
+    <string name="name">Nombre</string>
+    <string name="message_passwords_do_not_match">Las contraseñas no coinciden</string>
+    <string name="title_reserve_room">Reservar habitación</string>
+    <string name="title_change_password">Cambiar contraseña</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="repeat_new_password">Repetir nueva contraseña</string>
+    <string name="phone">Teléfono</string>
+    <string name="dates">Fechas</string>
+    <string name="date_enrollment">Fecha de matriculación</string>
+    <string name="confirm">Confirmar</string>
+    <string name="count_people">Nro personas</string>
+    <string name="error_invalid_email">Esta dirección de correo electrónico no es válida.</string>
+    <string name="error_field_required">"Este campo es requerido "</string>
+    <string name="additional_information">Información Adicional</string>
+    <string name="title_reset_password">Restablecer contraseña</string>
+    <string name="user_name">Nombre de usuario</string>
+    <string name="dni">DNI</string>
+    <string name="app_full_name1">Colegio de odontólogos</string>
+    <string name="message_something_went_wrong">Disculpa las molestias, algo salio mal</string>
+    <string name="message_reservation_failed">No se pudo completar la reservación, intentelo mas tarde por favor</string>
+    <string name="message_reservation_successful">Reservación exitosa</string>
 </resources>

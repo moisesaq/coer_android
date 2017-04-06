@@ -1,9 +1,11 @@
-package moises.com.appcoer.model;
+package moises.com.appcoer.model.base;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+
+import moises.com.appcoer.model.ImageCoer;
 
 public class BaseResponse implements Serializable{
     private int id;
@@ -17,6 +19,11 @@ public class BaseResponse implements Serializable{
     private int published;
     @SerializedName("image")
     private ImageCoer image;
+
+    @SerializedName("updated_at")
+    private String updatedAt;
+    @SerializedName("created_at")
+    private String createdAt;
 
     public int getId() {
         return id;
@@ -72,6 +79,22 @@ public class BaseResponse implements Serializable{
 
     public void setImage(ImageCoer image) {
         this.image = image;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

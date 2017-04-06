@@ -1,19 +1,27 @@
 package moises.com.appcoer.api;
 
-import com.google.gson.JsonObject;
-
 import java.util.List;
 
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.CourseList;
 import moises.com.appcoer.model.Lodging;
+import moises.com.appcoer.model.MethodPayment;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.NewsList;
+import moises.com.appcoer.model.Enrollment;
+import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
 import moises.com.appcoer.model.User;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -38,6 +46,29 @@ public interface ApiClient {
     @GET(API.LODGINGS)
     Call<List<Lodging>> getLodgingList(@Query("api_token") String apiToken);
 
-    @GET
-    Call<List<Room>> getRoomList(@Url String urlLodging, @Query("api_token") String apiToken);
+    @GET(API.ROOM_LIST)
+    Call<List<Room>> getRoomList(@Path("id") int idLodging , @Query("api_token") String apiToken);
+
+    @GET(API.ENROLLMENT_DATE)
+    Call<Enrollment> getEnrollmentDate();
+
+    @GET(API.METHOD_PAYMENTS)
+    Call<List<MethodPayment>> getMethodPayments();
+
+    @FormUrlEncoded
+    @PUT(API.CHANGE_PASSWORD)
+    @Headers("Accept: application/json")
+    Call<List<User>> changePassword(@Field("new_password") String newPassword, @Field("email") String email, @Query("api_token") String apiToken);
+
+    @FormUrlEncoded
+    @PUT(API.RESET_PASSWORD)
+    Call<ResponseBody> resetPassword(@Field("email") String email);
+
+    @POST(API.RESERVES)
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Call<Reservation> reserveRoom(@Path("id") int id, @Query("api_token") String apiToken, @Body Reservation reservation);
+
+    @GET(API.RESERVES_LIST)
+    Call<List<Reservation>> getReservations(@Query("api_token") String apiToken);
+
 }

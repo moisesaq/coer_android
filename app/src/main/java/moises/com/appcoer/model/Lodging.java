@@ -5,20 +5,18 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Lodging extends BaseResponse implements Serializable{
-    @SerializedName("title")
+public class Lodging implements Serializable{
+    private int id;
     private String title;
-    @SerializedName("info")
+    private String content;
     private String info;
     private String warning;
     @SerializedName("tarifa")
     private String rate;
     @SerializedName("tarifa_desde")
     private String rateFrom;
-    @SerializedName("updated_at")
-    private String updatedAt;
-    @SerializedName("created_at")
-    private String createdAt;
+    private String image;
+
 
     public String getInfo() {
         return info;
@@ -52,30 +50,36 @@ public class Lodging extends BaseResponse implements Serializable{
         this.rateFrom = rateFrom;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    @Override
     public String getTitle() {
         return title;
     }
 
-    @Override
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

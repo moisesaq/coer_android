@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import moises.com.appcoer.model.base.BaseResponse;
+
 public class Course extends BaseResponse implements Serializable{
     @SerializedName("afiche")
     private String poster;

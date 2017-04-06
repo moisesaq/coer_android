@@ -47,6 +47,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void recoverSession(){
+        //showLoginActivity();
         if(Session.getInstance().getUser() != null){
             showMainActivity();
         }else {

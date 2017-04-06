@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:padding="@dimen/padding_medium_global"
+    android:background="@drawable/background_transparent">
+
+    <TextView
+        android:id="@+id/tv_state"
+        style="@style/TextViewSmall"
+        android:maxLines="1"
+        android:text="Reservado"
+        android:layout_gravity="right"/>
+
+    <TextView
+        android:id="@+id/tv_lodging"
+        style="@style/TextViewMedium"
+        android:text="Alojamiento los timbues" />
+
+    <TextView
+        android:id="@+id/tv_room_description"
+        style="@style/TextViewSmall"
+        android:text="2 camas y medio" />
+
+    <TextView
+        android:id="@+id/tv_full_name"
+        style="@style/TextViewSmall"
+        android:text="Moises Apaza" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        style="@style/TextViewSmall"
+        android:text="homero@gmail.com" />
+
+</LinearLayout>

@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CourseList extends BaseList{
+import moises.com.appcoer.model.base.BaseList;
+
+public class CourseList extends BaseList {
     @SerializedName("data")
     private List<Course> courses;
 
