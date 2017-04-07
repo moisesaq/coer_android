@@ -1,8 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     tools:context="moises.com.appcoer.ui.fragments.NewsListFragment"
     android:background="@android:color/white">
 
@@ -18,17 +18,67 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="mini"
-        android:src="@drawable/svg_plus"
-        android:id="@+id/floatingActionButton"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        android:visibility="gone"/>
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fam_reserve"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|end"
+        android:padding="@dimen/padding_medium_global"
+        fab:menu_animationDelayPerItem="55"
+        fab:menu_backgroundColor="@color/blackTransparent"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_colorNormal="@color/colorAccent"
+        fab:menu_colorPressed="@color/colorPrimaryLight"
+        fab:menu_colorRipple="@color/divider"
+        fab:menu_fab_label=""
+        fab:menu_fab_size="normal"
+        fab:menu_icon="@drawable/svg_plus"
+        fab:menu_labels_colorNormal="@android:color/transparent"
+        fab:menu_labels_colorPressed="@color/colorPrimaryLight"
+        fab:menu_labels_colorRipple="@color/colorPrimaryLight"
+        fab:menu_labels_cornerRadius="3dp"
+        fab:menu_labels_ellipsize="none"
+        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        fab:menu_labels_margin="0dp"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_padding="2dp"
+        fab:menu_labels_position="left"
+        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="true"
+        fab:menu_labels_textColor="@android:color/white"
+        fab:menu_labels_textSize="15sp"
+        fab:menu_openDirection="up"
+        fab:menu_shadowColor="@color/divider"
+        fab:menu_shadowRadius="4dp"
+        fab:menu_shadowXOffset="1dp"
+        fab:menu_shadowYOffset="0dp"
+        fab:menu_showShadow="true"
+        android:visibility="invisible">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_reserve_timbues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/svg_hotel"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorPrimaryLight"
+            fab:fab_colorRipple="@android:color/darker_gray"
+            fab:fab_label="@string/reserve_timbues"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_reserve_parana"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/svg_hotel"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorPrimaryLight"
+            fab:fab_colorRipple="@android:color/darker_gray"
+            fab:fab_label="@string/reserve_parana"
+            fab:fab_size="mini" />
+    </com.github.clans.fab.FloatingActionMenu>
 
 </FrameLayout>

@@ -42,6 +42,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
             view = inflater.inflate(R.layout.fragment_menu, container, false);
             setupView(view);
         }
+        setTitle(getString(R.string.app_name));
         return view;
     }
 
@@ -52,10 +53,10 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
         mNews.setOnClickListener(this);
         LinearLayout mCourses = (LinearLayout)view.findViewById(R.id.ly_courses);
         mCourses.setOnClickListener(this);
-        LinearLayout mLodging = (LinearLayout)view.findViewById(R.id.ly_lodging_house);
-        mLodging.setOnClickListener(this);
-        LinearLayout mTimbue = (LinearLayout)view.findViewById(R.id.ly_timbue);
-        mTimbue.setOnClickListener(this);
+        LinearLayout mTimbues = (LinearLayout)view.findViewById(R.id.ly_timbues);
+        mTimbues.setOnClickListener(this);
+        LinearLayout mParana = (LinearLayout)view.findViewById(R.id.ly_parana);
+        mParana.setOnClickListener(this);
         LinearLayout mPayment = (LinearLayout)view.findViewById(R.id.ly_method_payment);
         mPayment.setOnClickListener(this);
     }
@@ -75,10 +76,10 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
             case R.id.ly_courses:
                 mCallback.onCoursesClick();
                 break;
-            case R.id.ly_lodging_house:
+            case R.id.ly_timbues:
                 mCallback.onLodgingClick(1);
                 break;
-            case R.id.ly_timbue:
+            case R.id.ly_parana:
                 mCallback.onLodgingClick(2);
                 break;
             case R.id.ly_method_payment:

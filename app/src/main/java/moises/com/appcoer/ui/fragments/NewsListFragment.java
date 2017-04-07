@@ -46,6 +46,7 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             setupView();
         }
+        setTitle(getString(R.string.nav_news));
         return view;
     }
 
@@ -67,14 +68,18 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
         newsListCall.enqueue(new Callback<NewsList>() {
             @Override
             public void onResponse(Call<NewsList> call, Response<NewsList> response) {
-                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                mLoadingView.hideLoading("", mRecyclerView);
-                mNewsListAdapter.addItems(response.body().getNews());
+                if(response.isSuccessful() && response.body() != null && response.body().getNews() != null && response.body().getNews().size() > 0){
+                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
+                    mLoadingView.hideLoading("", mRecyclerView);
+                    mNewsListAdapter.addItems(response.body().getNews());
+                }else{
+                    mLoadingView.hideLoading(getString(R.string.message_withot_news), mRecyclerView);
+                }
             }
 
             @Override
             public void onFailure(Call<NewsList> call, Throwable t) {
-                Log.d(TAG, " FAILED >>> " + t.toString());
+                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
     }

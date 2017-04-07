@@ -34,9 +34,9 @@ import retrofit2.Response;
 public class ReserveRoomFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener,
                                                                         DateDialog.OnDateDialogListener, AmountPeopleDialog.OnAmountPeopleDialogListener {
     private static final String TAG = ReserveRoomFragment.class.getSimpleName();
-    private static final String ARG_PARAM1 = "lodging";
+    private static final String ARG_PARAM1 = "idLodging";
 
-    private Lodging mLodging;
+    private int idLodging;
 
     private Spinner spinnerRooms;
     private SpinnerRoomsAdapter mSpinnerRoomsAdapter;
@@ -47,10 +47,10 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     public ReserveRoomFragment() {
     }
 
-    public static ReserveRoomFragment newInstance(Lodging lodging) {
+    public static ReserveRoomFragment newInstance(int idLodging) {
         ReserveRoomFragment fragment = new ReserveRoomFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, lodging);
+        args.putInt(ARG_PARAM1, idLodging);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,9 +58,8 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mLodging = (Lodging) getArguments().getSerializable(ARG_PARAM1);
-        }
+        if (getArguments() != null)
+            idLodging = getArguments().getInt(ARG_PARAM1);
         dateList = new ArrayList<>();
     }
 
@@ -105,7 +104,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     private void getRooms(){
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         //String urlLodging = String.format("%s%s%s%s", API.LODGINGS, "/", mLodging.getId(), API.ROOM_LIST);
-        Call<List<Room>> listCall = apiClient.getRoomList(mLodging.getId(), Session.getInstance().getUser().getApiToken());
+        Call<List<Room>> listCall = apiClient.getRoomList(idLodging, Session.getInstance().getUser().getApiToken());
         listCall.enqueue(new Callback<List<Room>>() {
             @Override
             public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {

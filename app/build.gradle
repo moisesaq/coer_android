@@ -47,5 +47,6 @@ dependencies {
     /*CIRCLE IMAGE VIEW*/
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 
-    compile 'com.github.dimorinny:floating-text-button:0.0.2'
+    /*FLOATING BUTTON WITH MENU*/
+    compile 'com.github.clans:fab:1.6.4'
 }

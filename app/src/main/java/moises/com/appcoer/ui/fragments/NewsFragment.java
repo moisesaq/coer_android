@@ -31,7 +31,6 @@ public class NewsFragment extends Fragment {
     private TextView mContent;
 
     public NewsFragment() {
-        // Required empty public constructor
     }
 
     public static NewsFragment newInstance(News news) {

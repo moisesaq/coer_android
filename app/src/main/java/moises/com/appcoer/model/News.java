@@ -14,6 +14,8 @@ public class News extends BaseResponse implements Serializable{
     private int mPublic;
     @SerializedName("destacado")
     private int outstanding;
+    @SerializedName("archivo")
+    private String file;
 
     public int getIdUser() {
         return idUser;
@@ -37,6 +39,14 @@ public class News extends BaseResponse implements Serializable{
 
     public void setOutstanding(int outstanding) {
         this.outstanding = outstanding;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 
     @Override

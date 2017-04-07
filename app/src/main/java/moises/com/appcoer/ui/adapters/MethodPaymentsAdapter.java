@@ -2,12 +2,14 @@ package moises.com.appcoer.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -39,7 +41,10 @@ public class MethodPaymentsAdapter extends RecyclerView.Adapter<MethodPaymentsAd
                 .error(R.drawable.example_course)
                 .into(holder.mImage);
         holder.mTitle.setText(methodPayment.getTitle().trim());
-        holder.mContent.setText(methodPayment.getContent().replace("\n", " ").replace("\r", "").replace("&nbsp;",""));
+        if(!methodPayment.getContent().isEmpty()){
+            holder.mContent.setVisibility(View.VISIBLE);
+            holder.mContent.setText(Html.fromHtml(methodPayment.getContent()));
+        }
     }
 
     @Override
@@ -59,7 +64,7 @@ public class MethodPaymentsAdapter extends RecyclerView.Adapter<MethodPaymentsAd
         TextView mTitle, mContent;
         public CourseViewHolder(View view) {
             super(view);
-            mImage = (ImageView)view.findViewById(R.id.iv_method_payment);
+            mImage = (ImageView) view.findViewById(R.id.riv_method_payment);
             mTitle = (TextView)view.findViewById(R.id.tv_title);
             mContent = (TextView)view.findViewById(R.id.tv_content);
         }

@@ -44,6 +44,7 @@ public class MethodPaymentsFragment extends BaseFragment{
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             setupView();
         }
+        setTitle(getString(R.string.nav_method_payments));
         return view;
     }
 
@@ -67,13 +68,13 @@ public class MethodPaymentsFragment extends BaseFragment{
                     mLoadingView.hideLoading("", mRecyclerView);
                     mMethodPaymentsAdapter.addItems(response.body());
                 }else{
-                    mLoadingView.hideLoading("There aren't any method payments", mRecyclerView);
+                    mLoadingView.hideLoading(getString(R.string.message_withot_method_payments), mRecyclerView);
                 }
             }
 
             @Override
             public void onFailure(Call<List<MethodPayment>> call, Throwable t) {
-                mLoadingView.hideLoading("Error", mRecyclerView);
+                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
     }

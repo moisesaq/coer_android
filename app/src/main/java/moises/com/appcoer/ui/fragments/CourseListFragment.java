@@ -48,6 +48,7 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             setupView();
         }
+        setTitle(getString(R.string.nav_courses));
         return view;
     }
 
@@ -68,14 +69,18 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
         courseListCall.enqueue(new Callback<CourseList>() {
             @Override
             public void onResponse(Call<CourseList> call, Response<CourseList> response) {
-                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                mCourseListAdapter.addItems(response.body().getCourses());
-                mLoadingView.hideLoading("", mRecyclerView);
+                if(response.isSuccessful() && response.body() != null && response.body().getCourses() != null && response.body().getCourses().size() > 0){
+                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
+                    mLoadingView.hideLoading("", mRecyclerView);
+                    mCourseListAdapter.addItems(response.body().getCourses());
+                }else{
+                    mLoadingView.hideLoading(getString(R.string.message_without_courses), mRecyclerView);
+                }
             }
 
             @Override
             public void onFailure(Call<CourseList> call, Throwable t) {
-                Log.d(TAG, " FAILED >>> " + t.toString());
+                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
     }

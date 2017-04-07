@@ -1,9 +1,9 @@
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:moi="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <FrameLayout
@@ -24,67 +24,119 @@
             android:orientation="vertical"
             android:visibility="invisible">
 
-            <ImageView
-                android:id="@+id/iv_lodging"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/image_load" />
-
-            <ru.dimorinny.floatingtextbutton.FloatingTextButton
-                android:id="@+id/ftb_reserve"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                app:floating_background_color="@color/colorAccent"
-                app:floating_icon="@drawable/svg_hotel"
-                app:floating_title="@string/reserve"
-                app:floating_title_color="@android:color/white"/>
-
-            <LinearLayout
-                android:id="@+id/layout_description"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="24dp"
-                android:orientation="vertical"
-                android:paddingBottom="16dp">
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true">
 
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Example"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/iv_lodging"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/image_load" />
 
-                <TextView
-                    android:id="@+id/tv_rate"
-                    style="@style/TextViewSmall"
-                    android:text="Rate" />
+                    <LinearLayout
+                        android:id="@+id/ly_reserve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/background_button_accent"
+                        android:orientation="horizontal"
+                        android:layout_gravity="end|bottom">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/svg_hotel"/>
+                        <TextView
+                            style="@style/TextViewSmall"
+                            android:text="@string/reserve"
+                            android:textColor="@android:color/white"
+                            android:padding="@dimen/padding_min_global"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_rate_from"
-                    style="@style/TextViewSmall"
-                    android:text="Rate from" />
+                </FrameLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_medium_global">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        style="@style/TextViewMedium"
+                        android:text="Example" />
+
+                    <TextView
+                        android:id="@+id/tv_rate"
+                        style="@style/TextViewSmall"
+                        android:text="Rate" />
+
+                    <TextView
+                        android:id="@+id/tv_rate_from"
+                        style="@style/TextViewSmall"
+                        android:text="Rate from" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true">
 
                 <TextView
                     android:id="@+id/tv_content"
                     style="@style/TextViewSmall"
-                    android:text="Large user information, to explain user skills and more that's interesting for other users" />
+                    android:text="Large user information, to explain user skills and more that's interesting for other users"
+                    android:padding="@dimen/padding_medium_global"/>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true">
 
                 <TextView
                     android:id="@+id/tv_info"
                     style="@style/TextViewSmall"
-                    android:text="Large user information, to explain user skills and more that's interesting for other users" />
+                    android:text="Large user information, to explain user skills and more that's interesting for other users"
+                    android:padding="@dimen/padding_medium_global"/>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true">
 
                 <TextView
                     android:id="@+id/tv_warning"
                     style="@style/TextViewSmall"
-                    android:text="Warning" />
+                    android:text="Warning"
+                    android:padding="@dimen/padding_medium_global"/>
 
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 

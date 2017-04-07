@@ -23,7 +23,6 @@ import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
 public class IntroduceLodgingFragment extends BaseFragment{
     private static final String TAG = IntroduceLodgingFragment.class.getSimpleName();
@@ -36,7 +35,6 @@ public class IntroduceLodgingFragment extends BaseFragment{
     private LoadingView mLoadingView;
     private ImageView mImage;
     private TextView mTitle, mRate, mRateFrom, mContent, mInfo, mWarning;
-    private FloatingTextButton mFloatingTextButton;
 
     public IntroduceLodgingFragment() {
         // Required empty public constructor
@@ -63,6 +61,7 @@ public class IntroduceLodgingFragment extends BaseFragment{
             view = inflater.inflate(R.layout.fragment_introduce_lodging, container, false);
             setupView(view);
         }
+        setTitle(getString(R.string.app_name));
         return view;
     }
 
@@ -76,11 +75,11 @@ public class IntroduceLodgingFragment extends BaseFragment{
         mContent = (TextView)view.findViewById(R.id.tv_content);
         mInfo = (TextView)view.findViewById(R.id.tv_info);
         mWarning = (TextView)view.findViewById(R.id.tv_warning);
-        mFloatingTextButton = (FloatingTextButton)view.findViewById(R.id.ftb_reserve);
-        mFloatingTextButton.setOnClickListener(new View.OnClickListener() {
+        LinearLayout mReserve = (LinearLayout) view.findViewById(R.id.ly_reserve);
+        mReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            replaceFragment(ReserveRoomFragment.newInstance(mLodging), true);
+                replaceFragment(ReserveRoomFragment.newInstance(mLodging.getId()), true);
             }
         });
         getDescriptionLodging();
@@ -116,6 +115,7 @@ public class IntroduceLodgingFragment extends BaseFragment{
             mLoadingView.hideLoading("Error", mContentDetail);
             return;
         }
+
         Picasso.with(getContext())
                 .load(mLodging.getImage())
                 .placeholder(R.mipmap.image_load)
@@ -123,8 +123,8 @@ public class IntroduceLodgingFragment extends BaseFragment{
                 .into(mImage);
         mLoadingView.hideLoading("", mContentDetail);
         mTitle.setText(mLodging.getTitle());
-        //CharSequence text = Html.fromHtml(mLodging.getRate());
-        mRate.setText(mLodging.getRate());
+        CharSequence text = Html.fromHtml(mLodging.getRate());
+        mRate.setText(text);
         mRateFrom.setText((mLodging.getRateFrom()));
         mContent.setText((mLodging.getContent()));
         mInfo.setText(mLodging.getInfo());

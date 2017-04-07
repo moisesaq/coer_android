@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -69,21 +70,23 @@ public class CourseFragment extends Fragment {
         TextView mDate = (TextView)view.findViewById(R.id.tv_date);
         mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(course.getDate(), Utils.DATE_FORMAT_INPUT)));
         TextView mCost = (TextView)view.findViewById(R.id.tv_cost);
-        mCost.setText(course.getCost().equals("0") ? "Costo: Gratis": "Costo: " + course.getCost());
+        mCost.setText(String.format("%s%s", "$ ",course.getCost()));
 
-        /*TextView mDiscount = (TextView)view.findViewById(R.id.tv_discount);
-        if(course.getDiscount().equals("")){
-            mDiscount.setText(String.format("%s %s ", "Descuento: ", course.getDiscount()));
-        }else {
-            mDiscount.setVisibility(View.GONE);
+        LinearLayout lyDiscount = (LinearLayout)view.findViewById(R.id.ly_discount);
+        TextView mDiscount = (TextView)view.findViewById(R.id.tv_discount);
+        if(course.getDiscount() != null || course.getDiscountToDate() != null)
+            lyDiscount.setVisibility(View.VISIBLE);
+
+        if(course.getDiscount() != null && !course.getDiscount().isEmpty()){
+            mDiscount.setVisibility(View.VISIBLE);
+            mDiscount.setText(course.getDiscount());
         }
 
         TextView mDiscountToDate = (TextView)view.findViewById(R.id.tv_discount_to_date);
-        if(course.getDiscount().equals("")){
+        if(course.getDiscountToDate() != null && !course.getDiscountToDate().isEmpty()){
+            mDiscountToDate.setVisibility(View.VISIBLE);
             mDiscountToDate.setText(course.getDiscountToDate());
-        }else {
-            mDiscountToDate.setVisibility(View.GONE);
-        }*/
+        }
 
         mContent = (TextView)view.findViewById(R.id.tv_content);
         mContent.setText(course.getContent());
@@ -97,9 +100,11 @@ public class CourseFragment extends Fragment {
         courseCall.enqueue(new Callback<Course>() {
             @Override
             public void onResponse(Call<Course> call, Response<Course> response) {
-                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                CharSequence content = Html.fromHtml(response.body().getContent());
-                mContent.setText(content);
+                if(response.isSuccessful()){
+                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
+                    CharSequence content = Html.fromHtml(response.body().getContent());
+                    mContent.setText(content);
+                }
             }
 
             @Override

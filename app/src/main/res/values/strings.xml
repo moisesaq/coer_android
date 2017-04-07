@@ -68,8 +68,17 @@
     <string name="title_reset_password">Reset password</string>
     <string name="message_reset_password_successful" >Password reset and sent to your email</string>
     <string name="message_reset_password_failed">Your password could not be restored</string>
-    <string name="message_something_went_wrong">Sorry for the inconvenience, something went wrong</string>
+    <string name="message_something_went_wrong">Error, something went wrong</string>
     <string name="message_reservation_failed">Reservation failed, please try again later</string>
     <string name="message_reservation_successful">Successful booking</string>
     <string name="message_withot_reservation">You don\'t have any reservations</string>
+    <string name="last_news">Last news</string>
+    <string name="loading_timbues">Accommodation Complex Colón \"Los Timbues\"</string>
+    <string name="lodging_panana">Accommodation Sede COER Paraná.</string>
+    <string name="message_without_courses">No course found</string>
+    <string name="message_withot_news">No news found</string>
+    <string name="cost">Cost:</string>
+    <string name="reserve_timbues">Reserve in timbues</string>
+    <string name="reserve_parana">Reserve in paraná</string>
+    <string name="message_withot_method_payments">No method payment found</string>
 </resources>
