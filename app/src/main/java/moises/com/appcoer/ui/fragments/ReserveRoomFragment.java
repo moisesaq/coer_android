@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -32,13 +33,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReserveRoomFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener,
-                                                                        DateDialog.OnDateDialogListener, AmountPeopleDialog.OnAmountPeopleDialogListener {
+                                                                        DateDialog.OnDateDialogListener, AmountPeopleDialog.OnAmountPeopleDialogListener,
+                                                                                InputTextView.Callback{
     private static final String TAG = ReserveRoomFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "idLodging";
 
     private int idLodging;
 
     private Spinner spinnerRooms;
+    private ProgressBar mProgressBar;
     private SpinnerRoomsAdapter mSpinnerRoomsAdapter;
     private InputTextView mDates, mName, mLastName, mEmail, mPhone, mAmountPeople, mAdditionalInformation;
     private Room mRoom;
@@ -74,19 +77,22 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         setTitle(getString(R.string.title_reserve_room));
         spinnerRooms = (Spinner)view.findViewById(R.id.spinner_rooms);
         spinnerRooms.setOnItemSelectedListener(this);
+        mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         List<Room> list = new ArrayList<>();
         list.add(getDefaultRoom());
         mSpinnerRoomsAdapter = new SpinnerRoomsAdapter(getContext(), list);
         spinnerRooms.setAdapter(mSpinnerRoomsAdapter);
 
         mDates = (InputTextView)view.findViewById(R.id.itv_dates);
-        mDates.setOnClickListener(this);
+        mDates.setEnabled(false);
+        mDates.addCallback(this);
         mName = (InputTextView)view.findViewById(R.id.itv_name);
         mLastName = (InputTextView)view.findViewById(R.id.itv_last_name);
         mEmail = (InputTextView)view.findViewById(R.id.itv_email);
         mPhone = (InputTextView)view.findViewById(R.id.itv_phone);
         mAmountPeople = (InputTextView)view.findViewById(R.id.itv_amount_people);
-        mAmountPeople.setOnClickListener(this);
+        mAmountPeople.setEnabled(false);
+        mAmountPeople.addCallback(this);
         mAdditionalInformation = (InputTextView)view.findViewById(R.id.itv_additional_information);
 
         Button mConfirm = (Button)view.findViewById(R.id.b_confirm);
@@ -102,8 +108,8 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void getRooms(){
+        mProgressBar.setVisibility(View.VISIBLE);
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        //String urlLodging = String.format("%s%s%s%s", API.LODGINGS, "/", mLodging.getId(), API.ROOM_LIST);
         Call<List<Room>> listCall = apiClient.getRoomList(idLodging, Session.getInstance().getUser().getApiToken());
         listCall.enqueue(new Callback<List<Room>>() {
             @Override
@@ -111,21 +117,22 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
                 Log.d(TAG, " Success >>>> " + response.body().toString());
                 if(response.body() != null && response.body().size() > 0){
                     mSpinnerRoomsAdapter.addAll(response.body());
-
                 }else {
                     Log.d(TAG, " >>>> Error");
                 }
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Room>> call, Throwable t) {
                 Log.d(TAG, "Error ?>>> " + t.toString());
+                mProgressBar.setVisibility(View.GONE);
             }
         });
     }
 
     @Override
-    public void onClick(View view) {
+    public void onActionIconClick(View view) {
         switch (view.getId()){
             case R.id.itv_dates:
                 new DateDialog(this).show(getFragmentManager(), DateDialog.TAG);
@@ -133,6 +140,12 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
             case R.id.itv_amount_people:
                 AmountPeopleDialog.newInstance(1, 4, this).show(getFragmentManager(), AmountPeopleDialog.TAG);
                 break;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
             case R.id.b_confirm:
                 if(mDates.isTextValid() && mName.isTextValid() && mLastName.isTextValid()
                             && mEmail.isEmailValid() && mPhone.isPhoneValid() && mAmountPeople.isTextValid() && mAdditionalInformation.isTextValid()){

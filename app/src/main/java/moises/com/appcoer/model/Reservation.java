@@ -26,6 +26,8 @@ public class Reservation implements Serializable{
     private String detail;
     @SerializedName("motivo")
     private String reason;
+    @SerializedName("fecha")
+    private String date;
     @SerializedName("estado")
     private String state;
     @SerializedName("pagado")
@@ -45,9 +47,9 @@ public class Reservation implements Serializable{
     @SerializedName("alojamiento")
     private String lodging;
 
-    /*@SerializedName("fechas")
+    @SerializedName("fechas")
     @Nullable
-    private List<String> dates;*/
+    private List<String> dates;
 
     public int getMp() {
         return mp;
@@ -129,14 +131,14 @@ public class Reservation implements Serializable{
         this.id = id;
     }
 
-    /*@Nullable
+    @Nullable
     public List<String> getDates() {
         return dates;
     }
 
     public void setDates(@Nullable List<String> dates) {
         this.dates = dates;
-    }*/
+    }
 
     public int getAmountPeople() {
         return amountPeople;
@@ -208,6 +210,14 @@ public class Reservation implements Serializable{
 
     public void setLodging(String lodging) {
         this.lodging = lodging;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override

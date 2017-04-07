@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -24,9 +25,11 @@ import moises.com.appcoer.tools.OnTextChangeListener;
 
 public class InputTextView extends LinearLayout implements View.OnClickListener{
 
-    private ImageView icon;
+    private ImageView imageView;
     private TextInputLayout textInputLayout;
     private EditText editText;
+    private ImageButton imageButton;
+    private Callback mCallback;
 
     public InputTextView(Context context) {
         super(context);
@@ -42,7 +45,7 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
     private void setupView(){
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.view_input_text, this, true);
-        icon = (ImageView)findViewById(R.id.icon);
+        imageView = (ImageView)findViewById(R.id.imageView);
         textInputLayout = (TextInputLayout)findViewById(R.id.textInputLayout);
         textInputLayout.setErrorEnabled(true);
         editText = (EditText)findViewById(R.id.editText);
@@ -52,6 +55,8 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
                 textInputLayout.setError(null);
             }
         });
+        imageButton = (ImageButton)findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(this);
     }
 
     private void initialize(AttributeSet attrs){
@@ -81,6 +86,9 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
         String hint = typedArray.getString(R.styleable.InputTextView_hint);
         setHint(hint);
 
+        Drawable iconAction = typedArray.getDrawable(R.styleable.InputTextView_iconAction);
+        setImageIconAction(iconAction);
+
         typedArray.recycle();
     }
 
@@ -106,8 +114,15 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
 
     public void setImageIcon(Drawable imageIcon){
         if(imageIcon != null){
-            icon.setVisibility(View.VISIBLE);
-            icon.setImageDrawable(imageIcon);
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageDrawable(imageIcon);
+        }
+    }
+
+    public void setImageIconAction(Drawable imageIcon){
+        if(imageIcon != null){
+            imageButton.setVisibility(View.VISIBLE);
+            imageButton.setImageDrawable(imageIcon);
         }
     }
 
@@ -145,11 +160,11 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        /*switch (view.getId()){
+        switch (view.getId()){
             case R.id.imageButton:
-                //setVisibilityPassword();
+                if(mCallback != null) mCallback.onActionIconClick(this);
                 break;
-        }*/
+        }
     }
 
     public boolean isTextValid(){
@@ -224,6 +239,14 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
 
     public void setError(String error){
         textInputLayout.setError(error);
+    }
+
+    public void addCallback(Callback callback){
+        this.mCallback = callback;
+    }
+
+    public interface Callback{
+        void onActionIconClick(View view);
     }
 
     /*SAVE STATE OF THE VIEWS*/

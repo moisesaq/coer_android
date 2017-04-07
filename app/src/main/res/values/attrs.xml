@@ -29,6 +29,7 @@
 
     <declare-styleable name="InputTextView">
         <attr name="iconImage"/>
+        <attr name="iconAction" format="integer"/>
         <attr name="errorEnabled" format="boolean"/>
         <attr name="maxLengthEnabled" format="boolean"/>
         <attr name="maxLength" format="integer"/>

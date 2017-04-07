@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:moi="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context="moises.com.appcoer.ui.fragments.ChangePasswordFragment">
 
     <LinearLayout
@@ -11,17 +12,40 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_max_global">
 
-        <Spinner
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner_rooms" />
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="4dp"
+            card_view:cardUseCompatPadding="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner_rooms" />
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_margin="0dp"
+                    android:indeterminate="true"
+                    android:layout_gravity="bottom"
+                    android:foregroundGravity="bottom"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <moises.com.appcoer.ui.view.InputTextView
             android:id="@+id/itv_dates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            moi:iconImage="@drawable/svg_lock"
+            moi:iconImage="@drawable/svg_calendar"
             moi:hint="@string/dates"
+            moi:iconAction="@drawable/svg_pencil"
             android:inputType="text"/>
 
         <moises.com.appcoer.ui.view.InputTextView
@@ -43,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                moi:iconImage="@drawable/svg_lock"
+                moi:iconImage="@drawable/svg_account_circle_gray"
                 moi:hint="@string/name"
                 android:text="Moi"
                 android:inputType="textCapSentences"/>
@@ -69,31 +93,42 @@
             android:inputType="textEmailAddress"
             android:layout_marginTop="@dimen/margin_min_global"/>
 
-        <moises.com.appcoer.ui.view.InputTextView
-            android:id="@+id/itv_phone"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            moi:iconImage="@drawable/svg_email"
-            moi:hint="@string/phone"
-            android:text="12345"
-            android:inputType="phone"
-            android:layout_marginTop="@dimen/margin_min_global"/>
+            android:orientation="horizontal">
 
-        <moises.com.appcoer.ui.view.InputTextView
-            android:id="@+id/itv_amount_people"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            moi:iconImage="@drawable/svg_email"
-            moi:hint="@string/count_people"
-            android:text="2"
-            android:inputType="number"
-            android:layout_marginTop="@dimen/margin_min_global"/>
+            <moises.com.appcoer.ui.view.InputTextView
+                android:id="@+id/itv_phone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                moi:iconImage="@drawable/svg_phone"
+                moi:hint="@string/phone"
+                android:text="12345"
+                android:inputType="phone"
+                android:layout_marginTop="@dimen/margin_min_global"/>
+
+            <moises.com.appcoer.ui.view.InputTextView
+                android:id="@+id/itv_amount_people"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                moi:iconImage="@drawable/svg_account_multiple"
+                moi:hint="@string/count_people"
+                moi:iconAction="@drawable/svg_pencil"
+                android:text="2"
+                android:inputType="number"
+                android:layout_marginTop="@dimen/margin_min_global"/>
+
+        </LinearLayout>
+
 
         <moises.com.appcoer.ui.view.InputTextView
             android:id="@+id/itv_additional_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            moi:iconImage="@drawable/svg_email"
+            moi:iconImage="@drawable/svg_note_text"
             moi:hint="@string/additional_information"
             android:text="Test test test"
             android:inputType="textCapSentences"
