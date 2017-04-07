@@ -27,7 +27,7 @@
     <string name="message_logout">¿Estás seguro quieres salir?</string>
     <string name="today">Hoy</string>
     <string name="message_not_logged">Usuario no autorizado, tiene que loguearse para hacer la reserva</string>
-    <string name="select_room">Seleccionar habitación</string>
+    <string name="select_room">--- Seleccionar habitación ---</string>
     <string name="message_reset_password_successful">Contraseña reseteado y enviado a su email</string>
     <string name="message_reset_password_failed">No se pudo restaurar su contraseña</string>
     <string name="restore">Restablecer</string>

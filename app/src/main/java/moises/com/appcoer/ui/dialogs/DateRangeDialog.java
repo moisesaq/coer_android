@@ -1,5 +1,4 @@
 package moises.com.appcoer.ui.dialogs;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.widget.DatePicker;
+
+import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,17 +22,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DateDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+public class DateRangeDialog extends DatePickerDialog implements DatePickerDialog.OnDateSetListener{
 
-    public static final String TAG = DateDialog.class.getSimpleName();
-    private OnDateDialogListener onDateDialogListener;
+    public static final String TAG = DateRangeDialog.class.getSimpleName();
+    private OnDateRangeDialogListener mListener;
     private int idRoom;
 
-    public DateDialog(){}
+    public DateRangeDialog(){}
 
-    public static DateDialog newInstance(OnDateDialogListener listener, int idRoom){
-        DateDialog dateDialog = new DateDialog();
-        dateDialog.setOnDateDialogListener(listener);
+    public static DateRangeDialog newInstance(OnDateRangeDialogListener listener, int idRoom){
+        DateRangeDialog dateDialog = new DateRangeDialog();
+        dateDialog.setOnDateRangeDialogListener(listener);
         Bundle bundle = new Bundle();
         bundle.putInt("idRoom", idRoom);
         dateDialog.setArguments(bundle);
@@ -45,16 +46,26 @@ public class DateDialog extends DialogFragment implements DatePickerDialog.OnDat
             idRoom = getArguments().getInt("idRoom");
     }
 
-    @NonNull
+    /*@NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
+        super.onCreateDialog(savedInstanceState);
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.DialogTheme, this, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        return datePickerDialog;
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, year, month, day-1);
+        //datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        return datePickerDialog.getDialog();
+    }*/
+
+    @Override
+    public void initialize(OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
+        final Calendar c = Calendar.getInstance();
+        int year1 = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        super.initialize(callBack, year1, month, day-1);
     }
 
     @Override
@@ -85,7 +96,7 @@ public class DateDialog extends DialogFragment implements DatePickerDialog.OnDat
         });
     }
 
-    @Override
+    /*@Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
@@ -98,13 +109,18 @@ public class DateDialog extends DialogFragment implements DatePickerDialog.OnDat
 
         if(onDateDialogListener != null)
             onDateDialogListener.onDateSelected(Utils.getCustomizedDate(Utils.DATE_FORMAT_INPUT, date), date);
+    }*/
+
+    public void setOnDateRangeDialogListener(OnDateRangeDialogListener listener) {
+        this.mListener = listener;
     }
 
-    public void setOnDateDialogListener(OnDateDialogListener onDateDialogListener) {
-        this.onDateDialogListener = onDateDialogListener;
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
+
     }
 
-    public interface OnDateDialogListener{
-        void onDateSelected(String textDate, Date date);
+    public interface OnDateRangeDialogListener{
+        void onDateRangeSelected();
     }
 }

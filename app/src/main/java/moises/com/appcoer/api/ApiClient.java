@@ -71,4 +71,7 @@ public interface ApiClient {
     @GET(API.RESERVES_LIST)
     Call<List<Reservation>> getReservations(@Query("api_token") String apiToken);
 
+    @GET(API.ROOM_DATES_BUSY)
+    Call<List<String>> getRoomBusyDate(@Path("id") int idRoom, @Query("api_token") String apiToken);
+
 }

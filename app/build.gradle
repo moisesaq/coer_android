@@ -49,4 +49,6 @@ dependencies {
 
     /*FLOATING BUTTON WITH MENU*/
     compile 'com.github.clans:fab:1.6.4'
+
+    compile 'com.borax12.materialdaterangepicker:library:1.9'
 }

@@ -16,6 +16,7 @@ public interface API {
     String ROOMS = API + "/habitaciones";
     String ROOM_LIST = LODGINGS + "/{id}/habitaciones";
     String RESERVES = ROOMS + "/{id}/reservas";
+    String ROOM_DATES_BUSY = ROOMS + "/{id}/fechas";
     String RESERVES_LIST = USERS + "/reservas";
 
     String SITES = API + "/sites";

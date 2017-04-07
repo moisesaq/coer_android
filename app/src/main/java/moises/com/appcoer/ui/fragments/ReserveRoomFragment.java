@@ -27,6 +27,7 @@ import moises.com.appcoer.ui.adapters.SpinnerRoomsAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.dialogs.AmountPeopleDialog;
 import moises.com.appcoer.ui.dialogs.DateDialog;
+import moises.com.appcoer.ui.dialogs.DateRangeDialog;
 import moises.com.appcoer.ui.view.InputTextView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +35,7 @@ import retrofit2.Response;
 
 public class ReserveRoomFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener,
                                                                         DateDialog.OnDateDialogListener, AmountPeopleDialog.OnAmountPeopleDialogListener,
-                                                                                InputTextView.Callback{
+                                                                                InputTextView.Callback, DateRangeDialog.OnDateRangeDialogListener{
     private static final String TAG = ReserveRoomFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "idLodging";
 
@@ -102,7 +103,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
     private Room getDefaultRoom(){
         Room room = new Room();
-        room.setId(100);
+        room.setId(1010);
         room.setRoomText(getString(R.string.select_room));
         return room;
     }
@@ -135,7 +136,11 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     public void onActionIconClick(View view) {
         switch (view.getId()){
             case R.id.itv_dates:
-                new DateDialog(this).show(getFragmentManager(), DateDialog.TAG);
+                if(mRoom.getId() == 1010){
+                    Utils.showToastMessage(getString(R.string.select_room));
+                }else {
+                    DateRangeDialog.newInstance(this, mRoom.getId()).show(getActivity().getFragmentManager(), "ATGA");
+                }
                 break;
             case R.id.itv_amount_people:
                 AmountPeopleDialog.newInstance(1, 4, this).show(getFragmentManager(), AmountPeopleDialog.TAG);
@@ -156,8 +161,10 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void reserveRoom(final Reservation reservation){
-        if(mRoom == null || mRoom.getId() == 0)
+        if(mRoom == null || mRoom.getId() == 1010){
+            Utils.showToastMessage(getString(R.string.select_room));
             return;
+        }
         Log.d(TAG, " Reservation >>>> " + reservation.toString());
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         Call<Reservation> reservationCall = apiClient.reserveRoom(mRoom.getId(), Session.getInstance().getUser().getApiToken(), reservation);
@@ -175,13 +182,14 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
             @Override
             public void onFailure(Call<Reservation> call, Throwable t) {
+                Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
             }
         });
     }
 
     private Reservation createReservation(){
         Reservation reservation = new Reservation();
-        //reservation.setDates(dateList);
+        reservation.setDates(dateList);
         //reservation.setMp(Session.getInstance().getUser().getMp());
         reservation.setName(mName.getText());
         reservation.setLastName(mLastName.getText());
@@ -210,11 +218,19 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         mRoom = (Room) adapterView.getAdapter().getItem(i);
+        if(mRoom.getId() != 1010){
+            DateDialog.newInstance(this, mRoom.getId()).show(getFragmentManager(), DateDialog.TAG);
+        }
         Log.d(TAG, " >>>> ID ROOM >>> " + mRoom.getId());
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    @Override
+    public void onDateRangeSelected() {
+
     }
 
     public interface OnReserveRoomFragmentListener {
