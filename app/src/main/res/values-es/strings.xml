@@ -56,8 +56,8 @@
     <string name="message_something_went_wrong">Error, algo salio mal</string>
     <string name="message_reservation_failed">No se pudo completar la reservación, intentelo mas tarde por favor</string>
     <string name="message_reservation_successful">Reservación exitosa</string>
-    <string name="loading_timbues">Alojamiento Complejo Colón \"Los Timbues\".</string>
-    <string name="lodging_panana">Alojamiento Sede COER Paraná.</string>
+    <string name="loading_timbues">Alojamiento Complejo Colón \"Los Timbues\"</string>
+    <string name="lodging_panana">Alojamiento Sede COER Paraná</string>
     <string name="message_withot_news">No se encontró ninguna noticia</string>
     <string name="message_withot_reservation">No tienes ninguna reserva</string>
     <string name="message_without_courses">No se encontró ningun curso</string>
@@ -67,4 +67,7 @@
     <string name="message_withot_method_payments">No se ha encontrado ningún método de pago</string>
     <string name="reserve_parana">Reservar en paraná</string>
     <string name="reserve_timbues">Reservar en timbues</string>
+    <string name="updating_dates">Actualización de fechas...</string>
+    <string name="from_date">De fecha</string>
+    <string name="to_date">A fecha</string>
 </resources>

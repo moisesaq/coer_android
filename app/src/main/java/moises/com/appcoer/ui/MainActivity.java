@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_reserves) {
             showMyReservations();
         } else if (id == R.id.nav_news) {
-            showFragment(NewsListFragment.newInstance(), true);
+            showFragment(NewsListFragment.newInstance(false), true);
         } else if (id == R.id.nav_courses) {
             showFragment(CourseListFragment.newInstance(), true);
         } else if (id == R.id.nav_method_payments) {
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /*FRAGMENT MENU LISTENER*/
     @Override
     public void onNewsClick() {
-        showFragment(NewsListFragment.newInstance(), true);
+        showFragment(NewsListFragment.newInstance(true), true);
     }
 
     @Override

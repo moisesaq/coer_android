@@ -81,4 +81,14 @@
             fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_margin="0dp"
+        android:indeterminate="true"
+        android:layout_gravity="bottom"
+        android:foregroundGravity="bottom"
+        android:visibility="gone"/>
 </FrameLayout>

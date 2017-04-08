@@ -41,4 +41,9 @@ public class BaseFragment extends Fragment{
             mainActivity.showFragment(fragment, stack);
     }
 
+    protected void onBackPressed(){
+        if(mainActivity != null)
+            mainActivity.onBackPressed();
+    }
+
 }

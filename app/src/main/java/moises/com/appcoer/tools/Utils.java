@@ -21,7 +21,10 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import moises.com.appcoer.R;
@@ -52,24 +55,6 @@ public class Utils {
 
         return LANGUAGE_ENGLISH;
     }
-
-    private static Handler handler = new Handler();
-    private static Runnable runnable;
-
-    /*public static void startSleep(int second, final OnSleepListener listener){
-        handler.removeCallbacks(runnable);
-
-        if(listener != null)
-            listener.onStartSleep();
-
-        handler.postDelayed(runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (listener != null)
-                    listener.onEndSleep(true);
-            }
-        }, (second * 1000));
-    }*/
 
     public static void showToastMessage(String message){
         Toast.makeText(App.getContext(), message, Toast.LENGTH_SHORT).show();
@@ -171,5 +156,24 @@ public class Utils {
             InputMethodManager imm = (InputMethodManager)GlobalManager.getActivityGlobal().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public static Calendar toCalendar(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
+    public static List<Date> getDaysBetweenDates(Date startDate, Date endDate) {
+        List<Date> dates = new ArrayList<>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startDate);
+
+        while (calendar.getTime().before(endDate)) {
+            Date result = calendar.getTime();
+            dates.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+        return dates;
     }
 }

@@ -1,11 +1,13 @@
 package moises.com.appcoer.ui.fragments;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -25,19 +27,32 @@ import retrofit2.Response;
 
 public class NewsListFragment extends BaseFragment implements NewsListAdapter.CallBack{
 
+    private static final String ARG_PARAM1 = "outstanding";
     private static final String TAG = NewsListFragment.class.getSimpleName();
 
     private View view;
     private RecyclerView mRecyclerView;
     private LoadingView mLoadingView;
+    private ProgressBar mProgressBar;
     private NewsListAdapter mNewsListAdapter;
+    private boolean outstanding;
 
     public NewsListFragment() {
-        // Required empty public constructor
     }
 
-    public static NewsListFragment newInstance() {
-        return new NewsListFragment();
+    public static NewsListFragment newInstance(boolean outstanding) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ARG_PARAM1, outstanding);
+        NewsListFragment newsListFragment =  new NewsListFragment();
+        newsListFragment.setArguments(bundle);
+        return newsListFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null)
+            outstanding = getArguments().getBoolean(ARG_PARAM1);
     }
 
     @Override
@@ -52,9 +67,18 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
 
     private void setupView(){
         mLoadingView = (LoadingView)view.findViewById(R.id.loading_view);
+        mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        /*mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                progressBar.setVisibility(View.VISIBLE);
+                getContactList(currentPage);
+            }
+        });*/
+
         mNewsListAdapter = new NewsListAdapter(getContext(), new ArrayList<News>(), this);
         mRecyclerView.setAdapter(mNewsListAdapter);
         mLoadingView.showLoading(mRecyclerView);

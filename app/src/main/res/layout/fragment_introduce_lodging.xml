@@ -35,6 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/iv_lodging"
                         android:layout_width="match_parent"
@@ -43,24 +44,13 @@
                         android:scaleType="centerCrop"
                         android:src="@mipmap/image_load" />
 
-                    <LinearLayout
-                        android:id="@+id/ly_reserve"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:background="@drawable/background_button_accent"
-                        android:orientation="horizontal"
-                        android:layout_gravity="end|bottom">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/svg_hotel"/>
-                        <TextView
-                            style="@style/TextViewSmall"
-                            android:text="@string/reserve"
-                            android:textColor="@android:color/white"
-                            android:padding="@dimen/padding_min_global"/>
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/b_reserve"
+                        android:text="@string/reserve"
+                        android:layout_height="36dp"
+                        android:drawableLeft="@drawable/svg_hotel"
+                        style="@style/ButtonReserve"
+                        android:layout_gravity="bottom|end"/>
 
                 </FrameLayout>
             </android.support.v7.widget.CardView>

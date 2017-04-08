@@ -1,5 +1,6 @@
 package moises.com.appcoer.ui.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,44 +10,44 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.API;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
-import moises.com.appcoer.model.Lodging;
 import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.adapters.SpinnerRoomsAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.dialogs.AmountPeopleDialog;
-import moises.com.appcoer.ui.dialogs.DateDialog;
-import moises.com.appcoer.ui.dialogs.DateRangeDialog;
+import moises.com.appcoer.ui.dialogs.DateCustomDialog;
 import moises.com.appcoer.ui.view.InputTextView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReserveRoomFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener,
-                                                                        DateDialog.OnDateDialogListener, AmountPeopleDialog.OnAmountPeopleDialogListener,
-                                                                                InputTextView.Callback, DateRangeDialog.OnDateRangeDialogListener{
+                                                                        AmountPeopleDialog.OnAmountPeopleDialogListener,
+                                                                                InputTextView.Callback, DateCustomDialog.OnDateCustomDialogListener{
     private static final String TAG = ReserveRoomFragment.class.getSimpleName();
+    private static final int ID_ROOM_DEFAULT = 1010;
     private static final String ARG_PARAM1 = "idLodging";
 
     private int idLodging;
-
-    private Spinner spinnerRooms;
     private ProgressBar mProgressBar;
     private SpinnerRoomsAdapter mSpinnerRoomsAdapter;
-    private InputTextView mDates, mName, mLastName, mEmail, mPhone, mAmountPeople, mAdditionalInformation;
+    private InputTextView mFromDate, mToDate, mName, mLastName, mEmail, mPhone, mAmountPeople, mAdditionalInformation;
     private Room mRoom;
-    private List<String> dateList;
+    private List<String> dateListForReserve;
+    private String[] textDatesNotAvailable;
+    private List<Date> dateListNotAvailable;
+    private Date fromDate, toDate;
 
     public ReserveRoomFragment() {
     }
@@ -64,7 +65,6 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
             idLodging = getArguments().getInt(ARG_PARAM1);
-        dateList = new ArrayList<>();
     }
 
     @Override
@@ -76,7 +76,10 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
     private void setupView(View view){
         setTitle(getString(R.string.title_reserve_room));
-        spinnerRooms = (Spinner)view.findViewById(R.id.spinner_rooms);
+        TextView mTitleLodging = (TextView)view.findViewById(R.id.tv_title_lodging);
+        if(idLodging == 2)
+            mTitleLodging.setText(getString(R.string.lodging_panana));
+        Spinner spinnerRooms = (Spinner)view.findViewById(R.id.spinner_rooms);
         spinnerRooms.setOnItemSelectedListener(this);
         mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         List<Room> list = new ArrayList<>();
@@ -84,9 +87,12 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         mSpinnerRoomsAdapter = new SpinnerRoomsAdapter(getContext(), list);
         spinnerRooms.setAdapter(mSpinnerRoomsAdapter);
 
-        mDates = (InputTextView)view.findViewById(R.id.itv_dates);
-        mDates.setEnabled(false);
-        mDates.addCallback(this);
+        mFromDate = (InputTextView)view.findViewById(R.id.itv_from_date);
+        mFromDate.setEnabled(false);
+        mFromDate.addCallback(this);
+        mToDate = (InputTextView)view.findViewById(R.id.itv_to_date);
+        mToDate.setEnabled(false);
+        mToDate.addCallback(this);
         mName = (InputTextView)view.findViewById(R.id.itv_name);
         mLastName = (InputTextView)view.findViewById(R.id.itv_last_name);
         mEmail = (InputTextView)view.findViewById(R.id.itv_email);
@@ -103,7 +109,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
     private Room getDefaultRoom(){
         Room room = new Room();
-        room.setId(1010);
+        room.setId(ID_ROOM_DEFAULT);
         room.setRoomText(getString(R.string.select_room));
         return room;
     }
@@ -135,12 +141,11 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onActionIconClick(View view) {
         switch (view.getId()){
-            case R.id.itv_dates:
-                if(mRoom.getId() == 1010){
-                    Utils.showToastMessage(getString(R.string.select_room));
-                }else {
-                    DateRangeDialog.newInstance(this, mRoom.getId()).show(getActivity().getFragmentManager(), "ATGA");
-                }
+            case R.id.itv_from_date:
+                showDateDialog(DateCustomDialog.ReserveDate.FROM_DATE);
+                break;
+            case R.id.itv_to_date:
+                showDateDialog(DateCustomDialog.ReserveDate.TO_DATE);
                 break;
             case R.id.itv_amount_people:
                 AmountPeopleDialog.newInstance(1, 4, this).show(getFragmentManager(), AmountPeopleDialog.TAG);
@@ -148,11 +153,19 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         }
     }
 
+    private void showDateDialog(DateCustomDialog.ReserveDate reserveDate){
+        if(mRoom.getId() != ID_ROOM_DEFAULT && textDatesNotAvailable != null){
+            DateCustomDialog.newInstance(this, reserveDate, textDatesNotAvailable).show(getActivity().getFragmentManager(), DateCustomDialog.TAG);
+        }else {
+            Utils.showToastMessage(getString(R.string.select_room));
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.b_confirm:
-                if(mDates.isTextValid() && mName.isTextValid() && mLastName.isTextValid()
+                if(mFromDate.isTextValid() && mToDate.isTextValid() && mName.isTextValid() && mLastName.isTextValid()
                             && mEmail.isEmailValid() && mPhone.isPhoneValid() && mAmountPeople.isTextValid() && mAdditionalInformation.isTextValid()){
                     reserveRoom(createReservation());
                 }
@@ -174,7 +187,12 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
                 Log.d(TAG, " Success >>>> " + response.message() + "code " +response.code());
                 if(response.isSuccessful()){
                     Log.d(TAG, " Success >>>> " + response.body().toString());
-                    Utils.showDialogMessage("", getString(R.string.message_reservation_successful), null);
+                    Utils.showDialogMessage("", getString(R.string.message_reservation_successful), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            onBackPressed();
+                        }
+                    });
                 }else {
                     Utils.showDialogMessage("", getString(R.string.message_reservation_failed), null);
                 }
@@ -189,7 +207,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
     private Reservation createReservation(){
         Reservation reservation = new Reservation();
-        reservation.setDates(dateList);
+        reservation.setDates(dateListForReserve);
         //reservation.setMp(Session.getInstance().getUser().getMp());
         reservation.setName(mName.getText());
         reservation.setLastName(mLastName.getText());
@@ -201,13 +219,34 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
-    public void onDateSelected(String textDate, Date date) {
-        if(mDates.getText().isEmpty()){
-            mDates.setText(textDate);
+    public void onDateSelected(String textDate, Date date, DateCustomDialog.ReserveDate reserveDate) {
+        if(reserveDate == DateCustomDialog.ReserveDate.FROM_DATE){
+            mFromDate.setText(textDate);
+            fromDate = date;
         }else {
-            mDates.setText(String.format("%s%s%s", mDates.getText(), ",", textDate));
+            mToDate.setText(textDate);
+            toDate = date;
         }
-        dateList.add(textDate);
+        prepareReserveDates();
+    }
+
+    private void prepareReserveDates(){
+        if(fromDate != null && toDate != null && fromDate.before(toDate)){
+            List<Date> list = Utils.getDaysBetweenDates(fromDate, toDate);
+            if(isDatesSelectedAvailable(list)){
+                dateListForReserve = getDatesString(list);
+                Log.d(TAG, " DATES RESERVE >>> " + dateListForReserve.toString());
+            }else{
+                Utils.showToastMessage("Error al seleccionar fechas");
+                clearDates();
+            }
+        }
+    }
+
+    private boolean isDatesSelectedAvailable(List<Date> datesSelected){
+        int count = datesSelected.size();
+        datesSelected.removeAll(dateListNotAvailable);
+        return count == datesSelected.size();
     }
 
     @Override
@@ -217,20 +256,68 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        clearDates();
         mRoom = (Room) adapterView.getAdapter().getItem(i);
-        if(mRoom.getId() != 1010){
-            DateDialog.newInstance(this, mRoom.getId()).show(getFragmentManager(), DateDialog.TAG);
+        if(mRoom.getId() != ID_ROOM_DEFAULT)
+            loadBusyDates(mRoom);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {}
+
+    private void loadBusyDates(Room room){
+        mProgressBar.setVisibility(View.VISIBLE);
+        Utils.showToastMessage(getString(R.string.updating_dates));
+        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        Call<List<String>> listCall = apiClient.getRoomBusyDate(room.getId(), Session.getInstance().getUser().getApiToken());
+        listCall.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if(response.isSuccessful() && response.body() != null && response.body().size() > 0){
+                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
+                    loadDateListNoAvailable(response.body());
+                    textDatesNotAvailable = new String[response.body().size()];
+                    textDatesNotAvailable = response.body().toArray(textDatesNotAvailable);
+                    showDateDialog(DateCustomDialog.ReserveDate.FROM_DATE);
+                }else{
+                    Utils.showToastMessage(getString(R.string.message_something_went_wrong));
+                }
+                mProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                mProgressBar.setVisibility(View.GONE);
+                Utils.showToastMessage(getString(R.string.message_something_went_wrong));
+            }
+        });
+    }
+
+    private void loadDateListNoAvailable(List<String> list){
+        try {
+            for (String text: list){
+                dateListNotAvailable.add(Utils.parseStringToDate(text, Utils.DATE_FORMAT_INPUT));
+            }
+            Log.d(TAG, " DATE LIST NOT AVAILABLE >>> " + dateListNotAvailable.toString());
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        Log.d(TAG, " >>>> ID ROOM >>> " + mRoom.getId());
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+    private void clearDates(){
+        mFromDate.clearField();
+        fromDate = null;
+        mToDate.clearField();
+        toDate = null;
+        dateListNotAvailable = new ArrayList<>();
     }
 
-    @Override
-    public void onDateRangeSelected() {
-
+    public static List<String> getDatesString(List<Date> dateList){
+        List<String> stringList = new ArrayList<>();
+        for (Date date: dateList){
+            stringList.add(Utils.getCustomizedDate(Utils.DATE_FORMAT_INPUT, date));
+        }
+        return stringList;
     }
 
     public interface OnReserveRoomFragmentListener {
