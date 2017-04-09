@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,6 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     private Room mRoom;
     private List<String> dateListForReserve;
     private String[] textDatesNotAvailable;
-    private List<Date> dateListNotAvailable;
     private Date fromDate, toDate;
 
     public ReserveRoomFragment() {
@@ -231,10 +231,11 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void prepareReserveDates(){
-        if(fromDate != null && toDate != null && fromDate.before(toDate)){
-            List<Date> list = Utils.getDaysBetweenDates(fromDate, toDate);
-            if(isDatesSelectedAvailable(list)){
-                dateListForReserve = getDatesString(list);
+        if(fromDate != null && toDate != null && fromDate.before(toDate) && textDatesNotAvailable != null){
+            List<String> dateListSelected = getDatesString(Utils.getDaysBetweenDates(fromDate, toDate));
+            List<String> dateListNotAvailable = Arrays.asList(textDatesNotAvailable);
+            if(isDatesSelectedAvailable(dateListSelected, dateListNotAvailable)){
+                dateListForReserve = dateListSelected;
                 Log.d(TAG, " DATES RESERVE >>> " + dateListForReserve.toString());
             }else{
                 Utils.showToastMessage("Error al seleccionar fechas");
@@ -243,10 +244,10 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         }
     }
 
-    private boolean isDatesSelectedAvailable(List<Date> datesSelected){
-        int count = datesSelected.size();
-        datesSelected.removeAll(dateListNotAvailable);
-        return count == datesSelected.size();
+    private boolean isDatesSelectedAvailable(List<String> dateListSelected, List<String> dateListNotAvailable){
+        int count = dateListSelected.size();
+        dateListSelected.removeAll(dateListNotAvailable);
+        return count == dateListSelected.size();
     }
 
     @Override
@@ -257,6 +258,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         clearDates();
+        textDatesNotAvailable = null;
         mRoom = (Room) adapterView.getAdapter().getItem(i);
         if(mRoom.getId() != ID_ROOM_DEFAULT)
             loadBusyDates(mRoom);
@@ -275,7 +277,6 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if(response.isSuccessful() && response.body() != null && response.body().size() > 0){
                     Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                    loadDateListNoAvailable(response.body());
                     textDatesNotAvailable = new String[response.body().size()];
                     textDatesNotAvailable = response.body().toArray(textDatesNotAvailable);
                     showDateDialog(DateCustomDialog.ReserveDate.FROM_DATE);
@@ -293,23 +294,11 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         });
     }
 
-    private void loadDateListNoAvailable(List<String> list){
-        try {
-            for (String text: list){
-                dateListNotAvailable.add(Utils.parseStringToDate(text, Utils.DATE_FORMAT_INPUT));
-            }
-            Log.d(TAG, " DATE LIST NOT AVAILABLE >>> " + dateListNotAvailable.toString());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     private void clearDates(){
         mFromDate.clearField();
         fromDate = null;
         mToDate.clearField();
         toDate = null;
-        dateListNotAvailable = new ArrayList<>();
     }
 
     public static List<String> getDatesString(List<Date> dateList){
