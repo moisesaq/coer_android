@@ -70,8 +70,8 @@
             android:id="@+id/tiv_created_at"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:text1="@string/created_at"
-            app:text2="@string/created_at"
+            app:text1="@string/date_reserve"
+            app:text2="@string/date_reserve"
             app:iconImage="@drawable/svg_calendar_check"/>
 
         <moises.com.appcoer.ui.view.TextImageView

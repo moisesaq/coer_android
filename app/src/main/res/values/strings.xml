@@ -90,4 +90,5 @@
     <string name="room">Room</string>
     <string name="dates_stay">Dates stay</string>
     <string name="reservation">Reservation</string>
+    <string name="date_reserve">Date reserve</string>
 </resources>

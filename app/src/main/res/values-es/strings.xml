@@ -71,4 +71,10 @@
     <string name="from_date">De fecha</string>
     <string name="to_date">A fecha</string>
     <string name="detail_arrival">Detalle la hora estimada de su llegada</string>
+    <string name="reservation">Reserva</string>
+    <string name="room">Habitación</string>
+    <string name="lodging">Alojamiento</string>
+    <string name="created_at">Creado en</string>
+    <string name="dates_stay">Fechas de estancia</string>
+    <string name="date_reserve">Reserva de fecha</string>
 </resources>
