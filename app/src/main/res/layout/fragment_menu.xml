@@ -108,7 +108,7 @@
                     android:src="@drawable/svg_home_modern"/>
                 <TextView
                     style="@style/HomeTextView"
-                    android:text="@string/loading_timbues"/>
+                    android:text="@string/lodging_timbues"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

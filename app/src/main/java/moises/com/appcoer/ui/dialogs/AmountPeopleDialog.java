@@ -45,7 +45,7 @@ public class AmountPeopleDialog extends DialogFragment implements View.OnClickLi
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setTitle(R.string.count_people);
+        dialog.setTitle(R.string.amount_people);
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.dialog_people_amount, null);
         npNumberPeople = (NumberPicker)view.findViewById(R.id.np_number_people);

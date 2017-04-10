@@ -15,7 +15,7 @@
         <TextView
             android:id="@+id/title"
             style="@style/TextViewTechnoMedium"
-            android:text="@string/count_people"
+            android:text="@string/amount_people"
             android:textStyle="normal"
             android:textColor="@color/colorPrimaryText"
             android:gravity="center"/>
@@ -45,7 +45,7 @@
 
         <TextView
             style="@style/TextViewTechnoMedium"
-            android:text="@string/count_people"
+            android:text="@string/amount_people"
             android:textStyle="normal"
             android:textColor="@color/colorPrimaryText"
             android:padding="@dimen/padding_min_global"

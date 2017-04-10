@@ -25,6 +25,7 @@ import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.adapters.ReservationListAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
+import moises.com.appcoer.ui.dialogs.ReserveDetailDialog;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,7 +98,7 @@ public class ReservationListFragment extends BaseFragment implements Reservation
 
     @Override
     public void onReservationClick(Reservation reservation) {
-
+        ReserveDetailDialog.newInstance(reservation).show(getFragmentManager(), ReserveDetailDialog.TAG);
     }
 
     private void showUserGuide(){

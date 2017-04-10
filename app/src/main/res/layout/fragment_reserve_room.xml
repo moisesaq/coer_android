@@ -26,7 +26,7 @@
                 <TextView
                     android:id="@+id/tv_title_lodging"
                     style="@style/TextViewSmall"
-                    android:text="@string/loading_timbues"
+                    android:text="@string/lodging_timbues"
                     android:padding="@dimen/padding_min_global"
                     android:gravity="center_horizontal"
                     android:textStyle="bold"/>
@@ -131,7 +131,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 moi:iconImage="@drawable/svg_account_multiple"
-                moi:hint="@string/count_people"
+                moi:hint="@string/amount_people"
                 moi:iconAction="@drawable/svg_pencil"
                 android:text=""
                 android:inputType="number"

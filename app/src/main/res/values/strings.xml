@@ -57,7 +57,7 @@
     <string name="name">Name</string>
     <string name="last_name">Lastname</string>
     <string name="phone">Phone</string>
-    <string name="count_people">Count people</string>
+    <string name="amount_people">Count people</string>
     <string name="additional_information">Additional information</string>
     <string name="title_reserve_room">Reserve room</string>
     <string name="select_room">--- Select room ---</string>
@@ -73,7 +73,7 @@
     <string name="message_reservation_successful">Successful booking</string>
     <string name="message_withot_reservation">You don\'t have any reservations</string>
     <string name="last_news">Last news</string>
-    <string name="loading_timbues">Accommodation Complex Colón \"Los Timbues\"</string>
+    <string name="lodging_timbues">Accommodation Complex Colón \"Los Timbues\"</string>
     <string name="lodging_panana">Accommodation Sede COER Paraná</string>
     <string name="message_without_courses">No course found</string>
     <string name="message_withot_news">No news found</string>
@@ -85,4 +85,9 @@
     <string name="from_date">From date</string>
     <string name="to_date">To date</string>
     <string name="detail_arrival">Detail the estimated time of your arrivel</string>
+    <string name="created_at">Created at</string>
+    <string name="lodging">Lodging</string>
+    <string name="room">Room</string>
+    <string name="dates_stay">Dates stay</string>
+    <string name="reservation">Reservation</string>
 </resources>
