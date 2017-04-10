@@ -1,6 +1,7 @@
 package moises.com.appcoer.ui.fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -57,6 +58,8 @@ public class ReservationListFragment extends BaseFragment implements Reservation
         mLoadingView = (LoadingView)view.findViewById(R.id.loading_view);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), linearLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mReservationListAdapter = new ReservationListAdapter(new ArrayList<Reservation>(), this);
         mRecyclerView.setAdapter(mReservationListAdapter);

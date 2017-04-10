@@ -1,6 +1,7 @@
 package moises.com.appcoer.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +19,7 @@ import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.NewsList;
 import moises.com.appcoer.model.User;
+import moises.com.appcoer.tools.EndlessRecyclerOnScrollListener;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.adapters.NewsListAdapter;
 import moises.com.appcoer.ui.view.LoadingView;
@@ -70,25 +72,30 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
         mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), linearLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        /*mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                progressBar.setVisibility(View.VISIBLE);
-                getContactList(currentPage);
-            }
-        });*/
-
         mNewsListAdapter = new NewsListAdapter(getContext(), new ArrayList<News>(), this);
         mRecyclerView.setAdapter(mNewsListAdapter);
         mLoadingView.showLoading(mRecyclerView);
-        getNews();
+        getNews(1);
+        if(!outstanding){
+            mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+                @Override
+                public void onLoadMore(int currentPage) {
+                    getNews(currentPage);
+                }
+            });
+        }
     }
 
-    private void getNews() {
+    private void getNews(final int page) {
+        Log.d(TAG, " PAGE >>> " + page);
+        if(page > 1)
+            mProgressBar.setVisibility(View.VISIBLE);
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         User user = Session.getInstance().getUser();
-        Call<NewsList> newsListCall = apiClient.getNews(5, 1, 1, user == null ? null : Session.getInstance().getUser().getApiToken());
+        Call<NewsList> newsListCall = apiClient.getNews(outstanding ? 5 : null, page, outstanding ? 1 : 0, user == null ? null : Session.getInstance().getUser().getApiToken());
         newsListCall.enqueue(new Callback<NewsList>() {
             @Override
             public void onResponse(Call<NewsList> call, Response<NewsList> response) {
@@ -96,9 +103,10 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
                     Log.d(TAG, " SUCCESS >>> " + response.body().toString());
                     mLoadingView.hideLoading("", mRecyclerView);
                     mNewsListAdapter.addItems(response.body().getNews());
-                }else{
+                }else if(page == 1){
                     mLoadingView.hideLoading(getString(R.string.message_withot_news), mRecyclerView);
                 }
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override

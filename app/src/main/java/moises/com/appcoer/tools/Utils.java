@@ -35,6 +35,7 @@ public class Utils {
 
     //DATE FORMAT
     public static final String DATE_FORMAT_INPUT = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_SHORT = "dd-MM-yy";
     public static final String DATE_FORMAT_INPUT_2 = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT_DAY = "EEEE d MMM, yyyy";
     public static final String DATE_FORMAT_DAY_DETAILED = "MMMM dd, yyyy";

@@ -70,4 +70,5 @@
     <string name="updating_dates">Actualización de fechas...</string>
     <string name="from_date">De fecha</string>
     <string name="to_date">A fecha</string>
+    <string name="detail_arrival">Detalle la hora estimada de su llegada</string>
 </resources>

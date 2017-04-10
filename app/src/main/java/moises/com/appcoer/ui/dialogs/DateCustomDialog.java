@@ -1,8 +1,6 @@
 package moises.com.appcoer.ui.dialogs;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -13,13 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
-import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.Session;
 import moises.com.appcoer.tools.Utils;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DateCustomDialog extends DatePickerDialog implements DatePickerDialog.OnDateSetListener{
 
@@ -27,7 +19,6 @@ public class DateCustomDialog extends DatePickerDialog implements DatePickerDial
     private static final String ARG_PARAM_1 = "reserveDate";
     private static final String ARG_PARAM_2 = "textDates";
     private OnDateCustomDialogListener mListener;
-    private int idRoom;
     private ReserveDate reserveDate;
     private String[] textDates;
 
@@ -61,33 +52,8 @@ public class DateCustomDialog extends DatePickerDialog implements DatePickerDial
     public void onStart() {
         super.onStart();
         setMinDate(Utils.toCalendar(new Date()));
-        //loadBusyDates();
         if(textDates != null)
             disabledDays(Arrays.asList(textDates));
-    }
-
-    private void loadBusyDates(){
-        if(idRoom == 0)
-            return;
-        Utils.showToastMessage(getString(R.string.updating_dates));
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<List<String>> listCall = apiClient.getRoomBusyDate(idRoom, Session.getInstance().getUser().getApiToken());
-        listCall.enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                if(response.isSuccessful() && response.body() != null && response.body().size() > 0){
-                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                    disabledDays(response.body());
-                }else{
-                    Log.d(TAG, " SUCCESS >>> EMPTY");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
-                Log.d(TAG, " ERROR >>> " + t.toString());
-            }
-        });
     }
 
     private void disabledDays(List<String> dateTextList){
@@ -133,7 +99,7 @@ public class DateCustomDialog extends DatePickerDialog implements DatePickerDial
         Date date = calendar.getTime();
 
         if(mListener != null)
-            mListener.onDateSelected(Utils.getCustomizedDate(Utils.DATE_FORMAT_INPUT, date), date, reserveDate);
+            mListener.onDateSelected(Utils.getCustomizedDate(Utils.DATE_FORMAT_SHORT, date), date, reserveDate);
     }
 
     public interface OnDateCustomDialogListener{

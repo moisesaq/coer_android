@@ -2,12 +2,14 @@ package moises.com.appcoer.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,7 @@ import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.CourseList;
+import moises.com.appcoer.tools.EndlessRecyclerOnScrollListener;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.adapters.CourseListAdapter;
 import moises.com.appcoer.ui.adapters.NewsListAdapter;
@@ -33,6 +36,7 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
     private RecyclerView mRecyclerView;
     private LoadingView mLoadingView;
     private CourseListAdapter mCourseListAdapter;
+    private ProgressBar mProgressBar;
 
     public CourseListFragment() {
         // Required empty public constructor
@@ -54,18 +58,30 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
 
     private void setupView(){
         mLoadingView = (LoadingView)view.findViewById(R.id.loading_view);
+        mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), linearLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mCourseListAdapter = new CourseListAdapter(getContext(), new ArrayList<Course>(), this);
         mRecyclerView.setAdapter(mCourseListAdapter);
         mLoadingView.showLoading(mRecyclerView);
-        getCourses();
+        getCourses(1);
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                getCourses(currentPage);
+            }
+        });
     }
 
-    private void getCourses() {
+    protected void getCourses(final int page) {
+        Log.d(TAG, " PAGE >>> " + page);
+        if(page > 1)
+            mProgressBar.setVisibility(View.VISIBLE);
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<CourseList> courseListCall = apiClient.getCourses(null, 1);
+        Call<CourseList> courseListCall = apiClient.getCourses(null, page);
         courseListCall.enqueue(new Callback<CourseList>() {
             @Override
             public void onResponse(Call<CourseList> call, Response<CourseList> response) {
@@ -73,9 +89,10 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
                     Log.d(TAG, " SUCCESS >>> " + response.body().toString());
                     mLoadingView.hideLoading("", mRecyclerView);
                     mCourseListAdapter.addItems(response.body().getCourses());
-                }else{
+                }else if (page == 1){
                     mLoadingView.hideLoading(getString(R.string.message_without_courses), mRecyclerView);
                 }
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override

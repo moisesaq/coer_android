@@ -74,17 +74,6 @@
 
         </LinearLayout>
 
-
-        <moises.com.appcoer.ui.view.InputTextView
-            android:id="@+id/itv_enrollment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            moi:iconImage="@drawable/svg_email"
-            moi:hint="@string/enrollment"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="@dimen/margin_min_global"
-            android:visibility="gone"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,7 +85,7 @@
                 android:layout_height="wrap_content"
                 moi:iconImage="@drawable/svg_account_circle_gray"
                 moi:hint="@string/name"
-                android:text="Moi"
+                android:text=""
                 android:inputType="textCapSentences"/>
 
             <moises.com.appcoer.ui.view.InputTextView
@@ -105,7 +94,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 moi:hint="@string/last_name"
-                android:text="Test"
+                android:text=""
                 android:inputType="textCapSentences"/>
         </LinearLayout>
 
@@ -116,7 +105,7 @@
             android:layout_height="wrap_content"
             moi:iconImage="@drawable/svg_email"
             moi:hint="@string/email"
-            android:text="moisesapaza07@gmail.com"
+            android:text=""
             android:inputType="textEmailAddress"
             android:layout_marginTop="@dimen/margin_min_global"/>
 
@@ -132,7 +121,7 @@
                 android:layout_height="wrap_content"
                 moi:iconImage="@drawable/svg_phone"
                 moi:hint="@string/phone"
-                android:text="12345"
+                android:text=""
                 android:inputType="phone"
                 android:layout_marginTop="@dimen/margin_min_global"/>
 
@@ -144,7 +133,7 @@
                 moi:iconImage="@drawable/svg_account_multiple"
                 moi:hint="@string/count_people"
                 moi:iconAction="@drawable/svg_pencil"
-                android:text="2"
+                android:text=""
                 android:inputType="number"
                 android:layout_marginTop="@dimen/margin_min_global"/>
 
@@ -157,10 +146,15 @@
             android:layout_height="wrap_content"
             moi:iconImage="@drawable/svg_note_text"
             moi:hint="@string/additional_information"
-            android:text="Test test test"
+            android:text=""
             android:inputType="textCapSentences"
             android:lines="3"
             android:layout_marginTop="@dimen/margin_min_global"/>
+        <TextView
+            style="@style/TextViewSmall"
+            android:text="@string/detail_arrival"
+            android:textSize="10dp"
+            android:layout_gravity="end"/>
 
         <Button
             android:id="@+id/b_confirm"
