@@ -22,6 +22,7 @@
             android:id="@+id/tiv_full_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             app:text1="@string/name"
             app:text2="@string/name"
             app:iconImage="@drawable/svg_account_circle_gray"/>
@@ -30,6 +31,7 @@
             android:id="@+id/tiv_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             app:text1="@string/email"
             app:text2="@string/email"
             app:iconImage="@drawable/svg_email"/>
@@ -38,6 +40,7 @@
             android:id="@+id/tiv_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             app:text1="@string/phone"
             app:text2="@string/phone"
             app:iconImage="@drawable/svg_phone"/>
@@ -46,6 +49,8 @@
             android:id="@+id/tiv_lodging"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:maxLines="2"
             app:text1="@string/lodging_timbues"
             app:text2="@string/lodging"
             app:iconImage="@drawable/svg_home_modern_gray"/>
@@ -54,6 +59,8 @@
             android:id="@+id/tiv_room"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:maxLines="2"
             app:text1="@string/room"
             app:text2="@string/room"
             app:iconImage="@drawable/svg_hotel_gray"/>
@@ -62,6 +69,7 @@
             android:id="@+id/tiv_amount_people"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             app:text1="@string/amount_people"
             app:text2="@string/amount_people"
             app:iconImage="@drawable/svg_account_multiple"/>
@@ -70,6 +78,7 @@
             android:id="@+id/tiv_created_at"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             app:text1="@string/date_reserve"
             app:text2="@string/date_reserve"
             app:iconImage="@drawable/svg_calendar_check"/>
@@ -78,6 +87,7 @@
             android:id="@+id/tiv_dates_stay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:maxLines="3"
             app:text1="@string/dates_stay"
             app:text2="@string/dates_stay"
@@ -87,6 +97,7 @@
             android:id="@+id/tiv_additional_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:maxLines="3"
             app:text1="@string/additional_information"
             app:text2="@string/additional_information"
