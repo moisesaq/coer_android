@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">COER</string>
     <string name="app_full_name1">College of dentists</string>
     <string name="app_full_name2">Entre Ríos</string>
