@@ -75,8 +75,6 @@ public class IntroduceLodgingFragment extends BaseFragment{
         mImage = (ImageView)view.findViewById(R.id.iv_lodging);
         mTitle = (TextView)view.findViewById(R.id.tv_title);
         webView = (WebView)view.findViewById(R.id.webView);
-        //webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setBuiltInZoomControls(true);
         mRateFrom = (TextView)view.findViewById(R.id.tv_rate_from);
         mContent = (TextView)view.findViewById(R.id.tv_content);
         mInfo = (TextView)view.findViewById(R.id.tv_info);
@@ -88,6 +86,7 @@ public class IntroduceLodgingFragment extends BaseFragment{
                 replaceFragment(ReserveRoomFragment.newInstance(mLodging.getId()), true);
             }
         });
+        mLoadingView.showLoading(mContentDetail);
         getDescriptionLodging();
     }
 

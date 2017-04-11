@@ -88,7 +88,6 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
     }
 
     private void getNews(final int page) {
-        Log.d(TAG, " PAGE >>> " + page);
         if(page > 1)
             mProgressBar.setVisibility(View.VISIBLE);
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();

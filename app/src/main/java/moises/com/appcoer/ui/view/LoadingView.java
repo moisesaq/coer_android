@@ -3,6 +3,7 @@ package moises.com.appcoer.ui.view;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -38,55 +39,20 @@ public class LoadingView extends LinearLayout{
         ivImage = (ImageView)findViewById(R.id.iv_image);
     }
 
-    public void showLoading(View hideView){
+    public void showLoading(@NonNull View hideView){
         tvMessage.setVisibility(View.GONE);
         ivImage.setVisibility(View.GONE);
         pbLoading.setVisibility(View.VISIBLE);
-        if(hideView != null)
-            hideView.setVisibility(View.GONE);
+        hideView.setVisibility(View.GONE);
     }
 
-    public void hideLoading(String message, View view){
+    public void hideLoading(String message, @NonNull View view){
         pbLoading.setVisibility(View.GONE);
-        ivImage.setVisibility(View.GONE);
         if(!message.isEmpty()){
-            tvMessage.setVisibility(View.VISIBLE);
+            ivImage.setVisibility(View.VISIBLE);
             tvMessage.setText(message);
-            view.setVisibility(View.GONE);
-        }else{
-            view.setVisibility(View.VISIBLE);
-            tvMessage.setVisibility(View.GONE);
-        }
-    }
-
-    public void hideLoading(String message, View view, Drawable image){
-        pbLoading.setVisibility(View.GONE);
-        ivImage.setVisibility(View.GONE);
-        if(!message.isEmpty()){
             tvMessage.setVisibility(View.VISIBLE);
-            tvMessage.setText(message);
             view.setVisibility(View.GONE);
-            if(image!=null){
-                ivImage.setVisibility(VISIBLE);
-                ivImage.setImageDrawable(image);
-            }
-        }else{
-            view.setVisibility(View.VISIBLE);
-            tvMessage.setVisibility(View.GONE);
-        }
-    }
-
-    public void hideLoading(String message, View view, int image){
-        pbLoading.setVisibility(View.GONE);
-        ivImage.setVisibility(View.GONE);
-        if(!message.isEmpty()){
-            tvMessage.setVisibility(View.VISIBLE);
-            tvMessage.setText(message);
-            view.setVisibility(View.GONE);
-            if(image != 0){
-                ivImage.setVisibility(VISIBLE);
-                ivImage.setImageResource(image);
-            }
         }else{
             view.setVisibility(View.VISIBLE);
             tvMessage.setVisibility(View.GONE);

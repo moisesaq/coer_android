@@ -69,6 +69,7 @@ public class ReservationListFragment extends BaseFragment implements Reservation
         fabTimbues.setOnClickListener(this);
         FloatingActionButton fabParana = (FloatingActionButton)view.findViewById(R.id.fab_reserve_parana);
         fabParana.setOnClickListener(this);
+        mLoadingView.showLoading(mRecyclerView);
         getReservations();
         showUserGuide();
     }

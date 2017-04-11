@@ -55,6 +55,7 @@ public class MethodPaymentsFragment extends BaseFragment{
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mMethodPaymentsAdapter = new MethodPaymentsAdapter(getContext(), new ArrayList<MethodPayment>());
         mRecyclerView.setAdapter(mMethodPaymentsAdapter);
+        mLoadingView.showLoading(mRecyclerView);
         getMethodPayments();
     }
 
@@ -64,7 +65,7 @@ public class MethodPaymentsFragment extends BaseFragment{
         listCall.enqueue(new Callback<List<MethodPayment>>() {
             @Override
             public void onResponse(Call<List<MethodPayment>> call, Response<List<MethodPayment>> response) {
-                if(response.body() != null && response.body().size() > 0){
+                if(response.isSuccessful() && response.body() != null && response.body().size() > 0){
                     mLoadingView.hideLoading("", mRecyclerView);
                     mMethodPaymentsAdapter.addItems(response.body());
                 }else{
