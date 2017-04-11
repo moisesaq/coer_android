@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFullName = (TextView)headerView.findViewById(R.id.tv_fullname);
         mEmail = (TextView)headerView.findViewById(R.id.tv_email);
         loadUser();
-        //showUserGuide();
+        showUserGuide();
     }
 
     public void openNavigationView(){
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         User user = Session.getInstance().getUser();
         if(user == null)
             return;
-        mFullName.setText(user.getFullName());
+        mFullName.setText(user.getFullName() != null ? user.getFullName() : "");
         mEmail.setText(user.getEmail() != null ? user.getEmail() : "");
     }
 

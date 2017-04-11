@@ -40,7 +40,7 @@
     <string name="on_boarding_description3">Manage your accounts and reservations</string>
     <string name="on_boarding_title2">Courses</string>
     <string name="on_boarding_title4">Reservations</string>
-    <string name="on_boarding_description4">Reserve habitaciones en nuestros alimentos Reserve rooms in our accommodations</string>
+    <string name="on_boarding_description4">Reserve rooms in our accommodations</string>
     <string name="get_started">GET STARTED</string>
     <string name="message_logout">Are you safe do you want exit?</string>
     <string name="confirm">Confirm</string>
@@ -91,4 +91,10 @@
     <string name="dates_stay">Dates stay</string>
     <string name="reservation">Reservation</string>
     <string name="date_reserve">Date reserve</string>
+    <string name="sending">Sending...</string>
+    <string name="rate_from">Rate from</string>
+    <string name="guide_stage_1">Main menu</string>
+    <string name="guide_stage_description_1">Click here to see the main menu</string>
+    <string name="guide_stage_2">New reservation</string>
+    <string name="guide_stage_description_2">Click here to make a new reservation</string>
 </resources>

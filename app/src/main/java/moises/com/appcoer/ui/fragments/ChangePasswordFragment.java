@@ -14,6 +14,7 @@ import java.util.List;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
+import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
@@ -24,9 +25,6 @@ import retrofit2.Response;
 
 public class ChangePasswordFragment extends BaseLoginFragment implements View.OnClickListener{
     private static final String TAG = ChangePasswordFragment.class.getSimpleName();
-    private static final String ARG_PARAM1 = "param1";
-
-    private String mParam1;
     private OnChangePasswordFragmentListener mListener;
 
     private InputTextView mEmail, mNewPassword, mRepeatNewPassword;
@@ -34,20 +32,8 @@ public class ChangePasswordFragment extends BaseLoginFragment implements View.On
     public ChangePasswordFragment() {
     }
 
-    public static ChangePasswordFragment newInstance(String param1) {
-        ChangePasswordFragment fragment = new ChangePasswordFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
+    public static ChangePasswordFragment newInstance() {
+        return new ChangePasswordFragment();
     }
 
     @Override
@@ -80,24 +66,25 @@ public class ChangePasswordFragment extends BaseLoginFragment implements View.On
             Utils.showToastMessage(getString(R.string.message_passwords_do_not_match));
             return;
         }
-
+        GlobalManager.showProgressDialog();
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         Call<List<User>> listCall = apiClient.changePassword(mNewPassword.getText(), mEmail.getText(), Session.getInstance().getUser().getApiToken());
         listCall.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                try {
+                GlobalManager.dismissProgressDialog();
+                if(response.isSuccessful()){
                     Log.d(TAG, " SUCCESS >>> " + response.message() + " code >>> " + response.code());
-                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
                     mListener.onChangePasswordSuccessful(response.body().get(0));
-                }catch (Exception e){
-                    e.printStackTrace();
+                }else{
+                    Utils.showToastMessage(getString(R.string.message_something_went_wrong));
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                Log.d(TAG, " ERROR >>> " + t.toString());
+                GlobalManager.dismissProgressDialog();
+                Utils.showToastMessage(getString(R.string.message_something_went_wrong));
             }
         });
     }

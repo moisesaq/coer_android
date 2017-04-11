@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,7 +30,7 @@ public class CourseFragment extends Fragment {
     private static final String TAG = CourseFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "course";
 
-    private TextView mContent;
+    private WebView mContent;
     private Course course;
 
     public CourseFragment() {
@@ -61,7 +62,7 @@ public class CourseFragment extends Fragment {
     private void setupView(View view){
         ImageView mImage = (ImageView)view.findViewById(R.id.iv_course);
         Picasso.with(getContext())
-                .load(course.getImage().getImage())
+                .load(course.getImage().getSlide())
                 .placeholder(R.mipmap.image_load)
                 .error(R.drawable.example_course)
                 .into(mImage);
@@ -70,7 +71,7 @@ public class CourseFragment extends Fragment {
         TextView mDate = (TextView)view.findViewById(R.id.tv_date);
         mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(course.getDate(), Utils.DATE_FORMAT_INPUT)));
         TextView mCost = (TextView)view.findViewById(R.id.tv_cost);
-        mCost.setText(String.format("%s%s", "$ ",course.getCost()));
+        mCost.setText(String.format("%s %s", "$", course.getCost()));
 
         LinearLayout lyDiscount = (LinearLayout)view.findViewById(R.id.ly_discount);
         TextView mDiscount = (TextView)view.findViewById(R.id.tv_discount);
@@ -88,8 +89,8 @@ public class CourseFragment extends Fragment {
             mDiscountToDate.setText(course.getDiscountToDate());
         }
 
-        mContent = (TextView)view.findViewById(R.id.tv_content);
-        mContent.setText(course.getContent());
+        mContent = (WebView) view.findViewById(R.id.wv_content);
+        showContent(course.getContent());
         getDescription();
     }
 
@@ -103,7 +104,7 @@ public class CourseFragment extends Fragment {
                 if(response.isSuccessful()){
                     Log.d(TAG, " SUCCESS >>> " + response.body().toString());
                     CharSequence content = Html.fromHtml(response.body().getContent());
-                    mContent.setText(content);
+                    showContent(response.body().getContent());
                 }
             }
 
@@ -112,6 +113,10 @@ public class CourseFragment extends Fragment {
                 Log.d(TAG, " SUCCESS >>> " + t.toString());
             }
         });
+    }
+
+    private void showContent(String content){
+        mContent.loadData(content, "text/html; charset=utf-8","UTF-8");
     }
 
     @Override

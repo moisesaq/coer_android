@@ -12,6 +12,7 @@ import android.widget.TextView;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
+import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.view.InputTextView;
@@ -79,12 +80,14 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
     }
 
     private void login(String userName, String password){
+        GlobalManager.showProgressDialog();
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         Call<User> userCall = apiClient.login(userName, password);
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 Log.d(TAG, "SUCCESS >>> " + response.message() + " code " + response.code());
+                GlobalManager.dismissProgressDialog();
                 if(response.body() != null){
                     mListener.onLoginSuccessful(response.body());
                 }else{
@@ -95,6 +98,8 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.d(TAG, "ERROR >>> " + t.toString());
+                Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
+                GlobalManager.dismissProgressDialog();
             }
         });
     }

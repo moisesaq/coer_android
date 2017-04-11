@@ -12,13 +12,14 @@
     android:background="@color/colorPrimary"
     tools:context="moises.com.appcoer.ui.SplashActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/civ_image_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="fitXY"
         android:src="@mipmap/logo"
+        app:siBorderWidth="2dp"
+        app:siBorderColor="@color/colorPrimaryLight"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/imageView"
-        app:civ_border_width="2dp"
-        app:civ_border_color="@color/colorPrimaryLight"/>
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

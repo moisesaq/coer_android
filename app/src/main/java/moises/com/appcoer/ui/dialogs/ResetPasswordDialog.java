@@ -63,6 +63,7 @@ public class ResetPasswordDialog extends DialogFragment implements View.OnClickL
     }
 
     private void resetPassword(String email){
+        Utils.showToastMessage(getString(R.string.sending));
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         Call<ResponseBody> call = apiClient.resetPassword(email);
         call.enqueue(new Callback<ResponseBody>() {

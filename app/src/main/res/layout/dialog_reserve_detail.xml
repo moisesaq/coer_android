@@ -81,7 +81,8 @@
             android:textStyle="bold"
             app:text1="@string/date_reserve"
             app:text2="@string/date_reserve"
-            app:iconImage="@drawable/svg_calendar_check"/>
+            app:iconImage="@drawable/svg_calendar_check"
+            android:visibility="gone"/>
 
         <moises.com.appcoer.ui.view.TextImageView
             android:id="@+id/tiv_dates_stay"

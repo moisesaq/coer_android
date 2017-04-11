@@ -38,7 +38,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     public void onBindViewHolder(NewsViewHolder holder, int position) {
         News news = newsList.get(position);
         Picasso.with(mContext)
-                .load(news.getImage().getImage())
+                .load(news.getImage().getThumbnail())
                 .placeholder(R.mipmap.image_load)
                 .error(R.drawable.example_coer)
                 .into(holder.mImage);

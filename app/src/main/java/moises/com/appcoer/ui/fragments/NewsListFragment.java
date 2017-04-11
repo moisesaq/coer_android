@@ -63,7 +63,7 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             setupView();
         }
-        setTitle(getString(R.string.nav_news));
+        setTitle(outstanding ? getString(R.string.last_news) : getString(R.string.nav_news));
         return view;
     }
 
@@ -79,14 +79,12 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
         mRecyclerView.setAdapter(mNewsListAdapter);
         mLoadingView.showLoading(mRecyclerView);
         getNews(1);
-        if(!outstanding){
-            mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-                @Override
-                public void onLoadMore(int currentPage) {
-                    getNews(currentPage);
-                }
-            });
-        }
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                getNews(currentPage);
+            }
+        });
     }
 
     private void getNews(final int page) {
@@ -95,7 +93,7 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
             mProgressBar.setVisibility(View.VISIBLE);
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         User user = Session.getInstance().getUser();
-        Call<NewsList> newsListCall = apiClient.getNews(outstanding ? 5 : null, page, outstanding ? 1 : 0, user == null ? null : Session.getInstance().getUser().getApiToken());
+        Call<NewsList> newsListCall = apiClient.getNews(null, page, 0, user == null ? null : Session.getInstance().getUser().getApiToken());
         newsListCall.enqueue(new Callback<NewsList>() {
             @Override
             public void onResponse(Call<NewsList> call, Response<NewsList> response) {

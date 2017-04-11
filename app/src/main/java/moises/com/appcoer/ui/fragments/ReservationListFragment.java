@@ -22,7 +22,6 @@ import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.Reservation;
-import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.adapters.ReservationListAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.dialogs.ReserveDetailDialog;
@@ -71,7 +70,7 @@ public class ReservationListFragment extends BaseFragment implements Reservation
         FloatingActionButton fabParana = (FloatingActionButton)view.findViewById(R.id.fab_reserve_parana);
         fabParana.setOnClickListener(this);
         getReservations();
-        //showUserGuide();
+        showUserGuide();
     }
 
     private void getReservations(){
@@ -102,10 +101,10 @@ public class ReservationListFragment extends BaseFragment implements Reservation
     }
 
     private void showUserGuide(){
-        UserGuide.getInstance(GlobalManager.getActivityGlobal()).showStageWithView(UserGuide.StageGuide.STAGE_2, famReserve, new UserGuide.CallBack() {
+        UserGuide.getInstance(GlobalManager.getActivityGlobal()).showStageWithView(UserGuide.StageGuide.STAGE_2, famReserve.getMenuIconView(), new UserGuide.CallBack() {
             @Override
             public void onUserGuideOnClick() {
-                Utils.showToastMessage("Próximamente");
+                famReserve.open(true);
             }
         });
     }

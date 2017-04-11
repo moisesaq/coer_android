@@ -29,12 +29,10 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         setSupportActionBar(toolbar);
         showFragment(OnBoardingFragment.newInstance(), true);
         setup();
-        /*if(Session.getInstance().getUser() != null)
-            showFragment(ChangePasswordFragment.newInstance(""), true);*/
     }
 
     private void setup(){
-        if(OnBoardingFragment.isOnBoardingCompleted()){
+        if(!OnBoardingFragment.isOnBoardingCompleted()){
             showFragment(OnBoardingFragment.newInstance(), true);
         }else{
             showFragment(LoginFragment.newInstance(), true);
@@ -50,12 +48,18 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         ft.commit();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        GlobalManager.setActivityGlobal(this);
+    }
+
     /*LOGIN FRAGMENT LISTENER*/
     @Override
     public void onLoginSuccessful(User user) {
         Session.getInstance().setUser(user);
         if(user.getFirstTime() == 1){
-            showFragment(ChangePasswordFragment.newInstance(""), true);
+            showFragment(ChangePasswordFragment.newInstance(), true);
         }else{
             goToMainActivity(false);
         }
@@ -87,4 +91,5 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         Session.getInstance().setUser(user);
         goToMainActivity(true);
     }
+
 }

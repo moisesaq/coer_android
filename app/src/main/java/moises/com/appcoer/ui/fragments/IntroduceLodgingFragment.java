@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Lodging;
+import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
@@ -35,7 +37,8 @@ public class IntroduceLodgingFragment extends BaseFragment{
     private LinearLayout mContentDetail;
     private LoadingView mLoadingView;
     private ImageView mImage;
-    private TextView mTitle, mRate, mRateFrom, mContent, mInfo, mWarning;
+    private TextView mTitle, mRateFrom, mContent, mInfo, mWarning;
+    private WebView webView;
 
     public IntroduceLodgingFragment() {
         // Required empty public constructor
@@ -71,7 +74,9 @@ public class IntroduceLodgingFragment extends BaseFragment{
         mContentDetail = (LinearLayout)view.findViewById(R.id.content_detail);
         mImage = (ImageView)view.findViewById(R.id.iv_lodging);
         mTitle = (TextView)view.findViewById(R.id.tv_title);
-        mRate = (TextView)view.findViewById(R.id.tv_rate);
+        webView = (WebView)view.findViewById(R.id.webView);
+        //webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
         mRateFrom = (TextView)view.findViewById(R.id.tv_rate_from);
         mContent = (TextView)view.findViewById(R.id.tv_content);
         mInfo = (TextView)view.findViewById(R.id.tv_info);
@@ -124,11 +129,14 @@ public class IntroduceLodgingFragment extends BaseFragment{
                 .into(mImage);
         mLoadingView.hideLoading("", mContentDetail);
         mTitle.setText(mLodging.getTitle());
-        CharSequence text = Html.fromHtml(mLodging.getRate());
-        mRate.setText(text);
-        mRateFrom.setText((mLodging.getRateFrom()));
+        webView.loadData(mLodging.getRate() , "text/html; charset=utf-8","UTF-8");
         mContent.setText((mLodging.getContent()));
         mInfo.setText(mLodging.getInfo());
         mWarning.setText(mLodging.getWarning());
+        try{
+            mRateFrom.setText(String.format("%s %s", getString(R.string.rate_from), Utils.getCustomDate(Utils.parseStringToDate(mLodging.getRateFrom(), Utils.DATE_FORMAT_INPUT))));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

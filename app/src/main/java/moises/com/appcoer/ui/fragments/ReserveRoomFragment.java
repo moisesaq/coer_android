@@ -20,6 +20,7 @@ import java.util.List;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
+import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
@@ -179,12 +180,14 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
             return;
         }
         Log.d(TAG, " Reservation >>>> " + reservation.toString());
+        GlobalManager.showProgressDialog();
         ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
         Call<Reservation> reservationCall = apiClient.reserveRoom(mRoom.getId(), Session.getInstance().getUser().getApiToken(), reservation);
         reservationCall.enqueue(new Callback<Reservation>() {
             @Override
             public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                 Log.d(TAG, " Success >>>> " + response.message() + "code " +response.code());
+                GlobalManager.dismissProgressDialog();
                 if(response.isSuccessful()){
                     Log.d(TAG, " Success >>>> " + response.body().toString());
                     Utils.showDialogMessage("", getString(R.string.message_reservation_successful), new DialogInterface.OnClickListener() {
@@ -200,6 +203,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
 
             @Override
             public void onFailure(Call<Reservation> call, Throwable t) {
+                GlobalManager.dismissProgressDialog();
                 Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
             }
         });

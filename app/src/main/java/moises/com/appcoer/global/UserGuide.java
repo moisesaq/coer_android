@@ -12,16 +12,16 @@ import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 
 import moises.com.appcoer.R;
+import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.App;
 
 public class UserGuide {
 
-    private static final String USER_GUIDE = "UserGuide";
-
+    private static final String USER_GUIDE = User.class.getSimpleName();
     private AppCompatActivity activity;
 
-    private UserGuide(AppCompatActivity activity){
-        this.activity = activity;
+    private UserGuide(AppCompatActivity activity1){
+        activity = activity1;
     }
 
     public static UserGuide getInstance(AppCompatActivity activity){
@@ -29,26 +29,26 @@ public class UserGuide {
     }
 
     public void showStageWithView(@NonNull StageGuide stageGuide,@NonNull View view, CallBack callBack){
-        showTapTargetView(view, stageGuide.getTitle(), stageGuide.getDescription(), callBack);
-        /*if(!isGuideSeen(stageGuide)){
+        //showTapTargetView(view, stageGuide.getTitle(), stageGuide.getDescription(), callBack);
+        if(!isGuideSeen(stageGuide)){
             showTapTargetView(view, stageGuide.getTitle(), stageGuide.getDescription(), callBack);
             guideSeen(stageGuide, true);
-        }*/
+        }
     }
 
     public void showStageWithToolbar(@NonNull StageGuide stageGuide,@NonNull Toolbar toolbar, CallBack callBack){
-        showTapTargetToolbar(toolbar, stageGuide.getTitle(), stageGuide.getDescription(), callBack);
-        /*if(!isGuideSeen(stageGuide)){
+        //showTapTargetToolbar(toolbar, stageGuide.getTitle(), stageGuide.getDescription(), callBack);
+        if(!isGuideSeen(stageGuide)){
             showTapTargetToolbar(toolbar, stageGuide.getTitle(), stageGuide.getDescription(), callBack);
             guideSeen(stageGuide, true);
-        }*/
+        }
     }
 
     private void showTapTargetView(View view, String title, String description, final CallBack callBack){
         TapTargetView.showFor(activity,
                 TapTarget.forView(view, title, description)
                         .outerCircleColor(R.color.colorAccent)
-                        .targetCircleColor(android.R.color.white)
+                        .targetCircleColor(R.color.colorPrimaryLight)
                         .dimColor(android.R.color.white)
                         .transparentTarget(false)
                         .tintTarget(false)
@@ -111,8 +111,8 @@ public class UserGuide {
     }
 
     public enum StageGuide {
-        STAGE_1("stage1", "Menu principal", "Presione aquí para ver el menu principal"),
-        STAGE_2("stage2", "Nueva reserva", "Presione aquí para hacer una nueva reserva"),
+        STAGE_1("stage1", App.getContext().getString(R.string.guide_stage_1), App.getContext().getString(R.string.guide_stage_description_1)),
+        STAGE_2("stage2", App.getContext().getString(R.string.guide_stage_2), App.getContext().getString(R.string.guide_stage_description_2)),
         STAGE_3("stage3", "Title stage 3", "Description stage 3"),
         STAGE_4("stage4", "Title stage 4", "Description stage 4");
 

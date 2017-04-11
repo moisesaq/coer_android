@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,27 +35,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/colorAccentTransparent"
-                    android:padding="@dimen/padding_max_global"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/TextViewSmall"
-                        android:text="@string/date_enrollment"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/padding_max_global"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_date_enrollment"
-                        style="@style/TextViewSmall"
-                        android:text="EEEE d MMM, yyyy"
-                        android:textColor="@android:color/white"/>
+                        <TextView
+                            style="@style/TextViewSmall"
+                            android:text="@string/date_enrollment"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/white"/>
 
-                    <TextView
-                        android:id="@+id/tv_description_enrollment"
-                        style="@style/TextViewSmall"
-                        android:text="Description"
-                        android:textColor="@android:color/white"
-                        android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/tv_date_enrollment"
+                            style="@style/TextViewSmall"
+                            android:text="EEEE d MMM, yyyy"
+                            android:textColor="@android:color/white"/>
+
+                        <TextView
+                            android:id="@+id/tv_description_enrollment"
+                            style="@style/TextViewSmall"
+                            android:text="Description"
+                            android:textColor="@android:color/white"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/img_tooth"/>
+
                 </LinearLayout>
             </FrameLayout>
 

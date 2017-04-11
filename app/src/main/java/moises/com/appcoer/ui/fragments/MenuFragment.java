@@ -109,7 +109,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
 
             @Override
             public void onFailure(Call<Enrollment> call, Throwable t) {
-                mDateEnrollment.setText("--/--/----");
+                //mDateEnrollment.setText("--/--/----");
             }
         });
     }

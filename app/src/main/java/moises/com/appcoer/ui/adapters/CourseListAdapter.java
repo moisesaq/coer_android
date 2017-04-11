@@ -39,7 +39,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
     public void onBindViewHolder(CourseViewHolder holder, int position) {
         Course course = courseList.get(position);
         Picasso.with(mContext)
-                .load(course.getImage().getImage())
+                .load(course.getImage().getThumbnail())
                 .placeholder(R.mipmap.image_load)
                 .error(R.drawable.example_course)
                 .into(holder.mImage);

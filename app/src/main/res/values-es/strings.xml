@@ -77,4 +77,10 @@
     <string name="created_at">Creado en</string>
     <string name="dates_stay">Fechas de estancia</string>
     <string name="date_reserve">Reserva de fecha</string>
+    <string name="sending">Enviando...</string>
+    <string name="rate_from">Tarifa desde</string>
+    <string name="guide_stage_1">Menú principal</string>
+    <string name="guide_stage_description_1">Presione aquí para ver el menu principal</string>
+    <string name="guide_stage_description_2">Presione aquí para hacer una nueva reserva</string>
+    <string name="guide_stage_2">Nueva reserva</string>
 </resources>

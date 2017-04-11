@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class NewsFragment extends Fragment {
     private static final String ARG_PARAM1 = "news";
 
     private News news;
-    private TextView mContent;
+    private WebView mContent;
 
     public NewsFragment() {
     }
@@ -58,7 +59,7 @@ public class NewsFragment extends Fragment {
     private void setupView(View view){
         ImageView mImage = (ImageView)view.findViewById(R.id.iv_news);
         Picasso.with(getContext())
-                .load(news.getImage().getImage())
+                .load(news.getImage().getSlide())
                 .placeholder(R.mipmap.image_load)
                 .error(R.drawable.example_coer)
                 .into(mImage);
@@ -66,10 +67,8 @@ public class NewsFragment extends Fragment {
         mTitle.setText(news.getTitle().trim());
         TextView mDate = (TextView)view.findViewById(R.id.tv_date);
         mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(news.getDate(), Utils.DATE_FORMAT_INPUT_2)));
-        mContent = (TextView)view.findViewById(R.id.tv_content);
-
-
-        mContent.setText(news.getContent());
+        mContent = (WebView) view.findViewById(R.id.wv_content);
+        showContent(news.getContent());
         getDescription();
     }
 
@@ -80,9 +79,11 @@ public class NewsFragment extends Fragment {
         newsCall.enqueue(new Callback<News>() {
             @Override
             public void onResponse(Call<News> call, Response<News> response) {
-                Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                CharSequence content = Html.fromHtml(response.body().getContent());
-                mContent.setText(content);
+                if(response.isSuccessful()){
+                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
+                    CharSequence content = Html.fromHtml(response.body().getContent());
+                    showContent(response.body().getContent());
+                }
             }
 
             @Override
@@ -90,6 +91,10 @@ public class NewsFragment extends Fragment {
                 Log.d(TAG, " SUCCESS >>> " + t.toString());
             }
         });
+    }
+
+    private void showContent(String content){
+        mContent.loadData(content, "text/html; charset=utf-8","UTF-8");
     }
 
     @Override
