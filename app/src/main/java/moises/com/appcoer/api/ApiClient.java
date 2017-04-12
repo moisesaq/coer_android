@@ -9,6 +9,7 @@ import moises.com.appcoer.model.MethodPayment;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.NewsList;
 import moises.com.appcoer.model.Enrollment;
+import moises.com.appcoer.model.Process;
 import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
 import moises.com.appcoer.model.User;
@@ -74,4 +75,6 @@ public interface ApiClient {
     @GET(API.ROOM_DATES_BUSY)
     Call<List<String>> getRoomBusyDate(@Path("id") int idRoom, @Query("api_token") String apiToken);
 
+    @GET(API.PROCESSES)
+    Call<List<Process>> getProcesses();
 }

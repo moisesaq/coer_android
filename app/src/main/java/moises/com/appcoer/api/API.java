@@ -22,4 +22,5 @@ public interface API {
     String SITES = API + "/sites";
     String ENROLLMENT_DATE = SITES + "/matriculation";
     String METHOD_PAYMENTS = SITES + "/mediosdepago";
+    String PROCESSES = SITES + "/tramites";
 }

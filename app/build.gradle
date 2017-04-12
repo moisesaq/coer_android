@@ -47,5 +47,9 @@ dependencies {
     /*FLOATING BUTTON WITH MENU*/
     compile 'com.github.clans:fab:1.6.4'
 
+    /*CUSTOM DATE PICKER*/
     compile 'com.wdullaer:materialdatetimepicker:3.1.3'
+
+    /*CUSTOM CHROME TABS*/
+    compile 'com.android.support:customtabs:25.2.0'
 }

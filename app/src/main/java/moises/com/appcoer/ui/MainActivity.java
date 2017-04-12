@@ -29,6 +29,7 @@ import moises.com.appcoer.ui.fragments.IntroduceLodgingFragment;
 import moises.com.appcoer.ui.fragments.MenuFragment;
 import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
+import moises.com.appcoer.ui.fragments.ProcessListFragment;
 import moises.com.appcoer.ui.fragments.ReservationListFragment;
 import moises.com.appcoer.ui.fragments.ReserveRoomFragment;
 
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_method_payments) {
             showFragment(MethodPaymentsFragment.newInstance(), true);
         } else if (id == R.id.nav_processes) {
+            showFragment(ProcessListFragment.newInstance(), true);
         } else if(id == R.id.nav_logout){
             logout();
         }
