@@ -47,7 +47,7 @@
                     <Button
                         android:id="@+id/b_reserve"
                         android:text="@string/reserve"
-                        android:layout_height="36dp"
+                        android:layout_height="30dp"
                         android:drawableLeft="@drawable/svg_hotel"
                         style="@style/ButtonReserve"
                         android:layout_gravity="bottom|end"/>

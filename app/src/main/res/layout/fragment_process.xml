@@ -33,21 +33,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_title"
                         style="@style/TextViewMedium"
                         android:padding="@dimen/padding_medium_global"
+                        android:gravity="center_horizontal"
                         android:text="Example"/>
 
                     <Button
                         android:id="@+id/b_download_document"
                         android:text="@string/download_document"
-                        android:layout_height="36dp"
+                        android:layout_height="30dp"
                         android:drawableLeft="@drawable/svg_download"
                         style="@style/ButtonReserve"
-                        android:layout_gravity="bottom|end"
                         android:visibility="visible"/>
 
                 </LinearLayout>
