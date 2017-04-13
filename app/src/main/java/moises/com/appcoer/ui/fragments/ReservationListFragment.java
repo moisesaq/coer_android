@@ -50,7 +50,7 @@ public class ReservationListFragment extends BaseFragment implements Reservation
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_list, container, false);
         setupView(view);
-        setTitle(getString(R.string.nav_reservations));
+        setTitle(getString(R.string.nav_reservations), R.id.nav_reserves);
         return view;
     }
 

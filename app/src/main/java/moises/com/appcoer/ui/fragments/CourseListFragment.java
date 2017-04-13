@@ -52,7 +52,7 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             setupView();
         }
-        setTitle(getString(R.string.nav_courses));
+        setTitle(getString(R.string.nav_courses), R.id.nav_courses);
         return view;
     }
 

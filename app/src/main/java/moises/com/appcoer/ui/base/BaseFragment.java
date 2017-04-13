@@ -3,6 +3,7 @@ package moises.com.appcoer.ui.base;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ public class BaseFragment extends Fragment{
 
     private MainActivity mainActivity;
     private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,16 +26,29 @@ public class BaseFragment extends Fragment{
         setHasOptionsMenu(true);
 
         toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
-
-        /*if(actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }*/
+        navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
     }
 
     protected void setTitle(@NonNull String title){
+        setTitle(title, 0);
+    }
+
+    protected void setTitle(String title, int navId){
         if(toolbar != null)
             toolbar.setTitle(title);
+        if(navigationView != null) {
+            if(navId > 0)
+                navigationView.setCheckedItem(navId);
+            else
+                uncheckedNavigation();
+        }
+    }
+
+    private void uncheckedNavigation(){
+        int size = navigationView.getMenu().size();
+        for (int i = 0; i < size; i++) {
+            navigationView.getMenu().getItem(i).setChecked(false);
+        }
     }
 
     protected void replaceFragment(Fragment fragment, boolean stack){

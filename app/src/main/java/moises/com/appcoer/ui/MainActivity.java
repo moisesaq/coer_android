@@ -31,12 +31,13 @@ import moises.com.appcoer.ui.fragments.MenuFragment;
 import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
 import moises.com.appcoer.ui.fragments.NewsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
+import moises.com.appcoer.ui.fragments.ProcessFragment;
 import moises.com.appcoer.ui.fragments.ProcessListFragment;
 import moises.com.appcoer.ui.fragments.ReservationListFragment;
 import moises.com.appcoer.ui.fragments.ReserveRoomFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-                                                            CourseListFragment.OnCoursesFragmentListener, MenuFragment.Callback, ReserveRoomFragment.OnReserveRoomFragmentListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCoursesFragmentListener,
+                                                                    MenuFragment.Callback, ReserveRoomFragment.OnReserveRoomFragmentListener{
     private TextView mFullName;
     private TextView mEmail;
     private Toolbar toolbar;
@@ -215,6 +216,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else{
             showMessageNeedSignUp();
         }
+    }
+
+    @Override
+    public void onProcessesClick() {
+        showFragment(ProcessListFragment.newInstance(), true);
     }
 
     @Override

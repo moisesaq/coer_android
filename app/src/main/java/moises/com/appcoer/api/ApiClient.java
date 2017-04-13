@@ -77,4 +77,7 @@ public interface ApiClient {
 
     @GET(API.PROCESSES)
     Call<List<Process>> getProcesses();
+
+    @GET(API.PROCESS_DETAIL)
+    Call<Process> getProcessDetail(@Path("id") int id);
 }

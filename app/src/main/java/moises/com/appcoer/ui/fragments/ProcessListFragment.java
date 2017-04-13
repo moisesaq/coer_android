@@ -1,11 +1,6 @@
 package moises.com.appcoer.ui.fragments;
 
-import android.app.Activity;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,7 +45,7 @@ public class ProcessListFragment extends BaseFragment implements ProcessListAdap
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             setupView();
         }
-        setTitle(getString(R.string.nav_processes));
+        setTitle(getString(R.string.nav_processes), R.id.nav_processes);
         return view;
     }
 
@@ -91,19 +86,6 @@ public class ProcessListFragment extends BaseFragment implements ProcessListAdap
 
     @Override
     public void onProcessClick(Process process) {
-        /*"http://www.ole.com.ar/"*/
-        showDocument("http://www.coer.org.ar/descargas/habilitacionplanilla.doc", getActivity());
-    }
-
-    private void showDocument(String url, Activity activity){
-        CustomTabsIntent.Builder builder =  new CustomTabsIntent.Builder()
-                .setStartAnimations(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .setExitAnimations(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .setToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimary))
-                .setSecondaryToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimaryLight))
-                .setShowTitle(true)
-                .setCloseButtonIcon(BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_window_close_white_24dp));
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(activity, Uri.parse("https://docs.google.com/viewerng/viewer?url=" + url));
+        replaceFragment(ProcessFragment.newInstance(process), true);
     }
 }

@@ -23,4 +23,5 @@ public interface API {
     String ENROLLMENT_DATE = SITES + "/matriculation";
     String METHOD_PAYMENTS = SITES + "/mediosdepago";
     String PROCESSES = SITES + "/tramites";
+    String PROCESS_DETAIL = PROCESSES + "/{id}";
 }

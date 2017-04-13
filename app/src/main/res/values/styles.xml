@@ -14,7 +14,6 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!--CUSTOM BUTTON-->
@@ -29,6 +28,7 @@
     <style name="ButtonReserve" parent="ButtonCustom">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:textSize">10dp</item>
         <item name="android:background">@drawable/background_button_accent</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>

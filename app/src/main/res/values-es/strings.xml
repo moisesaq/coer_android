@@ -84,4 +84,5 @@
     <string name="guide_stage_description_2">Presione aquí para hacer una nueva reserva</string>
     <string name="guide_stage_2">Nueva reserva</string>
     <string name="message_without_processes">No se encontró ningún tramite</string>
+    <string name="download_document">Descargar documento</string>
 </resources>

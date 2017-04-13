@@ -98,4 +98,5 @@
     <string name="guide_stage_2">New reservation</string>
     <string name="guide_stage_description_2">Click here to make a new reservation</string>
     <string name="message_without_processes">No processing was found</string>
+    <string name="download_document">Download document</string>
 </resources>

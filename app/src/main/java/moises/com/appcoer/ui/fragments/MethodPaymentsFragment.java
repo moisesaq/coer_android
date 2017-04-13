@@ -44,7 +44,7 @@ public class MethodPaymentsFragment extends BaseFragment{
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             setupView();
         }
-        setTitle(getString(R.string.nav_method_payments));
+        setTitle(getString(R.string.nav_method_payments), R.id.nav_method_payments);
         return view;
     }
 

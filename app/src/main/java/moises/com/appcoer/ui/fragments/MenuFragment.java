@@ -51,6 +51,7 @@ public class MenuFragment extends BaseFragment{
     protected @BindView(R.id.ly_courses) LinearLayout mCourses;
     protected @BindView(R.id.ly_timbues) LinearLayout mTimbues;
     protected @BindView(R.id.ly_parana) LinearLayout mParana;
+    protected @BindView(R.id.ly_process) LinearLayout mProcess;
     protected @BindView(R.id.ly_method_payment) LinearLayout mMethodPayment;
 
     public MenuFragment() {
@@ -71,7 +72,7 @@ public class MenuFragment extends BaseFragment{
         return view;
     }
 
-    @OnClick({R.id.cv_news, R.id.ly_news, R.id.ly_courses, R.id.ly_timbues, R.id.ly_parana, R.id.ly_method_payment})
+    @OnClick({R.id.cv_news, R.id.ly_news, R.id.ly_courses, R.id.ly_timbues, R.id.ly_parana, R.id.ly_process, R.id.ly_method_payment})
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.cv_news:
@@ -89,6 +90,9 @@ public class MenuFragment extends BaseFragment{
                 break;
             case R.id.ly_parana:
                 mCallback.onLodgingClick(2);
+                break;
+            case R.id.ly_process:
+                mCallback.onProcessesClick();
                 break;
             case R.id.ly_method_payment:
                 mCallback.onMethodPaymentsClick();
@@ -183,6 +187,7 @@ public class MenuFragment extends BaseFragment{
         void onNewsClick();
         void onCoursesClick();
         void onLodgingClick(int id);
+        void onProcessesClick();
         void onMethodPaymentsClick();
     }
 }
