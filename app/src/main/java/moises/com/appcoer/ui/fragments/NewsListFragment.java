@@ -63,7 +63,7 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             setupView();
         }
-        setTitle(outstanding ? getString(R.string.last_news) : getString(R.string.nav_news));
+        setTitle(outstanding ? getString(R.string.last_news) : getString(R.string.nav_news), R.id.nav_news);
         return view;
     }
 
