@@ -90,14 +90,14 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
                     mLoadingView.hideLoading("", mRecyclerView);
                     mCourseListAdapter.addItems(response.body().getCourses());
                 }else if (page == 1){
-                    mLoadingView.hideLoading(getString(R.string.message_without_courses), mRecyclerView);
+                    mLoadingView.hideLoading(getSafeString(R.string.message_without_courses), mRecyclerView);
                 }
                 mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<CourseList> call, Throwable t) {
-                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
+                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
     }

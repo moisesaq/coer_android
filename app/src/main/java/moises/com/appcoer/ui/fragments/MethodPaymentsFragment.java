@@ -69,13 +69,13 @@ public class MethodPaymentsFragment extends BaseFragment{
                     mLoadingView.hideLoading("", mRecyclerView);
                     mMethodPaymentsAdapter.addItems(response.body());
                 }else{
-                    mLoadingView.hideLoading(getString(R.string.message_withot_method_payments), mRecyclerView);
+                    mLoadingView.hideLoading(getSafeString(R.string.message_withot_method_payments), mRecyclerView);
                 }
             }
 
             @Override
             public void onFailure(Call<List<MethodPayment>> call, Throwable t) {
-                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
+                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
     }

@@ -8,6 +8,7 @@ public class Process implements Serializable{
     private String id;
     private String title;
     private String url;
+    private String content;
 
     public String getId() {
         return id;
@@ -31,6 +32,14 @@ public class Process implements Serializable{
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override

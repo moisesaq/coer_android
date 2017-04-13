@@ -78,13 +78,13 @@ public class ProcessListFragment extends BaseFragment implements ProcessListAdap
                     mLoadingView.hideLoading("", mRecyclerView);
                     processListAdapter.addItems(response.body());
                 }else{
-                    mLoadingView.hideLoading(getString(R.string.message_without_processes), mRecyclerView);
+                    mLoadingView.hideLoading(getSafeString(R.string.message_without_processes), mRecyclerView);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Process>> call, Throwable t) {
-                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
+                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
     }
@@ -92,7 +92,7 @@ public class ProcessListFragment extends BaseFragment implements ProcessListAdap
     @Override
     public void onProcessClick(Process process) {
         /*"http://www.ole.com.ar/"*/
-        showDocument(process.getUrl(), getActivity());
+        showDocument("http://www.coer.org.ar/descargas/habilitacionplanilla.doc", getActivity());
     }
 
     private void showDocument(String url, Activity activity){
@@ -100,6 +100,7 @@ public class ProcessListFragment extends BaseFragment implements ProcessListAdap
                 .setStartAnimations(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .setExitAnimations(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .setToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimary))
+                .setSecondaryToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimaryLight))
                 .setShowTitle(true)
                 .setCloseButtonIcon(BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_window_close_white_24dp));
         CustomTabsIntent customTabsIntent = builder.build();

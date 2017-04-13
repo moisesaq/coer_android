@@ -101,14 +101,14 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
                     mLoadingView.hideLoading("", mRecyclerView);
                     mNewsListAdapter.addItems(response.body().getNews());
                 }else if(page == 1){
-                    mLoadingView.hideLoading(getString(R.string.message_withot_news), mRecyclerView);
+                    mLoadingView.hideLoading(getSafeString(R.string.message_withot_news), mRecyclerView);
                 }
                 mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<NewsList> call, Throwable t) {
-                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
+                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
     }

@@ -1,7 +1,6 @@
 package moises.com.appcoer.ui.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
+import moises.com.appcoer.ui.base.BaseLoginFragment;
 import moises.com.appcoer.ui.view.InputTextView;
 import retrofit2.Call;
 import retrofit2.Callback;

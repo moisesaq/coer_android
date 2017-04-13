@@ -23,11 +23,13 @@ import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.Course;
+import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.fragments.CourseListFragment;
 import moises.com.appcoer.ui.fragments.IntroduceLodgingFragment;
 import moises.com.appcoer.ui.fragments.MenuFragment;
 import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
+import moises.com.appcoer.ui.fragments.NewsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
 import moises.com.appcoer.ui.fragments.ProcessListFragment;
 import moises.com.appcoer.ui.fragments.ReservationListFragment;
@@ -188,6 +190,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onCourseClick(Course course) {
 
+    }
+
+    @Override
+    public void onImportantNewsClick(News news) {
+        showFragment(NewsFragment.newInstance(news), true);
     }
 
     /*FRAGMENT MENU LISTENER*/

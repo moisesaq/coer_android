@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.fragments;
+package moises.com.appcoer.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

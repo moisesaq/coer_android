@@ -85,13 +85,13 @@ public class ReservationListFragment extends BaseFragment implements Reservation
                     mLoadingView.hideLoading("", mRecyclerView);
                     mReservationListAdapter.addItems(response.body());
                 }else{
-                    mLoadingView.hideLoading(getString(R.string.message_withot_reservation), mRecyclerView);
+                    mLoadingView.hideLoading(getSafeString(R.string.message_withot_reservation), mRecyclerView);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Reservation>> call, Throwable t) {
-                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mRecyclerView);
+                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mRecyclerView);
             }
         });
     }

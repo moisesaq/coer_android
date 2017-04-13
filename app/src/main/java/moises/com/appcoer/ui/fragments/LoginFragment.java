@@ -15,6 +15,7 @@ import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
+import moises.com.appcoer.ui.base.BaseLoginFragment;
 import moises.com.appcoer.ui.view.InputTextView;
 import retrofit2.Call;
 import retrofit2.Callback;

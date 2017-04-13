@@ -3,9 +3,7 @@ package moises.com.appcoer.ui.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,7 @@ import java.util.List;
 import me.relex.circleindicator.CircleIndicator;
 import moises.com.appcoer.R;
 import moises.com.appcoer.ui.App;
+import moises.com.appcoer.ui.base.BaseLoginFragment;
 import moises.com.appcoer.ui.base.IntroduceItem;
 import moises.com.appcoer.ui.base.IntroducePageAdapter;
 

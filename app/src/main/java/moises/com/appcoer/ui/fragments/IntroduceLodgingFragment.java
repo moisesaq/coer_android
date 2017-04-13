@@ -96,7 +96,6 @@ public class IntroduceLodgingFragment extends BaseFragment{
         lodgingListCall.enqueue(new Callback<List<Lodging>>() {
             @Override
             public void onResponse(Call<List<Lodging>> call, Response<List<Lodging>> response) {
-                //Log.d(TAG, " SUCCESS >>> " + response.body().toString());
                 if(response.body() != null && response.body().size() > 0){
                     for (Lodging lodging: response.body()){
                         if(lodging.getId() == idLodging)
@@ -104,13 +103,13 @@ public class IntroduceLodgingFragment extends BaseFragment{
                     }
                     showDetail();
                 }else{
-                    mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mContentDetail);
+                    mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mContentDetail);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Lodging>> call, Throwable t) {
-                mLoadingView.hideLoading(getString(R.string.message_something_went_wrong), mContentDetail);
+                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mContentDetail);
             }
         });
     }

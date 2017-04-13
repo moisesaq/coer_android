@@ -46,4 +46,9 @@ public class BaseFragment extends Fragment{
             mainActivity.onBackPressed();
     }
 
+    protected String getSafeString(int resId){
+        if(!isAdded())
+            return "";
+        return getString(resId);
+    }
 }
