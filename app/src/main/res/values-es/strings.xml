@@ -85,4 +85,5 @@
     <string name="guide_stage_2">Nueva reserva</string>
     <string name="message_without_processes">No se encontró ningún tramite</string>
     <string name="download_document">Descargar documento</string>
+    <string name="nav_bills">Vea aquí su factura</string>
 </resources>

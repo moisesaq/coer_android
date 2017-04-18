@@ -2,6 +2,7 @@ package moises.com.appcoer.api;
 
 import java.util.List;
 
+import moises.com.appcoer.model.Bill;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.CourseList;
 import moises.com.appcoer.model.Lodging;
@@ -80,4 +81,7 @@ public interface ApiClient {
 
     @GET(API.PROCESS_DETAIL)
     Call<Process> getProcessDetail(@Path("id") int id);
+
+    @GET(API.BILLS)
+    Call<Bill> getBill(@Query("api_token") String apiToken);
 }

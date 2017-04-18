@@ -3,6 +3,7 @@ package moises.com.appcoer.ui.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.MethodPayment;
+import moises.com.appcoer.tools.Utils;
 
 public class MethodPaymentsAdapter extends RecyclerView.Adapter<MethodPaymentsAdapter.CourseViewHolder>{
 
@@ -43,7 +45,8 @@ public class MethodPaymentsAdapter extends RecyclerView.Adapter<MethodPaymentsAd
         holder.mTitle.setText(methodPayment.getTitle().trim());
         if(!methodPayment.getContent().isEmpty()){
             holder.mContent.setVisibility(View.VISIBLE);
-            holder.mContent.setText(Html.fromHtml(methodPayment.getContent()));
+            holder.mContent.setText(Utils.fromHtml(methodPayment.getContent()));
+            holder.mContent.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 

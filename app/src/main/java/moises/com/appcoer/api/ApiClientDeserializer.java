@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
@@ -29,11 +30,11 @@ public class ApiClientDeserializer {
         }
     }
 
-    /*static class ContactsDeserializer implements JsonDeserializer<Contacts>{
+    static class UrlBillDeserializer implements JsonDeserializer<String>{
         @Override
-        public Contacts deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            Gson gson = new Gson();
-            return gson.fromJson(json.getAsJsonObject().toString(), Contacts.class);
+        public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            return json.getAsJsonObject().has("urlbilling") ? json.getAsString() : "";
         }
-    }*/
+    }
 }

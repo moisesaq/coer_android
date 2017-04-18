@@ -114,11 +114,11 @@ public class ReservationListFragment extends BaseFragment implements Reservation
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fab_reserve_timbues:
-                replaceFragment(ReserveRoomFragment.newInstance(1), true);
+                replaceFragment(ReserveRoomFragment.newInstance(ReserveRoomFragment.ID_TIMBUES), true);
                 famReserve.close(true);
                 break;
             case R.id.fab_reserve_parana:
-                replaceFragment(ReserveRoomFragment.newInstance(2), true);
+                replaceFragment(ReserveRoomFragment.newInstance(ReserveRoomFragment.ID_PARANA), true);
                 famReserve.close(true);
                 break;
         }

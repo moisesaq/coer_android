@@ -103,7 +103,6 @@ public class CourseFragment extends Fragment {
             public void onResponse(Call<Course> call, Response<Course> response) {
                 if(response.isSuccessful()){
                     Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                    CharSequence content = Html.fromHtml(response.body().getContent());
                     showContent(response.body().getContent());
                 }
             }

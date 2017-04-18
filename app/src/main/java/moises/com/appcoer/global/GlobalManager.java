@@ -4,15 +4,18 @@ package moises.com.appcoer.global;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -147,4 +150,14 @@ public class GlobalManager {
             progressDialog.dismiss();
     }
 
+    public static CustomTabsIntent getCustomTabsIntent(Activity activity){
+        CustomTabsIntent.Builder builder =  new CustomTabsIntent.Builder()
+                .setStartAnimations(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                .setExitAnimations(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                .setToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
+                .setSecondaryToolbarColor(ContextCompat.getColor(activity, R.color.colorAccent))
+                .setShowTitle(true)
+                .setCloseButtonIcon(BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_window_close_white_24dp));
+        return builder.build();
+    }
 }

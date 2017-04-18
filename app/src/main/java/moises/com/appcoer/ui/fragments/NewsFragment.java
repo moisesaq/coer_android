@@ -81,7 +81,6 @@ public class NewsFragment extends Fragment {
             public void onResponse(Call<News> call, Response<News> response) {
                 if(response.isSuccessful()){
                     Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                    CharSequence content = Html.fromHtml(response.body().getContent());
                     showContent(response.body().getContent());
                 }
             }

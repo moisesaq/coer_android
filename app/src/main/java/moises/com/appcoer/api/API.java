@@ -10,6 +10,8 @@ public interface API {
     String RESET_PASSWORD = USERS + "/resetpassword";
 
     String LOGIN = USERS + "/login";
+    String RESERVES_LIST = USERS + "/reservas";
+    String BILLS = USERS + "/bills";
     String NEWS = API + "/noticias";
     String COURSES = API + "/cursos";
     String LODGINGS = API + "/alojamientos";
@@ -17,7 +19,6 @@ public interface API {
     String ROOM_LIST = LODGINGS + "/{id}/habitaciones";
     String RESERVES = ROOMS + "/{id}/reservas";
     String ROOM_DATES_BUSY = ROOMS + "/{id}/fechas";
-    String RESERVES_LIST = USERS + "/reservas";
 
     String SITES = API + "/sites";
     String ENROLLMENT_DATE = SITES + "/matriculation";

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,6 +52,7 @@ public class MenuFragment extends BaseFragment{
     protected @BindView(R.id.ly_parana) LinearLayout mParana;
     protected @BindView(R.id.ly_process) LinearLayout mProcess;
     protected @BindView(R.id.ly_method_payment) LinearLayout mMethodPayment;
+    protected @BindView(R.id.ly_bills) LinearLayout mBills;
 
     public MenuFragment() {
     }
@@ -72,7 +72,7 @@ public class MenuFragment extends BaseFragment{
         return view;
     }
 
-    @OnClick({R.id.cv_news, R.id.ly_news, R.id.ly_courses, R.id.ly_timbues, R.id.ly_parana, R.id.ly_process, R.id.ly_method_payment})
+    @OnClick({R.id.cv_news, R.id.ly_news, R.id.ly_courses, R.id.ly_timbues, R.id.ly_parana, R.id.ly_process, R.id.ly_method_payment, R.id.ly_bills})
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.cv_news:
@@ -86,16 +86,19 @@ public class MenuFragment extends BaseFragment{
                 mCallback.onCoursesClick();
                 break;
             case R.id.ly_timbues:
-                mCallback.onLodgingClick(1);
+                mCallback.onLodgingClick(ReserveRoomFragment.ID_TIMBUES);
                 break;
             case R.id.ly_parana:
-                mCallback.onLodgingClick(2);
+                mCallback.onLodgingClick(ReserveRoomFragment.ID_PARANA);
                 break;
             case R.id.ly_process:
                 mCallback.onProcessesClick();
                 break;
             case R.id.ly_method_payment:
                 mCallback.onMethodPaymentsClick();
+                break;
+            case R.id.ly_bills:
+                mCallback.onBillsClick();
                 break;
         }
     }
@@ -189,5 +192,6 @@ public class MenuFragment extends BaseFragment{
         void onLodgingClick(int id);
         void onProcessesClick();
         void onMethodPaymentsClick();
+        void onBillsClick();
     }
 }

@@ -21,6 +21,7 @@ import butterknife.OnClick;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
+import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.model.Process;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.view.LoadingView;
@@ -95,20 +96,12 @@ public class ProcessFragment extends BaseFragment {
     @OnClick(R.id.b_download_document)
     public void onClick(View view){
         if (view.getId() == bDownloadDocument.getId()){
-            showDocument(process.getUrl(), getActivity());
+            showDocument(process.getUrl());
         }
     }
 
-    private void showDocument(String url, Activity activity){
-        CustomTabsIntent.Builder builder =  new CustomTabsIntent.Builder()
-                .setStartAnimations(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .setExitAnimations(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .setToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
-                .setSecondaryToolbarColor(ContextCompat.getColor(activity, R.color.colorAccent))
-                .setShowTitle(true)
-                .setCloseButtonIcon(BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_window_close_white_24dp));
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(activity, Uri.parse("https://docs.google.com/viewerng/viewer?url=" + url));
+    private void showDocument(String url){
+        GlobalManager.getCustomTabsIntent(getActivity()).launchUrl(getActivity(), Uri.parse("https://docs.google.com/viewerng/viewer?url=" + url));
     }
 
     @Override

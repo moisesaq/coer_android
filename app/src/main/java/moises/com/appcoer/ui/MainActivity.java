@@ -2,6 +2,7 @@ package moises.com.appcoer.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,22 +20,28 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import moises.com.appcoer.R;
+import moises.com.appcoer.api.ApiClient;
+import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.global.UserGuide;
+import moises.com.appcoer.model.Bill;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.User;
+import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.fragments.CourseListFragment;
 import moises.com.appcoer.ui.fragments.IntroduceLodgingFragment;
 import moises.com.appcoer.ui.fragments.MenuFragment;
 import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
 import moises.com.appcoer.ui.fragments.NewsFragment;
 import moises.com.appcoer.ui.fragments.NewsListFragment;
-import moises.com.appcoer.ui.fragments.ProcessFragment;
 import moises.com.appcoer.ui.fragments.ProcessListFragment;
 import moises.com.appcoer.ui.fragments.ReservationListFragment;
 import moises.com.appcoer.ui.fragments.ReserveRoomFragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCoursesFragmentListener,
                                                                     MenuFragment.Callback, ReserveRoomFragment.OnReserveRoomFragmentListener{
@@ -144,7 +151,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showFragment(MethodPaymentsFragment.newInstance(), true);
         } else if (id == R.id.nav_processes) {
             showFragment(ProcessListFragment.newInstance(), true);
-        } else if(id == R.id.nav_logout){
+        } else if (id == R.id.nav_bills) {
+            showBills();
+        }else if(id == R.id.nav_logout){
             logout();
         }
 
@@ -183,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
             builder.create().show();
         }
-
     }
 
     /*FRAGMENT COURSE LISTENER*/
@@ -226,6 +234,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onMethodPaymentsClick() {
         showFragment(MethodPaymentsFragment.newInstance(), true);
+    }
+
+    @Override
+    public void onBillsClick() {
+        showBills();
+    }
+
+    private void showBills(){
+        GlobalManager.showProgressDialog();
+        if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
+            ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+            Call<Bill> billCall = apiClient.getBill(Session.getInstance().getUser().getApiToken());
+            billCall.enqueue(new Callback<Bill>() {
+                @Override
+                public void onResponse(Call<Bill> call, Response<Bill> response) {
+                    GlobalManager.dismissProgressDialog();
+                    if(response.isSuccessful() && !response.body().getUrl().isEmpty()) {
+                        GlobalManager.getCustomTabsIntent(MainActivity.this).launchUrl(MainActivity.this, Uri.parse(response.body().getUrl()));
+                    }else{
+                        Utils.showToastMessage(getString(R.string.message_something_went_wrong));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Bill> call, Throwable t) {
+                    GlobalManager.dismissProgressDialog();
+                    Utils.showToastMessage(getString(R.string.message_something_went_wrong));
+                }
+            });
+        }else{
+            showMessageNeedSignUp();
+        }
     }
 
     /*RESERVE ROOM FRAGMENT LISTENER*/

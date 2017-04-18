@@ -28,6 +28,11 @@
             android:id="@+id/nav_processes"
             android:icon="@drawable/svg_doc"
             android:title="@string/nav_processes"/>
+
+        <item
+            android:id="@+id/nav_bills"
+            android:icon="@drawable/svg_printer_settings"
+            android:title="@string/nav_bills"/>
     </group>
 
     <group android:checkableBehavior="single">

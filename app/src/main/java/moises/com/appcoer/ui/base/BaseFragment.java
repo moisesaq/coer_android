@@ -5,12 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.global.GlobalManager;
-import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.ui.MainActivity;
 
 public class BaseFragment extends Fragment{

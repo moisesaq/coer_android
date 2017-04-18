@@ -37,6 +37,8 @@ import retrofit2.Response;
 public class ReserveRoomFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener,
                                                                         AmountPeopleDialog.OnAmountPeopleDialogListener,
                                                                                 InputTextView.Callback, DateCustomDialog.OnDateCustomDialogListener{
+    public static final int ID_PARANA = 1;
+    public static final int ID_TIMBUES = 2;
     private static final String TAG = ReserveRoomFragment.class.getSimpleName();
     private static final int ID_ROOM_DEFAULT = 1010;
     private static final String ARG_PARAM1 = "idLodging";
@@ -78,7 +80,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     private void setupView(View view){
         setTitle(getString(R.string.title_reserve_room));
         TextView mTitleLodging = (TextView)view.findViewById(R.id.tv_title_lodging);
-        if(idLodging == 2)
+        if(idLodging == ID_PARANA)
             mTitleLodging.setText(getString(R.string.lodging_panana));
         Spinner spinnerRooms = (Spinner)view.findViewById(R.id.spinner_rooms);
         spinnerRooms.setOnItemSelectedListener(this);
