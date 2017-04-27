@@ -12,6 +12,10 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindColor;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 import moises.com.appcoer.R;
 import moises.com.appcoer.ui.App;
@@ -19,8 +23,14 @@ import moises.com.appcoer.ui.base.BaseLoginFragment;
 import moises.com.appcoer.ui.base.IntroduceItem;
 import moises.com.appcoer.ui.base.IntroducePageAdapter;
 
-public class OnBoardingFragment extends BaseLoginFragment implements View.OnClickListener{
-    private View view;
+public class OnBoardingFragment extends BaseLoginFragment{
+
+    @BindView(R.id.indicator) protected CircleIndicator mCircleIndicator;
+    @BindView(R.id.vp_on_boarding) protected ViewPager mViewPager;
+    @BindView(R.id.b_started) protected Button mStated;
+
+    @BindColor(android.R.color.white) int white;
+
     private OnBoardingFragmentListener listener;
 
     public static OnBoardingFragment newInstance() {
@@ -29,30 +39,24 @@ public class OnBoardingFragment extends BaseLoginFragment implements View.OnClic
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_on_boarding, container, false);
+        View view = inflater.inflate(R.layout.fragment_on_boarding, container, false);
+        ButterKnife.bind(this, view);
         hideToolbar();
         setup();
         return view;
     }
 
     private void setup(){
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.vp_on_boarding);
         IntroducePageAdapter adapter = new IntroducePageAdapter(getItemsOnBoarding());
-        adapter.setColorText(android.R.color.white);
-        viewPager.setAdapter(adapter);
-
-        CircleIndicator circleIndicator = (CircleIndicator)view.findViewById(R.id.indicator);
-        circleIndicator.setViewPager(viewPager);
-        Button bStarted = (Button) view.findViewById(R.id.b_started);
-        bStarted.setOnClickListener(this);
+        adapter.setColorText(white);
+        mViewPager.setAdapter(adapter);
+        mCircleIndicator.setViewPager(mViewPager);
     }
 
-    @Override
+    @OnClick(R.id.b_started)
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.b_started:
-                goToLogin();
-                break;
+        if(v.getId() == R.id.b_started){
+            goToLogin();
         }
     }
 

@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.tools.Utils;
@@ -60,14 +62,14 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        RoundedImageView mImage;
-        TextView mTitle, mDate, mContent;
+        @BindView(R.id.riv_news) RoundedImageView mImage;
+        @BindView(R.id.tv_title) TextView mTitle;
+        @BindView(R.id.tv_date) TextView mDate;
+        @BindView(R.id.tv_content) TextView mContent;
+
         public NewsViewHolder(View view) {
             super(view);
-            mImage = (RoundedImageView) view.findViewById(R.id.riv_news);
-            mTitle = (TextView)view.findViewById(R.id.tv_title);
-            mDate = (TextView)view.findViewById(R.id.tv_date);
-            mContent = (TextView)view.findViewById(R.id.tv_content);
+            ButterKnife.bind(this, view);
             view.setOnClickListener(this);
         }
 

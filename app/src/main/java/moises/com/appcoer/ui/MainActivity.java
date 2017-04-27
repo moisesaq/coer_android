@@ -39,6 +39,7 @@ import moises.com.appcoer.ui.fragments.NewsListFragment;
 import moises.com.appcoer.ui.fragments.ProcessListFragment;
 import moises.com.appcoer.ui.fragments.ReservationListFragment;
 import moises.com.appcoer.ui.fragments.ReserveRoomFragment;
+import moises.com.appcoer.ui.test.TestFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -154,7 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_bills) {
             showBills();
         }else if(id == R.id.nav_logout){
-            logout();
+            //logout();
+            showFragment(TestFragment.newInstance(), true);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

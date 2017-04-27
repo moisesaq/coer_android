@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
@@ -33,14 +35,12 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
     private static final String TAG = NewsListFragment.class.getSimpleName();
 
     private View view;
-    private RecyclerView mRecyclerView;
-    private LoadingView mLoadingView;
-    private ProgressBar mProgressBar;
+    @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
+    @BindView(R.id.loading_view) protected LoadingView mLoadingView;
+    @BindView(R.id.progressBar) protected ProgressBar mProgressBar;
+
     private NewsListAdapter mNewsListAdapter;
     private boolean outstanding;
-
-    public NewsListFragment() {
-    }
 
     public static NewsListFragment newInstance(boolean outstanding) {
         Bundle bundle = new Bundle();
@@ -61,6 +61,7 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(view == null){
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
+            ButterKnife.bind(this, view);
             setupView();
         }
         setTitle(outstanding ? getString(R.string.last_news) : getString(R.string.nav_news), R.id.nav_news);
@@ -68,9 +69,6 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
     }
 
     private void setupView(){
-        mLoadingView = (LoadingView)view.findViewById(R.id.loading_view);
-        mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), linearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);

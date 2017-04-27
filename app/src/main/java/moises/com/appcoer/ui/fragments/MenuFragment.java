@@ -46,14 +46,6 @@ public class MenuFragment extends BaseFragment{
     protected @BindView(R.id.tv_title_news) TextView mTitleNews;
     protected @BindView(R.id.tv_description_news) TextView mDescriptionNews;
 
-    protected @BindView(R.id.ly_news) LinearLayout mNews;
-    protected @BindView(R.id.ly_courses) LinearLayout mCourses;
-    protected @BindView(R.id.ly_timbues) LinearLayout mTimbues;
-    protected @BindView(R.id.ly_parana) LinearLayout mParana;
-    protected @BindView(R.id.ly_process) LinearLayout mProcess;
-    protected @BindView(R.id.ly_method_payment) LinearLayout mMethodPayment;
-    protected @BindView(R.id.ly_bills) LinearLayout mBills;
-
     public MenuFragment() {
     }
 
@@ -174,8 +166,7 @@ public class MenuFragment extends BaseFragment{
         if (context instanceof MenuFragment.Callback) {
             mCallback = (MenuFragment.Callback) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement Callback");
+            throw new RuntimeException(context.toString() + " must implement Callback");
         }
     }
 
