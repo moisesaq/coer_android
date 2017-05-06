@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class ProcessFragment extends BaseFragment {
 
     private Process process;
     protected @BindView(R.id.loading_view) LoadingView mLoadingView;
+    protected @BindView(R.id.cv_content) CardView mCardViewContent;
     protected @BindView(R.id.content_detail) LinearLayout mContentDetail;
     protected @BindView(R.id.tv_title) TextView mTitle;
     protected @BindView(R.id.b_download_document) Button bDownloadDocument;
@@ -80,7 +82,12 @@ public class ProcessFragment extends BaseFragment {
                     process = response.body();
                     if(process.getUrl() != null && !process.getUrl().isEmpty())
                         bDownloadDocument.setVisibility(View.VISIBLE);
-                    mContent.loadData(response.body().getContent(), "text/html; charset=utf-8","UTF-8");
+
+                    if(process.getContent() != null && !process.getContent().isEmpty()){
+                        mCardViewContent.setVisibility(View.VISIBLE);
+                        mContent.loadData(response.body().getContent(), "text/html; charset=utf-8","UTF-8");
+                    }
+
                 }else{
                     mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mContentDetail);
                 }

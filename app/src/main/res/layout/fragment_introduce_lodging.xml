@@ -30,30 +30,22 @@
                 card_view:cardCornerRadius="4dp"
                 card_view:cardElevation="4dp"
                 card_view:cardUseCompatPadding="true">
-
-                <FrameLayout
+                <ImageView
+                    android:id="@+id/iv_lodging"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/iv_lodging"
-                        android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:layout_gravity="center_horizontal"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/image_load" />
-
-                    <Button
-                        android:id="@+id/b_reserve"
-                        android:text="@string/reserve"
-                        android:layout_height="30dp"
-                        android:drawableLeft="@drawable/svg_hotel"
-                        style="@style/ButtonReserve"
-                        android:layout_gravity="bottom|end"/>
-
-                </FrameLayout>
+                    android:layout_height="180dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/image_load" />
             </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/b_reserve"
+                style="@style/ButtonReserve"
+                android:text="@string/reserve"
+                android:drawableLeft="@drawable/svg_hotel"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="140dp" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"

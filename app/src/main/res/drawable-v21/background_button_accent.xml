@@ -6,6 +6,11 @@
         <shape>
             <solid android:color="@color/colorPrimaryLight"/>
             <corners android:radius="3dp"/>
+            <padding
+                android:right="10dp"
+                android:bottom="10dp"
+                android:left="10dp"
+                android:top="10dp"/>
         </shape>
     </item>
 
@@ -13,6 +18,11 @@
         <shape>
             <solid android:color="@color/colorAccent"/>
             <corners android:radius="2dp"/>
+            <padding
+                android:right="12dp"
+                android:bottom="10dp"
+                android:left="12dp"
+                android:top="10dp"/>
         </shape>
     </item>
 </ripple>
