@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "183754347206",
+    "firebase_url": "https://appcoer.firebaseio.com",
+    "project_id": "appcoer",
+    "storage_bucket": "appcoer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183754347206:android:52e8ad2ac01e9c67",
+        "android_client_info": {
+          "package_name": "moises.com.appcoer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183754347206-9rbpkun4vlr12eg6cvcqcg05bno72ju7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "moises.com.appcoer",
+            "certificate_hash": "92f97321d1fbff7be2848c2ef4f4772a5ff60894"
+          }
+        },
+        {
+          "client_id": "183754347206-h1c38j3ak51cnfpelcphd9u43enh5rt4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5TumSH-GMNTKbBHnpKfClMB_LS9euJ-8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183754347206-h1c38j3ak51cnfpelcphd9u43enh5rt4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

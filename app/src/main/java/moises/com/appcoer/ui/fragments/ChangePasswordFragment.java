@@ -74,7 +74,6 @@ public class ChangePasswordFragment extends BaseLoginFragment implements View.On
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 GlobalManager.dismissProgressDialog();
                 if(response.isSuccessful()){
-                    Log.d(TAG, " SUCCESS >>> " + response.message() + " code >>> " + response.code());
                     mListener.onChangePasswordSuccessful(response.body().get(0));
                 }else{
                     Utils.showToastMessage(getString(R.string.message_something_went_wrong));

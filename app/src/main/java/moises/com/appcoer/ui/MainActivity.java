@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_bills) {
             showBills();
         }else if(id == R.id.nav_logout){
-            //logout();
-            showFragment(TestFragment.newInstance(), true);
+            logout();
+            //showFragment(TestFragment.newInstance(), true);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

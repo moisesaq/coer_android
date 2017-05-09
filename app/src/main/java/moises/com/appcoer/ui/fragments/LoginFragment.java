@@ -13,6 +13,7 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
+import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseLoginFragment;
@@ -87,9 +88,8 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.d(TAG, "SUCCESS >>> " + response.message() + " code " + response.code());
                 GlobalManager.dismissProgressDialog();
-                if(response.body() != null){
+                if(response.isSuccessful() && response.body() != null){
                     mListener.onLoginSuccessful(response.body());
                 }else{
                     Utils.showDialogMessage("", getString(R.string.error_incorrect_password), null);

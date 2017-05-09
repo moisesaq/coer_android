@@ -12,6 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,6 +24,7 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
+import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
@@ -191,7 +195,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
                 Log.d(TAG, " Success >>>> " + response.message() + "code " +response.code());
                 GlobalManager.dismissProgressDialog();
                 if(response.isSuccessful()){
-                    Log.d(TAG, " Success >>>> " + response.body().toString());
+                    LogEvent.logEventFirebaseAnalytic(getContext(), LogEvent.EVENT_RESERVE_ROON);
                     Utils.showDialogMessage("", getString(R.string.message_reservation_successful), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -199,14 +203,14 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
                         }
                     });
                 }else {
-                    Utils.showDialogMessage("", getString(R.string.message_reservation_failed), null);
+                    Utils.showDialogMessage("", getSafeString(R.string.message_reservation_failed), null);
                 }
             }
 
             @Override
             public void onFailure(Call<Reservation> call, Throwable t) {
                 GlobalManager.dismissProgressDialog();
-                Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
+                Utils.showDialogMessage("", getSafeString(R.string.message_something_went_wrong), null);
             }
         });
     }
@@ -242,9 +246,8 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
             List<String> dateListNotAvailable = Arrays.asList(textDatesNotAvailable);
             if(isDatesSelectedAvailable(dateListSelected, dateListNotAvailable)){
                 dateListForReserve = dateListSelected;
-                Log.d(TAG, " DATES RESERVE >>> " + dateListForReserve.toString());
             }else{
-                Utils.showToastMessage("Error al seleccionar fechas");
+                Utils.showToastMessage(getSafeString(R.string.message_error_dates_selected));
                 clearDates();
             }
         }
@@ -287,7 +290,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
                     textDatesNotAvailable = response.body().toArray(textDatesNotAvailable);
                     showDateDialog(DateCustomDialog.ReserveDate.FROM_DATE);
                 }else{
-                    Utils.showToastMessage(getString(R.string.message_something_went_wrong));
+                    Utils.showToastMessage(getSafeString(R.string.message_something_went_wrong));
                 }
                 mProgressBar.setVisibility(View.GONE);
             }
@@ -295,7 +298,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
-                Utils.showToastMessage(getString(R.string.message_something_went_wrong));
+                Utils.showToastMessage(getSafeString(R.string.message_something_went_wrong));
             }
         });
     }

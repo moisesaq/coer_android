@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.customtabs.CustomTabsIntent;
@@ -20,6 +21,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.regex.Pattern;
 
@@ -45,24 +48,6 @@ public class GlobalManager {
     public static AppCompatActivity getActivityGlobal() {
         return activityGlobal;
     }
-
-    /*public static void logEventWithFirebaseAnalytic(String id, String name, String contentType){
-        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(getActivityGlobal().getApplicationContext());
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
-        if(!contentType.isEmpty())
-            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-    }
-
-    public static void logEventFirebaseAnalytic(String event){
-        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(getActivityGlobal().getApplicationContext());
-        Bundle bundle = new Bundle();
-        bundle.putString("user_name", Session.getInstance().getUser().getFirstName());
-        bundle.putString("user_email", Session.getInstance().getUser().getEmail());
-        firebaseAnalytics.logEvent("create_trip", bundle);
-    }*/
 
     /*HAS PERMISSION*/
     public static boolean hasPermission(String[] permissions){

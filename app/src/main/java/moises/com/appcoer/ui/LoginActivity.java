@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
+import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.dialogs.ResetPasswordDialog;
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     @Override
     public void onLoginSuccessful(User user) {
         Session.getInstance().setUser(user);
+        LogEvent.logEventFirebaseAnalytic(this, LogEvent.EVENT_START_SESSION);
         if(user.getFirstTime() == 1){
             showFragment(ChangePasswordFragment.newInstance(), true);
         }else{

@@ -100,4 +100,5 @@
     <string name="message_without_processes">No processing was found</string>
     <string name="download_document">Download document</string>
     <string name="nav_bills">See here your invoice</string>
+    <string name="message_error_dates_selected">Error when in dates selected</string>
 </resources>
