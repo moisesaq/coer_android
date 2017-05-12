@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageOnBoarding"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/default_profile"
+            android:background="@drawable/background_button_g"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/titleOnBoarding"
+                style="@style/TextViewTechnoMedium"
+                android:text="Quick orders"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/margin_medium_global"/>
+            <TextView
+                android:id="@+id/subtitleOnBoarding"
+                style="@style/TextViewTechnoSmall"
+                android:layout_width="200dp"
+                android:text="Test test test test bla bla bla bla bla bla"
+                android:textColor="@color/colorPrimaryText"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:lines="2"
+                android:layout_margin="@dimen/margin_medium_global"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

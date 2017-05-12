@@ -68,7 +68,8 @@
                     <TextView
                         android:id="@+id/tv_rate_from"
                         style="@style/TextViewSmall"
-                        android:text="Rate from" />
+                        android:text="Rate from"
+                        android:visibility="gone"/>
 
                     <WebView
                         android:id="@+id/webView"

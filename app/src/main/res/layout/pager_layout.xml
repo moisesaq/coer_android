@@ -20,16 +20,13 @@
             android:src="@mipmap/default_profile"
             android:background="@drawable/background_button_g"/>
 
-        <!-- NOTE font Available from android 4.1 API level 16
-        android:fontFamily="sans-serif-medium"
-        android:fontFamily="sans-serif"-->
-
         <TextView
             android:id="@+id/titleOnBoarding"
             style="@style/TextViewTechnoMedium"
             android:text="Quick orders"
             android:textColor="@color/colorPrimaryText"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_medium_global"/>
 
         <TextView
             android:id="@+id/subtitleOnBoarding"
@@ -40,7 +37,7 @@
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:lines="2"
-            android:layout_marginTop="10dp"/>
+            android:layout_margin="@dimen/margin_medium_global"/>
 
     </LinearLayout>
 

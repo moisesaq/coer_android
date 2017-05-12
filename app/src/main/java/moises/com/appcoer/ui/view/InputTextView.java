@@ -62,6 +62,9 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
     private void initialize(AttributeSet attrs){
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.InputTextView);
 
+        int id = typedArray.getInt(R.styleable.InputTextView_android_id, 0);
+        setIdEditText(id);
+
         Drawable imageIcon = typedArray.getDrawable(R.styleable.InputTextView_iconImage);
         setImageIcon(imageIcon);
 
@@ -110,6 +113,10 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
 
     public void clearField(){
         this.editText.getText().clear();
+    }
+
+    public void setIdEditText(int id){
+        this.editText.setId(id);
     }
 
     public void setImageIcon(Drawable imageIcon){
@@ -230,7 +237,7 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
     public boolean isPasswordValid(){
         String password = editText.getText().toString().trim();
         if(password.isEmpty()){
-            textInputLayout.setError(textInputLayout.getHint() + getContext().getString(R.string.error_field_required));
+            textInputLayout.setError(getContext().getString(R.string.error_field_required));
             return false;
         }
         textInputLayout.setError(null);
@@ -239,6 +246,10 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
 
     public void setError(String error){
         textInputLayout.setError(error);
+    }
+
+    public EditText getEditText(){
+        return editText;
     }
 
     public void addCallback(Callback callback){

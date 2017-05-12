@@ -52,8 +52,11 @@ public class DateCustomDialog extends DatePickerDialog implements DatePickerDial
     public void onStart() {
         super.onStart();
         setMinDate(Utils.toCalendar(new Date()));
-        if(textDates != null)
+        if(textDates != null && textDates.length > 0){
             disabledDays(Arrays.asList(textDates));
+        }else{
+            updated();
+        }
     }
 
     private void disabledDays(List<String> dateTextList){
@@ -61,16 +64,14 @@ public class DateCustomDialog extends DatePickerDialog implements DatePickerDial
         for (String dateText: dateTextList)
             dateList.add(Utils.parseStringToDate(dateText, Utils.DATE_FORMAT_INPUT));
 
-        if(dateList.size() > 0){
-            Calendar[] calendars = new Calendar[dateList.size()];
-            int i = 0;
-            for (Date date: dateList) {
-                calendars[i] = Utils.toCalendar(date);
-                i++;
-            }
-            setDisabledDays(calendars);
-            updated();
+        Calendar[] calendars = new Calendar[dateList.size()];
+        int i = 0;
+        for (Date date: dateList) {
+            calendars[i] = Utils.toCalendar(date);
+            i++;
         }
+        setDisabledDays(calendars);
+        updated();
     }
 
     private void updated(){

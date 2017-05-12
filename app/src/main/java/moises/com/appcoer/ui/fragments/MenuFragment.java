@@ -54,6 +54,12 @@ public class MenuFragment extends BaseFragment{
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(view == null){
             view = inflater.inflate(R.layout.fragment_menu, container, false);

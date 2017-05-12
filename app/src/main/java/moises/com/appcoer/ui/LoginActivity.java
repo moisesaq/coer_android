@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -28,15 +30,14 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         GlobalManager.setActivityGlobal(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        showFragment(OnBoardingFragment.newInstance(), true);
         setup();
     }
 
     private void setup(){
         if(!OnBoardingFragment.isOnBoardingCompleted()){
-            showFragment(OnBoardingFragment.newInstance(), true);
+            showFragment(OnBoardingFragment.newInstance(), false);
         }else{
-            showFragment(LoginFragment.newInstance(), true);
+            showFragment(LoginFragment.newInstance(), false);
         }
     }
 
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         if(user.getFirstTime() == 1){
             showFragment(ChangePasswordFragment.newInstance(), true);
         }else{
-            goToMainActivity(false);
+            goToMainActivity(true);
         }
     }
 
@@ -92,6 +93,15 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     public void onChangePasswordSuccessful(User user) {
         Session.getInstance().setUser(user);
         goToMainActivity(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0){
+            getSupportFragmentManager().popBackStack();
+        } else {
+            finish();
+        }
     }
 
 }

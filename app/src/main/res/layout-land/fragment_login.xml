@@ -1,0 +1,87 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:moi="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="moises.com.appcoer.ui.fragments.LoginFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/civ_image_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/logo"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_min_global"
+            app:siBorderWidth="2dp"
+            app:siBorderColor="@color/colorPrimaryLight"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/margin_min_global">
+
+            <moises.com.appcoer.ui.view.InputTextView
+                android:id="@+id/itv_user_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                moi:iconImage="@drawable/svg_email"
+                moi:hint="@string/registration_number"
+                android:text=""
+                android:inputType="textEmailAddress"
+                android:layout_marginRight="@dimen/margin_min_global"/>
+
+            <moises.com.appcoer.ui.view.InputTextView
+                android:id="@+id/itv_password"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                moi:iconImage="@drawable/svg_lock"
+                moi:hint="@string/password"
+                android:text=""
+                android:inputType="textPassword"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/margin_min_global">
+            <Button
+                android:id="@+id/b_login"
+                style="@style/ButtonCustom"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/log_in"
+                android:layout_marginRight="@dimen/margin_min_global"/>
+            <Button
+                android:id="@+id/b_guest"
+                style="@style/ButtonCustom"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/guest" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            style="@style/TextViewSmall"
+            android:text="@string/forgot_password"
+            android:textColor="@color/colorSecondaryText"
+            android:layout_marginTop="@dimen/margin_medium_global"
+            android:background="?selectableItemBackground"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_account) {
@@ -285,5 +284,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         builder.create().show();
+    }
+
+    private Fragment getFragment(String tag){
+        return getSupportFragmentManager().findFragmentByTag(tag);
     }
 }

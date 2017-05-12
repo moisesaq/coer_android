@@ -7,13 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
-import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseLoginFragment;
@@ -22,20 +23,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginFragment extends BaseLoginFragment implements View.OnClickListener{
+public class LoginFragment extends BaseLoginFragment{
     public static final String TAG = LoginFragment.class.getSimpleName();
 
-    private static final String ARG_PARAM1 = "param1";
-    private String mParam1;
+    private static final String USER_NAME = "user_name";
+    private static final String PASSWORD = "password";
 
-    private InputTextView mUserName, mPassword;
-    private Button mSignIn;
+    @BindView(R.id.itv_user_name) protected InputTextView mUserName;
+    @BindView(R.id.itv_password) protected InputTextView mPassword;
+    @BindView(R.id.b_login) protected Button mLogin;
 
     private OnLoginFragmentListener mListener;
-
-    public LoginFragment() {
-        // Required empty public constructor
-    }
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -44,33 +42,33 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        setupView(view);
+        setupView(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         return view;
     }
 
-    private void setupView(View view){
+    private void setupView(View view, Bundle savedInstanceState){
         setTitle(getString(R.string.app_full_name1), getString(R.string.app_full_name2));
         mUserName = (InputTextView)view.findViewById(R.id.itv_user_name);
         mPassword = (InputTextView)view.findViewById(R.id.itv_password);
-        Button bLogin = (Button)view.findViewById(R.id.b_login);
-        bLogin.setOnClickListener(this);
-        Button bGuest = (Button)view.findViewById(R.id.b_guest);
-        bGuest.setOnClickListener(this);
-        TextView mForgotPassword = (TextView)view.findViewById(R.id.tv_forgot_password);
-        mForgotPassword.setOnClickListener(this);
+        if(savedInstanceState != null){
+            mUserName.setText(savedInstanceState.getString(USER_NAME, ""));
+            mPassword.setText(savedInstanceState.getString(PASSWORD, ""));
+        }
     }
 
-    @Override
+    @OnClick({R.id.b_login, R.id.b_guest, R.id.tv_forgot_password})
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.b_login:
-                login(mUserName.getText(), mPassword.getText());
+                if(mUserName.isTextValid() && mPassword.isPasswordValid())
+                    login(mUserName.getText(), mPassword.getText());
                 break;
             case R.id.b_guest:
                 mListener.onStartGuest();
@@ -92,7 +90,7 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
                 if(response.isSuccessful() && response.body() != null){
                     mListener.onLoginSuccessful(response.body());
                 }else{
-                    Utils.showDialogMessage("", getString(R.string.error_incorrect_password), null);
+                    Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
                 }
             }
 
@@ -111,8 +109,7 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
         if (context instanceof OnLoginFragmentListener) {
             mListener = (OnLoginFragmentListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnLoginFragmentListener");
+            throw new RuntimeException(context.toString() + " must implement OnLoginFragmentListener");
         }
     }
 
@@ -120,6 +117,13 @@ public class LoginFragment extends BaseLoginFragment implements View.OnClickList
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(USER_NAME, mUserName.getText());
+        savedInstanceState.putString(PASSWORD, mPassword.getText());
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     public interface OnLoginFragmentListener {

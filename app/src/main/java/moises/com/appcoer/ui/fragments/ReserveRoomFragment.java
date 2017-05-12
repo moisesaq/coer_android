@@ -3,9 +3,11 @@ package moises.com.appcoer.ui.fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -39,8 +41,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReserveRoomFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener,
-                                                                        AmountPeopleDialog.OnAmountPeopleDialogListener,
-                                                                                InputTextView.Callback, DateCustomDialog.OnDateCustomDialogListener{
+                                                                        AmountPeopleDialog.OnAmountPeopleDialogListener, InputTextView.Callback,
+                                                                                    DateCustomDialog.OnDateCustomDialogListener, TextView.OnEditorActionListener{
     public static final int ID_PARANA = 1;
     public static final int ID_TIMBUES = 2;
     private static final String TAG = ReserveRoomFragment.class.getSimpleName();
@@ -100,10 +102,17 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         mToDate = (InputTextView)view.findViewById(R.id.itv_to_date);
         mToDate.setEnabled(false);
         mToDate.addCallback(this);
+
         mName = (InputTextView)view.findViewById(R.id.itv_name);
+        mName.getEditText().setOnEditorActionListener(this);
+
         mLastName = (InputTextView)view.findViewById(R.id.itv_last_name);
+        mLastName.getEditText().setOnEditorActionListener(this);
         mEmail = (InputTextView)view.findViewById(R.id.itv_email);
+        mEmail.getEditText().setOnEditorActionListener(this);
         mPhone = (InputTextView)view.findViewById(R.id.itv_phone);
+        mPhone.getEditText().setOnEditorActionListener(this);
+
         mAmountPeople = (InputTextView)view.findViewById(R.id.itv_amount_people);
         mAmountPeople.setEnabled(false);
         mAmountPeople.addCallback(this);
@@ -247,7 +256,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
             if(isDatesSelectedAvailable(dateListSelected, dateListNotAvailable)){
                 dateListForReserve = dateListSelected;
             }else{
-                Utils.showToastMessage(getSafeString(R.string.message_error_dates_selected));
+                Utils.showDialogMessage("", getSafeString(R.string.message_error_dates_selected), null);
                 clearDates();
             }
         }
@@ -262,6 +271,7 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onNumberPeopleSelected(int numberPeople) {
         mAmountPeople.setText(String.valueOf(numberPeople));
+        mAdditionalInformation.requestFocus();
     }
 
     @Override
@@ -284,7 +294,8 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
         listCall.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                if(response.isSuccessful() && response.body() != null && response.body().size() > 0){
+                Log.d(TAG, " RESULT >>> " + response.code() + " --> " + response.message());
+                if(response.isSuccessful() && response.body() != null){
                     Log.d(TAG, " SUCCESS >>> " + response.body().toString());
                     textDatesNotAvailable = new String[response.body().size()];
                     textDatesNotAvailable = response.body().toArray(textDatesNotAvailable);
@@ -316,6 +327,20 @@ public class ReserveRoomFragment extends BaseFragment implements View.OnClickLis
             stringList.add(Utils.getCustomizedDate(Utils.DATE_FORMAT_INPUT, date));
         }
         return stringList;
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        if(i == EditorInfo.IME_ACTION_NEXT){
+            if(mName.hasFocus()){
+                mLastName.requestFocus();
+            }else if(mEmail.hasFocus()){
+                mPhone.requestFocus();
+            }else if(mPhone.hasFocus()){
+                AmountPeopleDialog.newInstance(1, 4, this).show(getFragmentManager(), AmountPeopleDialog.TAG);
+            }
+        }
+        return false;
     }
 
     public interface OnReserveRoomFragmentListener {
