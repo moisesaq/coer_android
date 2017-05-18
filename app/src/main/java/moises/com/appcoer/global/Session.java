@@ -34,8 +34,7 @@ public class Session {
 
     public void setUser(User user) {
         this.user = user;
-        if(user != null)
-            saveUser(user);
+        saveUser(user);
     }
 
     /*SHARED PREFERENCES SESSION*/
@@ -55,7 +54,7 @@ public class Session {
     public static void clearSession(){
         Session.getInstance().setUser(null);
         SharedPreferences sharedPreferences = App.getContext().getSharedPreferences(SESSION, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor =sharedPreferences.edit();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(USER_DATA);
         editor.apply();
     }
