@@ -4,8 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import moises.com.appcoer.ui.test.DaggerWeaponComponent;
-import moises.com.appcoer.ui.test.WeaponComponent;
-import moises.com.appcoer.ui.test.WeaponModule;
+import moises.com.appcoer.ui.test.dagger.WeaponComponent;
 
 public class App extends Application{
 

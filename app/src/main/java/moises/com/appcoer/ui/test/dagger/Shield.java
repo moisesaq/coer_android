@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.test;
+package moises.com.appcoer.ui.test.dagger;
 
 public class Shield {
 

@@ -14,12 +14,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import moises.com.appcoer.R;
-import moises.com.appcoer.ui.App;
+import moises.com.appcoer.ui.test.dagger.CapAmerica;
 
 public class TestFragment extends Fragment {
 
     @BindView(R.id.textView) protected TextView textView;
-    @Inject CapAmerica mCapAmerica;
+    @Inject
+    CapAmerica mCapAmerica;
 
     public static TestFragment newInstance(){
         return new TestFragment();
@@ -27,7 +28,7 @@ public class TestFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((App)getActivity().getApplicationContext()).getWeaponComponent().inject(this);
+        //((App)getActivity().getApplicationContext()).getWeaponComponent().inject(this);
     }
 
     @Nullable
