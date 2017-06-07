@@ -21,7 +21,6 @@ import moises.com.appcoer.model.CourseList;
 import moises.com.appcoer.tools.EndlessRecyclerOnScrollListener;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.adapters.CourseListAdapter;
-import moises.com.appcoer.ui.adapters.NewsListAdapter;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -24,7 +24,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChangePasswordFragment extends BaseLoginFragment implements View.OnClickListener{
-    private static final String TAG = ChangePasswordFragment.class.getSimpleName();
     private OnChangePasswordFragmentListener mListener;
 
     private InputTextView mEmail, mNewPassword, mRepeatNewPassword;

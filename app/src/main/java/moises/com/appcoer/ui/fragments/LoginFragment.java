@@ -8,9 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import org.reactivestreams.Subscriber;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
@@ -68,7 +73,7 @@ public class LoginFragment extends BaseLoginFragment{
         switch (view.getId()){
             case R.id.b_login:
                 if(mUserName.isTextValid() && mPassword.isPasswordValid())
-                    login(mUserName.getText(), mPassword.getText());
+                    startLogin(mUserName.getText(), mPassword.getText());
                 break;
             case R.id.b_guest:
                 mListener.onStartGuest();
@@ -77,6 +82,18 @@ public class LoginFragment extends BaseLoginFragment{
                 mListener.onForgotPasswordClick();
                 break;
         }
+    }
+
+    private void startLogin(String userName, String password){
+        GlobalManager.showProgressDialog();
+        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        apiClient.startLogin(userName, password)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(user -> mListener.onLoginSuccessful(user), error -> {
+                    Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
+                    Log.d(TAG, "ERROR >>> " + error.toString());
+                });
     }
 
     private void login(String userName, String password){

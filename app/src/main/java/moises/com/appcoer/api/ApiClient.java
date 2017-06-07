@@ -2,6 +2,7 @@ package moises.com.appcoer.api;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import moises.com.appcoer.model.Bill;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.CourseList;
@@ -31,6 +32,10 @@ public interface ApiClient {
 
     @POST(API.LOGIN)
     Call<User> login(@Query("username") String userName, @Query("password") String password);
+
+    @POST(API.LOGIN)
+    Observable<User> startLogin(@Query("username") String userName, @Query("password") String password);
+
 
     @GET(API.NEWS)
     Call<NewsList> getNews(@Query("per_page") Integer perPage, @Query("page") Integer page,
