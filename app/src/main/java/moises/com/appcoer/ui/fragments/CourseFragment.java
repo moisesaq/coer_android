@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.API;
 import moises.com.appcoer.api.ApiClient;
@@ -92,6 +94,16 @@ public class CourseFragment extends Fragment {
         mContent = (WebView) view.findViewById(R.id.wv_content);
         showContent(course.getContent());
         getDescription();
+    }
+
+    private void getDetail(){
+        String urlCourse = API.COURSES + "/" + course.getId();
+        RestApiAdapter.getCourseDescription(urlCourse)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(course -> showContent(course.getContent()), error -> {
+                    Log.d(TAG, "ERROR >>> " + error.toString());
+                });
     }
 
     private void getDescription(){

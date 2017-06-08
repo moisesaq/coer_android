@@ -8,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import org.reactivestreams.Subscriber;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import moises.com.appcoer.R;
@@ -51,7 +48,8 @@ public class LoginFragment extends BaseLoginFragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         setupView(view, savedInstanceState);
         ButterKnife.bind(this, view);
@@ -86,14 +84,19 @@ public class LoginFragment extends BaseLoginFragment{
 
     private void startLogin(String userName, String password){
         GlobalManager.showProgressDialog();
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        apiClient.startLogin(userName, password)
-                .subscribeOn(Schedulers.newThread())
+        RestApiAdapter.login(userName, password)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(user -> mListener.onLoginSuccessful(user), error -> {
-                    Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
-                    Log.d(TAG, "ERROR >>> " + error.toString());
-                });
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        user -> {
+                            mListener.onLoginSuccessful(user);
+                            GlobalManager.dismissProgressDialog();
+                        },
+                        error -> {
+                            Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
+                            GlobalManager.dismissProgressDialog();
+                            Log.d(TAG, "ERROR >>> " + error.toString());
+                        });
     }
 
     private void login(String userName, String password){

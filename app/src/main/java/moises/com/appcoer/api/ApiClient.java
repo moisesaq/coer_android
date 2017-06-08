@@ -50,6 +50,9 @@ public interface ApiClient {
     @GET
     Call<Course> getCourseDescription(@Url String urlNews);
 
+    @GET
+    Observable<Course> getCourseDescription2(@Url String urlNews);
+
     @GET(API.LODGINGS)
     Call<List<Lodging>> getLodgingList(@Query("api_token") String apiToken);
 
