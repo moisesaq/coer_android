@@ -1,11 +1,9 @@
-package moises.com.appcoer.ui;
+package moises.com.appcoer.ui.login;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,10 +13,9 @@ import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
+import moises.com.appcoer.ui.home.MainActivity;
 import moises.com.appcoer.ui.dialogs.ResetPasswordDialog;
-import moises.com.appcoer.ui.fragments.ChangePasswordFragment;
-import moises.com.appcoer.ui.fragments.LoginFragment;
-import moises.com.appcoer.ui.fragments.OnBoardingFragment;
+import moises.com.appcoer.ui.onBoarding.OnBoardingFragment;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnLoginFragmentListener,
                                                         OnBoardingFragment.OnBoardingFragmentListener, ChangePasswordFragment.OnChangePasswordFragmentListener{

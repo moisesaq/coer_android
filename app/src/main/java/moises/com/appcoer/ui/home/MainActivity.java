@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui;
+package moises.com.appcoer.ui.home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,16 +30,7 @@ import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
-import moises.com.appcoer.ui.fragments.CourseListFragment;
-import moises.com.appcoer.ui.fragments.IntroduceLodgingFragment;
-import moises.com.appcoer.ui.fragments.MenuFragment;
-import moises.com.appcoer.ui.fragments.MethodPaymentsFragment;
-import moises.com.appcoer.ui.fragments.NewsFragment;
-import moises.com.appcoer.ui.fragments.NewsListFragment;
-import moises.com.appcoer.ui.fragments.ProcessListFragment;
-import moises.com.appcoer.ui.fragments.ReservationListFragment;
-import moises.com.appcoer.ui.fragments.ReserveRoomFragment;
-import moises.com.appcoer.ui.test.TestFragment;
+import moises.com.appcoer.ui.login.LoginActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

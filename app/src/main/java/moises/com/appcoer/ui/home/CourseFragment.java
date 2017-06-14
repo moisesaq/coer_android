@@ -1,8 +1,7 @@
-package moises.com.appcoer.ui.fragments;
+package moises.com.appcoer.ui.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +19,7 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.api.API;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Course;
-import moises.com.appcoer.model.News;
 import moises.com.appcoer.tools.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;

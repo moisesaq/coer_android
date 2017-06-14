@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.fragments;
+package moises.com.appcoer.ui.login;
 
 import android.content.Context;
 import android.os.Bundle;

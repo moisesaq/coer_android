@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.fragments;
+package moises.com.appcoer.ui.home;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

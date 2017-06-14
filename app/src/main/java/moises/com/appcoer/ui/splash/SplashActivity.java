@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui;
+package moises.com.appcoer.ui.splash;
 
 import android.content.Intent;
 import android.os.Build;
@@ -10,6 +10,8 @@ import android.view.WindowManager;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.Session;
+import moises.com.appcoer.ui.home.MainActivity;
+import moises.com.appcoer.ui.login.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

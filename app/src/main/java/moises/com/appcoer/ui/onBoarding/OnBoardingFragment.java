@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.fragments;
+package moises.com.appcoer.ui.onBoarding;
 
 import android.content.Context;
 import android.content.SharedPreferences;

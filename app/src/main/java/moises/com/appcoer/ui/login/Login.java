@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui;
+package moises.com.appcoer.ui.login;
 
 import moises.com.appcoer.ui.base.BasePresenter;
 import moises.com.appcoer.ui.base.BaseView;

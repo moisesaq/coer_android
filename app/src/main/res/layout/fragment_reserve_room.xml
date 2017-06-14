@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:moi="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    tools:context="moises.com.appcoer.ui.fragments.ChangePasswordFragment">
+    tools:context="moises.com.appcoer.ui.login.ChangePasswordFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
