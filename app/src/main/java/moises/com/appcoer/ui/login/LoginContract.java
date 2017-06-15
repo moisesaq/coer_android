@@ -3,7 +3,7 @@ package moises.com.appcoer.ui.login;
 import moises.com.appcoer.ui.base.BasePresenter;
 import moises.com.appcoer.ui.base.BaseView;
 
-public class Login {
+public class LoginContract {
 
     interface View extends BaseView<Presenter> {
         void showProgress(boolean show);

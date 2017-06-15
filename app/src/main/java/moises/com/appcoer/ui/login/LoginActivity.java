@@ -1,5 +1,6 @@
 package moises.com.appcoer.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,10 +16,16 @@ import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.home.MainActivity;
 import moises.com.appcoer.ui.dialogs.ResetPasswordDialog;
-import moises.com.appcoer.ui.onBoarding.OnBoardingFragment;
+import moises.com.appcoer.ui.onBoarding.OnBoardingActivity;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.OnLoginFragmentListener,
-                                                        OnBoardingFragment.OnBoardingFragmentListener, ChangePasswordFragment.OnChangePasswordFragmentListener{
+public class LoginActivity extends AppCompatActivity implements
+        LoginFragment.OnLoginFragmentListener,
+        ChangePasswordFragment.OnChangePasswordFragmentListener{
+
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +34,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         GlobalManager.setActivityGlobal(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setup();
-    }
-
-    private void setup(){
-        if(!OnBoardingFragment.isOnBoardingCompleted()){
-            showFragment(OnBoardingFragment.newInstance(), false);
-        }else{
-            showFragment(LoginFragment.newInstance(), false);
-        }
+        showFragment(LoginFragment.newInstance(), false);
     }
 
     private void showFragment(Fragment fragment, boolean stack){
@@ -79,11 +78,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         startActivity(new Intent(this, MainActivity.class));
         if(close)
             finish();
-    }
-
-    @Override
-    public void onGetStartClick() {
-        showFragment(LoginFragment.newInstance(), true);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package moises.com.appcoer.ui.home;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -41,6 +42,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView mEmail;
     private Toolbar toolbar;
     private DrawerLayout drawer;
+
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

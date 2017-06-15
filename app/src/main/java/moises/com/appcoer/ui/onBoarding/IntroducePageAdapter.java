@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.base;
+package moises.com.appcoer.ui.onBoarding;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -13,6 +13,7 @@ import java.util.List;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.tools.Utils;
+import moises.com.appcoer.ui.base.IntroduceItem;
 
 public class IntroducePageAdapter extends PagerAdapter {
     private View view;

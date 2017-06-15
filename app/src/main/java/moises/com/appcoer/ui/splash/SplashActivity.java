@@ -1,23 +1,30 @@
 package moises.com.appcoer.ui.splash;
 
-import android.content.Intent;
 import android.os.Build;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.global.Session;
 import moises.com.appcoer.ui.home.MainActivity;
 import moises.com.appcoer.ui.login.LoginActivity;
+import moises.com.appcoer.ui.onBoarding.OnBoardingActivity;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity implements SplashContract.ActivityView{
+
+    SplashContract.ActivityPresenter activityPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpFullScreen();
+        setContentView(R.layout.activity_splash);
+        activityPresenter = new SplashPresenter(this);
+        activityPresenter.onActivityCreated();
+    }
+
+    private void setUpFullScreen(){
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -26,44 +33,23 @@ public class SplashActivity extends AppCompatActivity {
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
         }
-        setContentView(R.layout.activity_splash);
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-        startSplash();
-    }
-
-    private void startSplash(){
-        new CountDownTimer(2000, 1000){
-            @Override
-            public void onTick(long l) {
-            }
-
-            @Override
-            public void onFinish() {
-                recoverSession();
-            }
-        }.start();
-    }
-
-    private void recoverSession(){
-        //showLoginActivity();
-        if(Session.getInstance().getUser() != null){
-            showMainActivity();
-        }else {
-            showLoginActivity();
-        }
-    }
-
-    private void showLoginActivity(){
-        startActivity(new Intent(this, LoginActivity.class));
+    public void startOnBoardingActivity() {
+        OnBoardingActivity.startActivity(this);
         finish();
     }
 
-    private void showMainActivity(){
-        startActivity(new Intent(this, MainActivity.class));
+    @Override
+    public void startLoginActivity() {
+        LoginActivity.startActivity(this);
+        finish();
+    }
+
+    @Override
+    public void startMainActivity() {
+        MainActivity.startActivity(this);
         finish();
     }
 }

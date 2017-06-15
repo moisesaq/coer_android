@@ -2,7 +2,7 @@ ext {
     // Sdk configuration
     compileVersion = 25
     buildVersion = '25.0.3'
-    minVersion = 19
+    minVersion = 16
     targetVersion = 25
     releaseVersionCode = 1
     releaseVersionName = '1.0'
