@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.home;
+package moises.com.appcoer.ui.home.processList;
 
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,6 +18,7 @@ import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.Process;
 import moises.com.appcoer.ui.adapters.ProcessListAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
+import moises.com.appcoer.ui.home.process.ProcessFragment;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.home;
+package moises.com.appcoer.ui.home.lodging;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +20,14 @@ import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Lodging;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseFragment;
+import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class IntroduceLodgingFragment extends BaseFragment{
-    private static final String TAG = IntroduceLodgingFragment.class.getSimpleName();
+public class LodgingFragment extends BaseFragment{
+    private static final String TAG = LodgingFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "idLodging";
 
     private View view;
@@ -38,12 +39,12 @@ public class IntroduceLodgingFragment extends BaseFragment{
     private TextView mTitle, mRateFrom, mContent, mInfo, mWarning;
     private WebView webView;
 
-    public IntroduceLodgingFragment() {
+    public LodgingFragment() {
         // Required empty public constructor
     }
 
-    public static IntroduceLodgingFragment newInstance(int idLodging) {
-        IntroduceLodgingFragment fragment = new IntroduceLodgingFragment();
+    public static LodgingFragment newInstance(int idLodging) {
+        LodgingFragment fragment = new LodgingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, idLodging);
         fragment.setArguments(args);

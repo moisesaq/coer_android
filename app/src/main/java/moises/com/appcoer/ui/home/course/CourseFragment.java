@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.home;
+package moises.com.appcoer.ui.home.course;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

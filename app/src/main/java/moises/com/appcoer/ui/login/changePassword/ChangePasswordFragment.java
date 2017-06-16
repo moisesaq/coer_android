@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.login;
+package moises.com.appcoer.ui.login.changePassword;
 
 import android.content.Context;
 import android.os.Bundle;

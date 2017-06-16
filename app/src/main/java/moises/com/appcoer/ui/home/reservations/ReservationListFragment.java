@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.home;
+package moises.com.appcoer.ui.home.reservations;
 
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -25,6 +25,7 @@ import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.ui.adapters.ReservationListAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.dialogs.ReserveDetailDialog;
+import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 import moises.com.appcoer.ui.view.LoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.home;
+package moises.com.appcoer.ui.home.payments;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;

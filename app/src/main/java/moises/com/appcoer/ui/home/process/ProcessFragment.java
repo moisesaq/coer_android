@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.home;
+package moises.com.appcoer.ui.home.process;
 
 import android.net.Uri;
 import android.os.Bundle;

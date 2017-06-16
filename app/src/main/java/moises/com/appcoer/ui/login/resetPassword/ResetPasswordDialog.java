@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.dialogs;
+package moises.com.appcoer.ui.login.resetPassword;
 
 
 import android.app.Dialog;

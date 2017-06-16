@@ -31,13 +31,22 @@ import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
+import moises.com.appcoer.ui.home.courseList.CourseListFragment;
+import moises.com.appcoer.ui.home.lodging.LodgingFragment;
+import moises.com.appcoer.ui.home.menu.MenuFragment;
+import moises.com.appcoer.ui.home.news.NewsFragment;
+import moises.com.appcoer.ui.home.newsList.NewsListFragment;
+import moises.com.appcoer.ui.home.payments.MethodPaymentsFragment;
+import moises.com.appcoer.ui.home.processList.ProcessListFragment;
+import moises.com.appcoer.ui.home.reservations.ReservationListFragment;
+import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 import moises.com.appcoer.ui.login.LoginActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCoursesFragmentListener,
-                                                                    MenuFragment.Callback, ReserveRoomFragment.OnReserveRoomFragmentListener{
+                                                                    MenuFragment.OnMenuFragmentListener, ReserveRoomFragment.OnReserveRoomFragmentListener{
     private TextView mFullName;
     private TextView mEmail;
     private Toolbar toolbar;
@@ -218,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onLodgingClick(int id) {
         if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
-            showFragment(IntroduceLodgingFragment.newInstance(id), true);
+            showFragment(LodgingFragment.newInstance(id), true);
         }else{
             showMessageNeedSignUp();
         }

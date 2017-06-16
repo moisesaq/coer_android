@@ -15,8 +15,8 @@ import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.home.MainActivity;
-import moises.com.appcoer.ui.dialogs.ResetPasswordDialog;
-import moises.com.appcoer.ui.onBoarding.OnBoardingActivity;
+import moises.com.appcoer.ui.login.changePassword.ChangePasswordFragment;
+import moises.com.appcoer.ui.login.resetPassword.ResetPasswordDialog;
 
 public class LoginActivity extends AppCompatActivity implements
         OnLoginFragmentListener,

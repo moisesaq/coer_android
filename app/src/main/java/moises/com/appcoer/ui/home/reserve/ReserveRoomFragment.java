@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.home;
+package moises.com.appcoer.ui.home.reserve;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
