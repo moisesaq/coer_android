@@ -99,4 +99,10 @@
     <string name="download_document">Download document</string>
     <string name="nav_bills">See here your invoice</string>
     <string name="message_error_dates_selected">Error when in dates selected (There may be busy days between the selected dates)</string>
+
+    <!--INPUT TEXT VIEW-->
+    <string name="is_empty">is empty</string>
+    <string name="is_invalid">is invalid</string>
+    <string name="error_characters_min">, characters min is</string>
+
 </resources>

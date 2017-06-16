@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputType;
 import android.util.AttributeSet;
@@ -17,53 +18,54 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.util.regex.Pattern;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.SavedState;
-import moises.com.appcoer.tools.OnTextChangeListener;
 
 public class InputTextView extends LinearLayout implements View.OnClickListener{
+    private static final int MIN_TEXT_LINE = 1;
 
-    private ImageView imageView;
-    private TextInputLayout textInputLayout;
-    private EditText editText;
-    private ImageButton imageButton;
-    private Callback mCallback;
+    @BindView(R.id.image_view) protected ImageView imageView;
+    @BindView(R.id.text_input_layout) protected TextInputLayout textInputLayout;
+    @BindView(R.id.edit_text) protected EditText editText;
+    @BindView(R.id.image_button) protected ImageButton imageButton;
+
+    private Callback callback;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public InputTextView(Context context) {
         super(context);
-        setupView();
+        setUpView();
     }
 
     public InputTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setupView();
+        setUpView();
         initialize(attrs);
     }
 
-    private void setupView(){
+    private void setUpView() {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.view_input_text, this, true);
-        imageView = (ImageView)findViewById(R.id.imageView);
-        textInputLayout = (TextInputLayout)findViewById(R.id.textInputLayout);
-        textInputLayout.setErrorEnabled(true);
-        editText = (EditText)findViewById(R.id.editText);
-        editText.addTextChangedListener(new OnTextChangeListener() {
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                textInputLayout.setError(null);
-            }
-        });
-        imageButton = (ImageButton)findViewById(R.id.imageButton);
+        View view = inflater.inflate(R.layout.view_input_text, this, true);
+        ButterKnife.bind(this, view);
+        compositeDisposable.add(getSubscriptionFromEditText());
         imageButton.setOnClickListener(this);
     }
 
-    private void initialize(AttributeSet attrs){
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.InputTextView);
+    private Disposable getSubscriptionFromEditText() {
+        return RxTextView
+                .textChanges(editText)
+                .subscribe(charSequence -> textInputLayout.setError(null));
+    }
 
-        int id = typedArray.getInt(R.styleable.InputTextView_android_id, 0);
-        setIdEditText(id);
+    private void initialize(AttributeSet attrs) {
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.InputTextView);
 
         Drawable imageIcon = typedArray.getDrawable(R.styleable.InputTextView_iconImage);
         setImageIcon(imageIcon);
@@ -89,34 +91,19 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
         String hint = typedArray.getString(R.styleable.InputTextView_hint);
         setHint(hint);
 
-        Drawable iconAction = typedArray.getDrawable(R.styleable.InputTextView_iconAction);
-        setImageIconAction(iconAction);
+        boolean enabled = typedArray.getBoolean(R.styleable.InputTextView_android_enabled,true);
+        setEnabled(enabled);
 
         typedArray.recycle();
     }
 
-    public void setText(String text){
-        if(text != null)
-            editText.setText(text);
-    }
+    public void onDestroy() { compositeDisposable.dispose(); }
 
+    /**
+     * Getters & Setters
+     */
     public String getText(){
         return editText.getText().toString();
-    }
-
-    public void setSelection(int index){
-        if(index > 0){
-            editText.setSelection(index);
-            editText.requestFocus();
-        }
-    }
-
-    public void clearField(){
-        this.editText.getText().clear();
-    }
-
-    public void setIdEditText(int id){
-        this.editText.setId(id);
     }
 
     public void setImageIcon(Drawable imageIcon){
@@ -126,11 +113,18 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
         }
     }
 
-    public void setImageIconAction(Drawable imageIcon){
-        if(imageIcon != null){
-            imageButton.setVisibility(View.VISIBLE);
-            imageButton.setImageDrawable(imageIcon);
-        }
+    public void setText(@NonNull String text){
+        editText.setText(text);
+    }
+
+    public void setHint(@NonNull String text){ textInputLayout.setHint(text); }
+
+    public void setError(@NonNull String error){
+        textInputLayout.setError(error);
+    }
+
+    public void setInputType(int inputType){
+        editText.setInputType(inputType);
     }
 
     public void setErrorEnabled(boolean enabled){
@@ -145,130 +139,149 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
         textInputLayout.setCounterMaxLength(maxLength);
     }
 
-    public void setInputType(int inputType){
-        editText.setInputType(inputType);
+    public void setLines(int lines) {
+        if(lines >= MIN_TEXT_LINE)
+            setLinesAttributes(lines);
     }
 
-    public void setLines(int lines){
-        if(lines > 1){
-            editText.setLines(lines);
-            editText.setGravity(Gravity.START|Gravity.TOP);
-        }
-    }
-
-    public void setHint(String text){
-        if(text != null && !text.isEmpty())
-            textInputLayout.setHint(text);
-    }
-
-    public void setEnabled(boolean enabled){
-        editText.setEnabled(enabled);
+    private void setLinesAttributes(int lines) {
+        editText.setLines(lines);
+        editText.setGravity(Gravity.START|Gravity.TOP);
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.imageButton:
-                if(mCallback != null) mCallback.onActionIconClick(this);
-                break;
-        }
+    public void setEnabled(boolean value){ editText.setEnabled(value); }
+
+    @Override
+    public void setFocusable(boolean focusable){
+        editText.setFocusable(focusable);
     }
 
-    public boolean isTextValid(){
-        return isTextValid("");
-    }
+    public void clearField(){ editText.getText().clear(); }
 
-
-    public boolean isTextValid(String textError){
-        String text = editText.getText().toString();
-        Pattern pattern = Pattern.compile("^[a-zA-Z ]+$");
-
-        if(text.isEmpty()){
-            textInputLayout.setError(getContext().getString(R.string.error_field_required));
-            return false;
+    /**
+     * Public Checks
+     */
+    public boolean isTextValid() {
+        try {
+            return checkEmptyAndLengthAndReturn();
+        } catch (ExceptionInvalidInput exception) {
+            return manageErrorAndReturn(exception);
         }
-
-        if(textInputLayout.isCounterEnabled()){
-            if(text.length() <= textInputLayout.getCounterMaxLength()){
-                textInputLayout.setError(null);
-                return true;
-            }else{
-                textInputLayout.setError(textError);
-                return false;
-            }
-        }
-        textInputLayout.setError(null);
-        return true;
-    }
-
-    public boolean isPhoneValid(){
-        String phone = editText.getText().toString().trim();
-
-        if(phone.isEmpty()){
-            textInputLayout.setError("Phone empty");
-            return false;
-        }
-
-        if(!Patterns.PHONE.matcher(phone).matches()){
-            textInputLayout.setError("Phone invalid");
-            return false;
-        }else{
-            textInputLayout.setError(null);
-        }
-        return true;
-    }
-
-    public boolean isEmailValid(){
-        String email = editText.getText().toString().trim();
-        if(email.isEmpty()){
-            textInputLayout.setError(getContext().getString(R.string.error_field_required));
-            return false;
-        }
-
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            textInputLayout.setError(getContext().getString(R.string.error_invalid_email));
-            return false;
-        }else {
-            textInputLayout.setError(null);
-        }
-        return true;
     }
 
     public boolean isPasswordValid(){
-        String password = editText.getText().toString().trim();
-        if(password.isEmpty()){
-            textInputLayout.setError(getContext().getString(R.string.error_field_required));
-            return false;
+        try {
+            return checkEmptyAndLengthAndReturn();
+        } catch (ExceptionInvalidInput exception) {
+            return manageErrorAndReturn(exception);
         }
-        textInputLayout.setError(null);
+    }
+
+    public boolean isPhoneValid() {
+        try {
+            return checkEmptyAndPhoneAndReturn();
+        } catch (ExceptionInvalidInput exception) {
+            return manageErrorAndReturn(exception);
+        }
+    }
+
+    public boolean isEmailValid() {
+        try {
+            return checkEmptyAndEmailAndReturn();
+        } catch (ExceptionInvalidInput exception) {
+            return manageErrorAndReturn(exception);
+        }
+    }
+
+    private boolean checkEmptyAndLengthAndReturn() throws ExceptionInvalidInput {
+        String text = editText.getText().toString();
+        checkEmpty(text);
+        checkLength(text);
         return true;
     }
 
-    public void setError(String error){
-        textInputLayout.setError(error);
+    private boolean checkEmptyAndPhoneAndReturn() throws ExceptionInvalidInput{
+        String phone = editText.getText().toString().trim();
+        checkEmpty(phone);
+        checkPhone(phone);
+        return true;
+    }
+
+    private boolean checkEmptyAndEmailAndReturn() throws ExceptionInvalidInput {
+        String email = editText.getText().toString().trim();
+        checkEmpty(email);
+        checkEmail(email);
+        return true;
+    }
+
+    private boolean manageErrorAndReturn(ExceptionInvalidInput exception) {
+        clearField();
+        setError(exception.getMessage());
+        return false;
+    }
+
+    private void checkEmpty(String text) throws ExceptionInvalidInput {
+        if(text.isEmpty())
+            throw new ExceptionInvalidInput(getStringToShow(R.string.is_empty));
+    }
+
+    private void checkLength(String text) throws ExceptionInvalidInput {
+        if(textInputLayout.isCounterEnabled() && textIsGreaterThanMax(text))
+            throw new ExceptionInvalidInput(getStringToShow(R.string.is_invalid));
+    }
+
+    private boolean textIsGreaterThanMax(String text) {
+        return text.length() >= textInputLayout.getCounterMaxLength();
+    }
+
+    private void checkPhone(String phone) throws ExceptionInvalidInput {
+        if(!Patterns.PHONE.matcher(phone).matches())
+            throw new ExceptionInvalidInput(getStringToShow(R.string.is_invalid));
+    }
+
+    private void checkEmail(String email) throws ExceptionInvalidInput {
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+            throw new ExceptionInvalidInput(getStringToShow(R.string.is_invalid));
+    }
+
+    private String getStringToShow(int resourceId) {
+        return textInputLayout.getHint() + " " + getResources().getString(resourceId);
+    }
+
+    public void addCallback(Callback callback){
+        this.callback = callback;
     }
 
     public EditText getEditText(){
         return editText;
     }
 
-    public void addCallback(Callback callback){
-        this.mCallback = callback;
+    @Override
+    public void onClick(View view) {
+        callback.onActionIconClick(view);
     }
 
     public interface Callback{
         void onActionIconClick(View view);
     }
 
-    /*SAVE STATE OF THE VIEWS*/
+    /**
+     * Save State
+    * */
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
         SavedState ss = new SavedState(superState);
         ss.childrenStates = new SparseArray();
-        for (int i = 0; i < getChildCount(); i++) {
+        return saveHierarchyStateOfEachChild(ss);
+    }
+
+    private SavedState saveHierarchyStateOfEachChild(SavedState ss) {
+        for(int i = 0; i < getChildCount(); i++) {
             getChildAt(i).saveHierarchyState(ss.childrenStates);
         }
+
         return ss;
     }
 
@@ -276,7 +289,11 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
     public void onRestoreInstanceState(Parcelable state) {
         SavedState ss = (SavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
-        for (int i = 0; i < getChildCount(); i++) {
+        restoreHierarchyStateOfEachChild(ss);
+    }
+
+    private void restoreHierarchyStateOfEachChild(SavedState ss) {
+        for(int i = 0; i < getChildCount(); i++) {
             getChildAt(i).restoreHierarchyState(ss.childrenStates);
         }
     }

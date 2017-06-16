@@ -19,7 +19,7 @@ import moises.com.appcoer.ui.dialogs.ResetPasswordDialog;
 import moises.com.appcoer.ui.onBoarding.OnBoardingActivity;
 
 public class LoginActivity extends AppCompatActivity implements
-        LoginFragment.OnLoginFragmentListener,
+        OnLoginFragmentListener,
         ChangePasswordFragment.OnChangePasswordFragmentListener{
 
     public static void startActivity(Context context){
@@ -76,8 +76,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void goToMainActivity(boolean close){
         startActivity(new Intent(this, MainActivity.class));
-        if(close)
-            finish();
+        if(close) finish();
     }
 
     @Override

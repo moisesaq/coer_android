@@ -38,6 +38,7 @@
         <attr name="android:inputType"/>
         <attr name="android:lines"/>
         <attr name="android:id"/>
+        <attr name="android:enabled"/>
     </declare-styleable>
 
     <declare-styleable name="BlankView">

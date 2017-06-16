@@ -7,7 +7,7 @@
     android:gravity="center_vertical">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/svg_email"
@@ -16,7 +16,7 @@
         android:visibility="gone"/>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/text_input_layout"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         app:counterTextAppearance="@style/Counter">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -36,7 +36,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/image_button"
         style="@style/ImageButtonCircle"
         android:src="@drawable/svg_pencil"
         android:layout_marginTop="5dp"

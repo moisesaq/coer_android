@@ -53,7 +53,7 @@ public class ChangePasswordFragment extends BaseLoginFragment implements View.On
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.b_confirm){
-            if(mEmail.isEmailValid() && mNewPassword.isTextValid(getString(R.string.error_data_no_valid)) && mNewPassword.isTextValid(getString(R.string.error_data_no_valid))){
+            if(mEmail.isEmailValid() && mNewPassword.isPasswordValid() && mNewPassword.isPasswordValid()){
                 changePassword();
             }
         }
