@@ -31,14 +31,14 @@ import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
-import moises.com.appcoer.ui.home.courseList.CourseListFragment;
+import moises.com.appcoer.ui.home.course.list.CourseListFragment;
 import moises.com.appcoer.ui.home.lodging.LodgingFragment;
 import moises.com.appcoer.ui.home.menu.MenuFragment;
-import moises.com.appcoer.ui.home.news.NewsFragment;
-import moises.com.appcoer.ui.home.newsList.NewsListFragment;
+import moises.com.appcoer.ui.home.news.detail.NewsFragment;
+import moises.com.appcoer.ui.home.news.list.NewsListFragment;
 import moises.com.appcoer.ui.home.payments.MethodPaymentsFragment;
-import moises.com.appcoer.ui.home.processList.ProcessListFragment;
-import moises.com.appcoer.ui.home.reservations.ReservationListFragment;
+import moises.com.appcoer.ui.home.process.list.ProcessListFragment;
+import moises.com.appcoer.ui.home.reservations.ReservationsFragment;
 import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 import moises.com.appcoer.ui.login.LoginActivity;
 import retrofit2.Call;
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void showMyReservations(){
         if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
-            showFragment(ReservationListFragment.newInstance(), true);
+            showFragment(ReservationsFragment.newInstance(), true);
         }else{
             showMessageNeedSignUp();
         }

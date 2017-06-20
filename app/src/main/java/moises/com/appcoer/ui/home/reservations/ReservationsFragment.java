@@ -1,6 +1,8 @@
 package moises.com.appcoer.ui.home.reservations;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,10 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
@@ -31,70 +37,53 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReservationListFragment extends BaseFragment implements ReservationListAdapter.CallBack, View.OnClickListener{
+public class ReservationsFragment extends BaseFragment implements ReservationListAdapter.CallBack, ReservationsContract.View{
 
-    private static final String TAG = ReservationListFragment.class.getSimpleName();
+    @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
+    @BindView(R.id.loading_view) protected LoadingView mLoadingView;
+    @BindView(R.id.fam_reserve) protected FloatingActionMenu famReserve;
+    @BindView(R.id.fab_reserve_timbues) protected FloatingActionButton fabTimbues;
+    @BindView(R.id.fab_reserve_parana) protected FloatingActionButton fabParana;
 
-    private RecyclerView mRecyclerView;
-    private LoadingView mLoadingView;
-    private FloatingActionMenu famReserve;
     private ReservationListAdapter mReservationListAdapter;
+    private ReservationsContract.Presenter reservationsPresenter;
+    private Unbinder unbinder;
 
-    public ReservationListFragment() {
+    public static ReservationsFragment newInstance() {
+        return new ReservationsFragment();
     }
 
-    public static ReservationListFragment newInstance() {
-        return new ReservationListFragment();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new ReservationsPresenter(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_list, container, false);
-        setupView(view);
-        setTitle(getString(R.string.nav_reservations), R.id.nav_reserves);
+        unbinder = ButterKnife.bind(this, view);
+        setUp();
         return view;
     }
 
-    private void setupView(View view){
-        mLoadingView = (LoadingView)view.findViewById(R.id.loading_view);
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
+    private void setUp(){
+        setTitle(getString(R.string.nav_reservations), R.id.nav_reserves);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), linearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mReservationListAdapter = new ReservationListAdapter(new ArrayList<Reservation>(), this);
+        //TODO Change to Dependency injection Dagger2
+        mReservationListAdapter = new ReservationListAdapter(this);
         mRecyclerView.setAdapter(mReservationListAdapter);
-        famReserve = (FloatingActionMenu) view.findViewById(R.id.fam_reserve);
+
         famReserve.setVisibility(View.VISIBLE);
-        FloatingActionButton fabTimbues = (FloatingActionButton)view.findViewById(R.id.fab_reserve_timbues);
-        fabTimbues.setOnClickListener(this);
-        FloatingActionButton fabParana = (FloatingActionButton)view.findViewById(R.id.fab_reserve_parana);
-        fabParana.setOnClickListener(this);
-        mLoadingView.showLoading(mRecyclerView);
-        getReservations();
-        showUserGuide();
     }
 
-    private void getReservations(){
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<List<Reservation>> listCall = apiClient.getReservations(Session.getInstance().getUser().getApiToken());
-        listCall.enqueue(new Callback<List<Reservation>>() {
-            @Override
-            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
-                Log.d(TAG, " Success >>>> " + response.message() + "code " +response.code());
-                if(response.body() != null && response.body().size() > 0){
-                    mLoadingView.hideLoading("", mRecyclerView);
-                    mReservationListAdapter.addItems(response.body());
-                }else{
-                    mLoadingView.hideLoading(getSafeString(R.string.message_withot_reservation), mRecyclerView);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Reservation>> call, Throwable t) {
-                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mRecyclerView);
-            }
-        });
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        reservationsPresenter.onFragmentStarted();
     }
 
     @Override
@@ -102,7 +91,17 @@ public class ReservationListFragment extends BaseFragment implements Reservation
         ReserveDetailDialog.newInstance(reservation).show(getFragmentManager(), ReserveDetailDialog.TAG);
     }
 
-    private void showUserGuide(){
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    /**
+     * IMPLEMENTATION RESERVATIONS CONTRACT VIEW
+     **/
+    @Override
+    public void showUserGuide(){
         UserGuide.getInstance(GlobalManager.getActivityGlobal()).showStageWithView(UserGuide.StageGuide.STAGE_2, famReserve.getMenuIconView(), new UserGuide.CallBack() {
             @Override
             public void onUserGuideOnClick() {
@@ -112,6 +111,22 @@ public class ReservationListFragment extends BaseFragment implements Reservation
     }
 
     @Override
+    public void showLoading(boolean show) {
+        if(show) mLoadingView.showLoading(mRecyclerView);
+        else mLoadingView.hideLoading("", mRecyclerView);
+    }
+
+    @Override
+    public void showError(int stringId) {
+        mLoadingView.hideLoading(getSafeString(stringId), mRecyclerView);
+    }
+
+    @Override
+    public void showReservations(List<Reservation> reservations) {
+        mReservationListAdapter.addItems(reservations);
+    }
+
+    @OnClick({ R.id.fab_reserve_timbues, R.id.fab_reserve_parana})
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fab_reserve_timbues:
@@ -123,5 +138,16 @@ public class ReservationListFragment extends BaseFragment implements Reservation
                 famReserve.close(true);
                 break;
         }
+    }
+
+    @Override
+    public void setPresenter(ReservationsContract.Presenter presenter) {
+        if(presenter != null) this.reservationsPresenter = presenter;
+        else throw new RuntimeException("Reservations Presenter can not be null");
+    }
+
+    @Override
+    public Fragment getFragment() {
+        return this;
     }
 }
