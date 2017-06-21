@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import moises.com.appcoer.R;
@@ -15,8 +16,8 @@ public class ProcessListAdapter extends RecyclerView.Adapter<ProcessListAdapter.
     private List<Process> processList;
     private CallBack mCallBack;
 
-    public ProcessListAdapter(List<Process> processList, CallBack callBack){
-        this.processList = processList;
+    public ProcessListAdapter(CallBack callBack){
+        this.processList = new ArrayList<>();
         mCallBack = callBack;
     }
 

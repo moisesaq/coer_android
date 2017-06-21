@@ -2,6 +2,8 @@ package moises.com.appcoer.ui.home.process.detail;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
@@ -26,11 +29,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProcessFragment extends BaseFragment {
-    private static final String TAG = ProcessFragment.class.getSimpleName();
+public class ProcessFragment extends BaseFragment implements ProcessContract.View{
     private static final String ARG_PARAM1 = "process";
 
-    private Process process;
     protected @BindView(R.id.loading_view) LoadingView mLoadingView;
     protected @BindView(R.id.cv_content) CardView mCardViewContent;
     protected @BindView(R.id.content_detail) LinearLayout mContentDetail;
@@ -38,8 +39,9 @@ public class ProcessFragment extends BaseFragment {
     protected @BindView(R.id.b_download_document) Button bDownloadDocument;
     protected @BindView(R.id.wv_content) WebView mContent;
 
-    public ProcessFragment() {
-    }
+    private Process process;
+    private Unbinder unbinder;
+    private ProcessContract.Presenter processPresenter;
 
     public static ProcessFragment newInstance(Process process) {
         ProcessFragment fragment = new ProcessFragment();
@@ -52,6 +54,7 @@ public class ProcessFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new ProcessPresenter(this);
         if (getArguments() != null)
             process = (Process) getArguments().getSerializable(ARG_PARAM1);
     }
@@ -59,41 +62,15 @@ public class ProcessFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_process, container, false);
-        ButterKnife.bind(this, view);
-        loadData();
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
-    private void loadData(){
-        mLoadingView.showLoading(mContentDetail);
-        mTitle.setText(process.getTitle().trim());
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        final Call<Process> processCall = apiClient.getProcessDetail(process.getId());
-        processCall.enqueue(new Callback<Process>() {
-            @Override
-            public void onResponse(Call<Process> call, Response<Process> response) {
-                if(response.isSuccessful()){
-                    Log.d(TAG, "SUCCESS >>> " + response.body().toString());
-                    mLoadingView.hideLoading("", mContentDetail);
-                    process = response.body();
-                    if(process.getUrl() != null && !process.getUrl().isEmpty())
-                        bDownloadDocument.setVisibility(View.VISIBLE);
-
-                    if(process.getContent() != null && !process.getContent().isEmpty()){
-                        mCardViewContent.setVisibility(View.VISIBLE);
-                        mContent.loadData(response.body().getContent(), "text/html; charset=utf-8","UTF-8");
-                    }
-
-                }else{
-                    mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mContentDetail);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Process> call, Throwable t) {
-                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mContentDetail);
-            }
-        });
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        processPresenter.onFragmentStarted();
+        processPresenter.updateProcess(process.getId());
     }
 
     @OnClick(R.id.b_download_document)
@@ -108,7 +85,50 @@ public class ProcessFragment extends BaseFragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    /**
+     * IMPLEMENTATION PROCESS CONTRACT VIEW
+     **/
+    @Override
+    public void setPresenter(ProcessContract.Presenter presenter) {
+        if(presenter != null) this.processPresenter = presenter;
+        else throw new RuntimeException("Process presenter can not be null");
+    }
+
+    @Override
+    public Fragment getFragment() {
+        return this;
+    }
+
+    @Override
+    public void showLoading(boolean show) {
+        if(show) mLoadingView.showLoading(mContentDetail);
+        else mLoadingView.hideLoading("", mContentDetail);
+    }
+
+    @Override
+    public void showMessageError(int stringId) {
+        mLoadingView.hideLoading(getSafeString(stringId), mContentDetail);
+    }
+
+    @Override
+    public void showProcessUpdated(Process process) {
+        showDetail(process);
+    }
+
+    private void showDetail(Process process){
+        mTitle.setText(process.getTitle().trim());
+
+        if(process.getUrl() != null && !process.getUrl().isEmpty())
+            bDownloadDocument.setVisibility(View.VISIBLE);
+
+        if(process.getContent() != null && !process.getContent().isEmpty()){
+            mCardViewContent.setVisibility(View.VISIBLE);
+            mContent.loadData(process.getContent(), "text/html; charset=utf-8","UTF-8");
+        }
     }
 }
