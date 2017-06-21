@@ -82,6 +82,7 @@ public class NewsListFragment extends BaseFragment implements NewsListAdapter.Ca
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //TODO remove or move to onCreateView
         newsListPresenter.onFragmentStarted();
     }
 

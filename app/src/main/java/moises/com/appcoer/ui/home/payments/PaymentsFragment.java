@@ -1,80 +1,96 @@
 package moises.com.appcoer.ui.home.payments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
-import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.MethodPayment;
 import moises.com.appcoer.ui.adapters.MethodPaymentsAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.view.LoadingView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class PaymentsFragment extends BaseFragment{
-
-    private static final String TAG = PaymentsFragment.class.getSimpleName();
+public class PaymentsFragment extends BaseFragment implements PaymentsContract.View{
+    @BindView(R.id.recycler_view) protected RecyclerView recyclerView;
+    @BindView(R.id.loading_view) protected LoadingView loadingView;
     private View view;
-    private RecyclerView mRecyclerView;
-    private LoadingView mLoadingView;
-    private MethodPaymentsAdapter mMethodPaymentsAdapter;
 
-    public PaymentsFragment() {
-    }
+    private MethodPaymentsAdapter methodPaymentsAdapter;
+    private Unbinder unbinder;
+    private PaymentsContract.Presenter paymentsPresenter;
 
     public static PaymentsFragment newInstance() {
         return new PaymentsFragment();
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new PaymentsPresenter(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(view == null){
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
-            setupView();
+            unbinder = ButterKnife.bind(this, view);
+            setUp();
         }
         setTitle(getString(R.string.nav_method_payments), R.id.nav_method_payments);
         return view;
     }
 
-    private void setupView(){
-        mLoadingView = (LoadingView)view.findViewById(R.id.loading_view);
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
+    private void setUp(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mMethodPaymentsAdapter = new MethodPaymentsAdapter(getContext(), new ArrayList<MethodPayment>());
-        mRecyclerView.setAdapter(mMethodPaymentsAdapter);
-        mLoadingView.showLoading(mRecyclerView);
-        getMethodPayments();
+        recyclerView.setLayoutManager(linearLayoutManager);
+        methodPaymentsAdapter = new MethodPaymentsAdapter(getContext());
+        recyclerView.setAdapter(methodPaymentsAdapter);
+        paymentsPresenter.onFragmentStarted();
     }
 
-    private void getMethodPayments(){
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<List<MethodPayment>> listCall = apiClient.getMethodPayments();
-        listCall.enqueue(new Callback<List<MethodPayment>>() {
-            @Override
-            public void onResponse(Call<List<MethodPayment>> call, Response<List<MethodPayment>> response) {
-                if(response.isSuccessful() && response.body() != null && response.body().size() > 0){
-                    mLoadingView.hideLoading("", mRecyclerView);
-                    mMethodPaymentsAdapter.addItems(response.body());
-                }else{
-                    mLoadingView.hideLoading(getSafeString(R.string.message_withot_method_payments), mRecyclerView);
-                }
-            }
+    /**
+     * IMPLEMENTATION PAYMENTS CONTRACT VIEW
+     **/
+    @Override
+    public void setPresenter(PaymentsContract.Presenter presenter) {
+        if(presenter != null) this.paymentsPresenter = presenter;
+        else throw new RuntimeException("Payments presenter can not be null");
+    }
 
-            @Override
-            public void onFailure(Call<List<MethodPayment>> call, Throwable t) {
-                mLoadingView.hideLoading(getSafeString(R.string.message_something_went_wrong), mRecyclerView);
-            }
-        });
+    @Override
+    public Fragment getFragment() {
+        return this;
+    }
+
+    @Override
+    public void showLoading(boolean show) {
+        if(show) loadingView.showLoading(recyclerView);
+        else loadingView.hideLoading("", recyclerView);
+    }
+
+    @Override
+    public void showMessageError(int stringId) {
+        loadingView.hideLoading(getSafeString(stringId), recyclerView);
+    }
+
+    @Override
+    public void showPayments(List<MethodPayment> methodPayments) {
+        methodPaymentsAdapter.addItems(methodPayments);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

@@ -2,7 +2,6 @@ package moises.com.appcoer.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.MethodPayment;
@@ -23,9 +22,9 @@ public class MethodPaymentsAdapter extends RecyclerView.Adapter<MethodPaymentsAd
     private Context mContext;
     private List<MethodPayment> methodPaymentList;
 
-    public MethodPaymentsAdapter(Context context, List<MethodPayment> methodPayments){
+    public MethodPaymentsAdapter(Context context){
         this.mContext = context;
-        this.methodPaymentList = methodPayments;
+        this.methodPaymentList = new ArrayList<>();
     }
 
     @Override
