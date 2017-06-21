@@ -21,19 +21,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MethodPaymentsFragment extends BaseFragment{
+public class PaymentsFragment extends BaseFragment{
 
-    private static final String TAG = MethodPaymentsFragment.class.getSimpleName();
+    private static final String TAG = PaymentsFragment.class.getSimpleName();
     private View view;
     private RecyclerView mRecyclerView;
     private LoadingView mLoadingView;
     private MethodPaymentsAdapter mMethodPaymentsAdapter;
 
-    public MethodPaymentsFragment() {
+    public PaymentsFragment() {
     }
 
-    public static MethodPaymentsFragment newInstance() {
-        return new MethodPaymentsFragment();
+    public static PaymentsFragment newInstance() {
+        return new PaymentsFragment();
     }
 
     @Override

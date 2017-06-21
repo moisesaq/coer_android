@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,9 +25,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     private List<News> newsList;
     private CallBack mCallBack;
 
-    public NewsListAdapter(Context context, List<News> newsList, CallBack callBack){
+    public NewsListAdapter(Context context, CallBack callBack){
         this.mContext = context;
-        this.newsList = newsList;
+        this.newsList = new ArrayList<>();
         mCallBack = callBack;
     }
 

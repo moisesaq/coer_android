@@ -1,8 +1,8 @@
 package moises.com.appcoer.ui.home.news.detail;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,26 +12,24 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.API;
-import moises.com.appcoer.api.ApiClient;
-import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.tools.Utils;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class NewsFragment extends Fragment {
-    private static final String TAG = NewsFragment.class.getSimpleName();
+public class NewsFragment extends Fragment implements NewsContract.View{
     private static final String ARG_PARAM1 = "news";
 
-    private News news;
-    private WebView mContent;
+    @BindView(R.id.iv_image_news) protected ImageView imageView;
+    @BindView(R.id.tv_title) protected TextView tvTitle;
+    @BindView(R.id.tv_date) protected TextView tvDate;
+    @BindView(R.id.wv_content) protected WebView webView;
 
-    public NewsFragment() {
-    }
+    private News news;
+    private NewsContract.Presenter newsPresenter;
+    private Unbinder unbinder;
 
     public static NewsFragment newInstance(News news) {
         NewsFragment fragment = new NewsFragment();
@@ -44,6 +42,7 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new NewsPresenter(this);
         if (getArguments() != null)
             news = (News)getArguments().getSerializable(ARG_PARAM1);
     }
@@ -51,52 +50,63 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-        setupView(view);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
-    private void setupView(View view){
-        ImageView mImage = (ImageView)view.findViewById(R.id.iv_news);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        newsPresenter.onFragmentStarted();
+    }
+
+    /**
+     * IMPLEMENTATION NEWS CONTRACT VIEW
+     **/
+    @Override
+    public void setPresenter(NewsContract.Presenter presenter) {
+        if(presenter != null) this.newsPresenter = presenter;
+        else throw new RuntimeException("News presenter can not be null");
+    }
+
+    @Override
+    public Fragment getFragment() {
+        return this;
+    }
+
+    @Override
+    public void showNews() {
+        showNewsImage(news);
+        showNewsDetail(news);
+        showNewsContent(news.getContent());
+        newsPresenter.updateNews(news.getId());
+    }
+
+    @Override
+    public void showNewsUpdated(News news) {
+        showNewsContent(news.getContent());
+    }
+
+    private void showNewsImage(News news){
         Picasso.with(getContext())
                 .load(news.getImage().getSlide())
                 .placeholder(R.mipmap.image_load)
                 .error(R.drawable.example_coer)
-                .into(mImage);
-        TextView mTitle = (TextView)view.findViewById(R.id.tv_title);
-        mTitle.setText(news.getTitle().trim());
-        TextView mDate = (TextView)view.findViewById(R.id.tv_date);
-        mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(news.getDate(), Utils.DATE_FORMAT_INPUT_2)));
-        mContent = (WebView) view.findViewById(R.id.wv_content);
-        showContent(news.getContent());
-        getDescription();
+                .into(imageView);
     }
 
-    private void getDescription(){
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        String urlNews = API.NEWS + "/" + news.getId();
-        Call<News> newsCall = apiClient.getNewsDescription(urlNews, Session.getInstance().getUser() == null ? null : Session.getInstance().getUser().getApiToken());
-        newsCall.enqueue(new Callback<News>() {
-            @Override
-            public void onResponse(Call<News> call, Response<News> response) {
-                if(response.isSuccessful()){
-                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                    showContent(response.body().getContent());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<News> call, Throwable t) {
-                Log.d(TAG, " SUCCESS >>> " + t.toString());
-            }
-        });
+    private void showNewsDetail(News news){
+        tvTitle.setText(news.getTitle().trim());
+        tvDate.setText(Utils.getCustomDate(Utils.parseStringToDate(news.getDate(), Utils.DATE_FORMAT_INPUT_2)));
     }
 
-    private void showContent(String content){
-        mContent.loadData(content, "text/html; charset=utf-8","UTF-8");
+    private void showNewsContent(String content){
+        webView.loadData(content, "text/html; charset=utf-8","UTF-8");
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

@@ -1,8 +1,8 @@
 package moises.com.appcoer.ui.home.course.detail;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,28 +13,27 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.API;
-import moises.com.appcoer.api.ApiClient;
-import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.tools.Utils;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class CourseFragment extends Fragment {
-    private static final String TAG = CourseFragment.class.getSimpleName();
+public class CourseFragment extends Fragment implements CourseContract.View{
     private static final String ARG_PARAM1 = "course";
 
-    private WebView mContent;
-    private Course course;
+    @BindView(R.id.iv_course) protected ImageView imageView;
+    @BindView(R.id.tv_title) protected TextView tvTitle;
+    @BindView(R.id.tv_date) protected TextView tvDate;
+    @BindView(R.id.tv_cost) protected TextView tvCost;
+    @BindView(R.id.tv_discount) protected TextView tvDiscount;
+    @BindView(R.id.tv_discount_to_date) protected TextView tvDiscountToDate;
+    @BindView(R.id.wv_content) protected WebView webView;
 
-    public CourseFragment() {
-        // Required empty public constructor
-    }
+    private Course course;
+    private CourseContract.Presenter coursePresenter;
+    private Unbinder unbinder;
 
     public static CourseFragment newInstance(Course course) {
         CourseFragment fragment = new CourseFragment();
@@ -47,6 +46,7 @@ public class CourseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new CoursePresenter(this);
         if (getArguments() != null)
             course = (Course) getArguments().getSerializable(ARG_PARAM1);
     }
@@ -54,81 +54,74 @@ public class CourseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
-        setupView(view);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
-    private void setupView(View view){
-        ImageView mImage = (ImageView)view.findViewById(R.id.iv_course);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        coursePresenter.onFragmentStarted();
+    }
+
+    /**
+     * IMPLEMENTATION COURSE CONTRACT VIEW
+     * */
+    @Override
+    public void setPresenter(CourseContract.Presenter presenter) {
+        if(presenter != null) this.coursePresenter = presenter;
+        else throw new RuntimeException("Course presenter can not be null");
+    }
+
+    @Override
+    public Fragment getFragment() {
+        return this;
+    }
+
+    @Override
+    public void showCurrentCourse() {
+        showCourseImage();
+        showCourseDetail(course);
+        showCourseContent(course.getContent());
+        coursePresenter.updateCourse(course);
+    }
+
+    @Override
+    public void showCourseUpdated(Course course) {
+        showCourseContent(course.getContent());
+    }
+
+    private void showCourseImage(){
         Picasso.with(getContext())
                 .load(course.getImage().getSlide())
                 .placeholder(R.mipmap.image_load)
                 .error(R.drawable.example_course)
-                .into(mImage);
-        TextView mTitle = (TextView)view.findViewById(R.id.tv_title);
-        mTitle.setText(course.getTitle().trim());
-        TextView mDate = (TextView)view.findViewById(R.id.tv_date);
-        mDate.setText(Utils.getCustomDate(Utils.parseStringToDate(course.getDate(), Utils.DATE_FORMAT_INPUT)));
-        TextView mCost = (TextView)view.findViewById(R.id.tv_cost);
-        mCost.setText(String.format("%s %s", "$", course.getCost()));
+                .into(imageView);
+    }
 
-        LinearLayout lyDiscount = (LinearLayout)view.findViewById(R.id.ly_discount);
-        TextView mDiscount = (TextView)view.findViewById(R.id.tv_discount);
-        if(course.getDiscount() != null || course.getDiscountToDate() != null)
-            lyDiscount.setVisibility(View.VISIBLE);
+    private void showCourseDetail(Course course){
+        tvTitle.setText(course.getTitle().trim());
+        tvDate.setText(Utils.getCustomDate(Utils.parseStringToDate(course.getDate(), Utils.DATE_FORMAT_INPUT)));
+        tvCost.setText(String.format("%s %s", "$", course.getCost()));
 
         if(course.getDiscount() != null && !course.getDiscount().isEmpty()){
-            mDiscount.setVisibility(View.VISIBLE);
-            mDiscount.setText(course.getDiscount());
+            tvDiscount.setVisibility(View.VISIBLE);
+            tvDiscount.setText(course.getDiscount());
         }
 
-        TextView mDiscountToDate = (TextView)view.findViewById(R.id.tv_discount_to_date);
         if(course.getDiscountToDate() != null && !course.getDiscountToDate().isEmpty()){
-            mDiscountToDate.setVisibility(View.VISIBLE);
-            mDiscountToDate.setText(course.getDiscountToDate());
+            tvDiscountToDate.setVisibility(View.VISIBLE);
+            tvDiscountToDate.setText(course.getDiscountToDate());
         }
-
-        mContent = (WebView) view.findViewById(R.id.wv_content);
-        showContent(course.getContent());
-        getDescription();
     }
 
-    private void getDetail(){
-        String urlCourse = API.COURSES + "/" + course.getId();
-        RestApiAdapter.getCourseDescription(urlCourse)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(course -> showContent(course.getContent()), error -> {
-                    Log.d(TAG, "ERROR >>> " + error.toString());
-                });
-    }
-
-    private void getDescription(){
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
-        String urlCourse = API.COURSES + "/" + course.getId();
-        Call<Course> courseCall = apiClient.getCourseDescription(urlCourse);
-        courseCall.enqueue(new Callback<Course>() {
-            @Override
-            public void onResponse(Call<Course> call, Response<Course> response) {
-                if(response.isSuccessful()){
-                    Log.d(TAG, " SUCCESS >>> " + response.body().toString());
-                    showContent(response.body().getContent());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Course> call, Throwable t) {
-                Log.d(TAG, " SUCCESS >>> " + t.toString());
-            }
-        });
-    }
-
-    private void showContent(String content){
-        mContent.loadData(content, "text/html; charset=utf-8","UTF-8");
+    private void showCourseContent(String courseContent){
+        webView.loadData(courseContent, "text/html; charset=utf-8","UTF-8");
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

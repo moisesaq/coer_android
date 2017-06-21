@@ -32,11 +32,11 @@ import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.home.course.list.CourseListFragment;
-import moises.com.appcoer.ui.home.lodging.LodgingFragment;
+import moises.com.appcoer.ui.home.hotel.HotelFragment;
 import moises.com.appcoer.ui.home.menu.MenuFragment;
 import moises.com.appcoer.ui.home.news.detail.NewsFragment;
 import moises.com.appcoer.ui.home.news.list.NewsListFragment;
-import moises.com.appcoer.ui.home.payments.MethodPaymentsFragment;
+import moises.com.appcoer.ui.home.payments.PaymentsFragment;
 import moises.com.appcoer.ui.home.process.list.ProcessListFragment;
 import moises.com.appcoer.ui.home.reservations.ReservationsFragment;
 import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_courses) {
             showFragment(CourseListFragment.newInstance(), true);
         } else if (id == R.id.nav_method_payments) {
-            showFragment(MethodPaymentsFragment.newInstance(), true);
+            showFragment(PaymentsFragment.newInstance(), true);
         } else if (id == R.id.nav_processes) {
             showFragment(ProcessListFragment.newInstance(), true);
         } else if (id == R.id.nav_bills) {
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onLodgingClick(int id) {
         if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
-            showFragment(LodgingFragment.newInstance(id), true);
+            showFragment(HotelFragment.newInstance(id), true);
         }else{
             showMessageNeedSignUp();
         }
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onMethodPaymentsClick() {
-        showFragment(MethodPaymentsFragment.newInstance(), true);
+        showFragment(PaymentsFragment.newInstance(), true);
     }
 
     @Override

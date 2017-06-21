@@ -6,7 +6,7 @@ import io.reactivex.Observable;
 import moises.com.appcoer.model.Bill;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.CourseList;
-import moises.com.appcoer.model.Lodging;
+import moises.com.appcoer.model.Hotel;
 import moises.com.appcoer.model.MethodPayment;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.NewsList;
@@ -54,7 +54,7 @@ public interface ApiClient {
     Observable<Course> getCourseDescription2(@Url String urlNews);
 
     @GET(API.LODGINGS)
-    Call<List<Lodging>> getLodgingList(@Query("api_token") String apiToken);
+    Call<List<Hotel>> getLodgingList(@Query("api_token") String apiToken);
 
     @GET(API.ROOM_LIST)
     Call<List<Room>> getRoomList(@Path("id") int idLodging , @Query("api_token") String apiToken);

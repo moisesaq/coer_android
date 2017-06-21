@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Lodging implements Serializable{
+public class Hotel implements Serializable{
     private int id;
     private String title;
     private String content;
