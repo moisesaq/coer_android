@@ -12,7 +12,7 @@ public class Reservation implements Serializable{
     private int id;
     private int mp;
     @SerializedName("id_habitacion")
-    private String idRoom;
+    private int roomId;
     @SerializedName("nombres")
     private String name;
     @SerializedName("apellidos")
@@ -59,12 +59,12 @@ public class Reservation implements Serializable{
         this.mp = mp;
     }
 
-    public String getIdRoom() {
-        return idRoom;
+    public int getRoomId() {
+        return roomId;
     }
 
-    public void setIdRoom(String idRoom) {
-        this.idRoom = idRoom;
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
     public String getName() {

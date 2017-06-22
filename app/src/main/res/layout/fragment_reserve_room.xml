@@ -24,7 +24,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_title_lodging"
+                    android:id="@+id/tv_hotel_title"
                     style="@style/TextViewSmall"
                     android:text="@string/lodging_timbues"
                     android:padding="@dimen/padding_min_global"
@@ -157,7 +157,7 @@
             android:layout_gravity="end"/>
 
         <Button
-            android:id="@+id/b_confirm"
+            android:id="@+id/btn_confirm"
             style="@style/ButtonCustom"
             android:layout_marginTop="@dimen/margin_max_global"
             android:text="@string/reserve" />

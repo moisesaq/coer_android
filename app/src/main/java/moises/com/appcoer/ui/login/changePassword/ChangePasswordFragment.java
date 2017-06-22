@@ -46,13 +46,13 @@ public class ChangePasswordFragment extends BaseLoginFragment implements View.On
         mEmail = (InputTextView)view.findViewById(R.id.itv_email);
         mNewPassword = (InputTextView)view.findViewById(R.id.itv_new_password);
         mRepeatNewPassword = (InputTextView)view.findViewById(R.id.itv_repeat_new_password);
-        Button mConfirm = (Button)view.findViewById(R.id.b_confirm);
+        Button mConfirm = (Button)view.findViewById(R.id.btn_confirm);
         mConfirm.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.b_confirm){
+        if(view.getId() == R.id.btn_confirm){
             if(mEmail.isEmailValid() && mNewPassword.isPasswordValid() && mNewPassword.isPasswordValid()){
                 changePassword();
             }

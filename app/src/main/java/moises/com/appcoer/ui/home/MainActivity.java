@@ -46,7 +46,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCoursesFragmentListener,
-                                                                    MenuFragment.OnMenuFragmentListener, ReserveRoomFragment.OnReserveRoomFragmentListener{
+                                                                    MenuFragment.OnMenuFragmentListener{
     private TextView mFullName;
     private TextView mEmail;
     private Toolbar toolbar;
@@ -273,11 +273,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else{
             showMessageNeedSignUp();
         }
-    }
-
-    /*RESERVE ROOM FRAGMENT LISTENER*/
-    @Override
-    public void onReserveRoomSuccessful() {
     }
 
     private void showMessageNeedSignUp(){

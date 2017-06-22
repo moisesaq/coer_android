@@ -94,6 +94,9 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
         boolean enabled = typedArray.getBoolean(R.styleable.InputTextView_android_enabled,true);
         setEnabled(enabled);
 
+        Drawable iconAction = typedArray.getDrawable(R.styleable.InputTextView_iconAction);
+        setImageIconAction(iconAction);
+
         typedArray.recycle();
     }
 
@@ -110,6 +113,13 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
         if(imageIcon != null){
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageDrawable(imageIcon);
+        }
+    }
+
+    public void setImageIconAction(Drawable imageIcon){
+        if(imageIcon != null){
+            imageButton.setVisibility(View.VISIBLE);
+            imageButton.setImageDrawable(imageIcon);
         }
     }
 
