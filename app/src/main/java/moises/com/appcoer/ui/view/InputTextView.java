@@ -22,12 +22,13 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.SavedState;
 
-public class InputTextView extends LinearLayout implements View.OnClickListener{
+public class InputTextView extends LinearLayout{
     private static final int MIN_TEXT_LINE = 1;
 
     @BindView(R.id.image_view) protected ImageView imageView;
@@ -55,7 +56,7 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
         View view = inflater.inflate(R.layout.view_input_text, this, true);
         ButterKnife.bind(this, view);
         compositeDisposable.add(getSubscriptionFromEditText());
-        imageButton.setOnClickListener(this);
+        textInputLayout.setErrorEnabled(true);
     }
 
     private Disposable getSubscriptionFromEditText() {
@@ -66,6 +67,9 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
 
     private void initialize(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.InputTextView);
+
+        int id = typedArray.getInt(R.styleable.InputTextView_android_id, 0);
+        setIdEditText(id);
 
         Drawable imageIcon = typedArray.getDrawable(R.styleable.InputTextView_iconImage);
         setImageIcon(imageIcon);
@@ -91,7 +95,7 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
         String hint = typedArray.getString(R.styleable.InputTextView_hint);
         setHint(hint);
 
-        boolean enabled = typedArray.getBoolean(R.styleable.InputTextView_android_enabled,true);
+        boolean enabled = typedArray.getBoolean(R.styleable.InputTextView_android_enabled, true);
         setEnabled(enabled);
 
         Drawable iconAction = typedArray.getDrawable(R.styleable.InputTextView_iconAction);
@@ -168,6 +172,15 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
     }
 
     public void clearField(){ editText.getText().clear(); }
+
+    public void setIdEditText(int id){
+        this.editText.setId(id);
+    }
+
+    @OnClick(R.id.image_button)
+    public void onClick(View view) {
+        callback.onActionIconClick(this);
+    }
 
     /**
      * Public Checks
@@ -265,11 +278,6 @@ public class InputTextView extends LinearLayout implements View.OnClickListener{
 
     public EditText getEditText(){
         return editText;
-    }
-
-    @Override
-    public void onClick(View view) {
-        callback.onActionIconClick(view);
     }
 
     public interface Callback{

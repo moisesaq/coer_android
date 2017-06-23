@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import moises.com.appcoer.ui.dialogs.AmountPeopleDialog;
 import moises.com.appcoer.ui.dialogs.DateCustomDialog;
 import moises.com.appcoer.ui.view.InputTextView;
 
+//TODO Improve all
 public class ReserveRoomFragment extends BaseFragment implements
         AdapterView.OnItemSelectedListener, AmountPeopleDialog.OnAmountPeopleDialogListener,
         InputTextView.Callback, DateCustomDialog.OnDateCustomDialogListener,
@@ -122,7 +124,7 @@ public class ReserveRoomFragment extends BaseFragment implements
 
     @OnClick(R.id.btn_confirm)
     public void onClick(View view) {
-        if(mRoom == null || mRoom.getId() == 1010)
+        if(mRoom != null || mRoom.getId() != 1010)
             reserveRoomPresenter.reserveRoom();
     }
 
@@ -135,6 +137,7 @@ public class ReserveRoomFragment extends BaseFragment implements
 
     @Override
     public void onActionIconClick(View view) {
+        Log.d("RESERVE", " >>> " + view.getId());
         switch (view.getId()){
             case R.id.itv_from_date:
                 showDateDialog(DateCustomDialog.ReserveDate.FROM_DATE);
