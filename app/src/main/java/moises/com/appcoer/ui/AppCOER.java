@@ -3,11 +3,9 @@ package moises.com.appcoer.ui;
 import android.app.Application;
 import android.content.Context;
 
-//import moises.com.appcoer.ui.test.DaggerWeaponComponent;
 import moises.com.appcoer.ui.test.dagger.WeaponComponent;
 
-public class App extends Application{
-
+public class AppCOER extends Application{
     private static Context mContext;
     private WeaponComponent weaponComponent;
 

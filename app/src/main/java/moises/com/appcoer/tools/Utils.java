@@ -23,7 +23,7 @@ import java.util.Locale;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
-import moises.com.appcoer.ui.App;
+import moises.com.appcoer.ui.AppCOER;
 
 public class Utils {
 
@@ -52,7 +52,7 @@ public class Utils {
     }
 
     public static void showToastMessage(String message){
-        Toast.makeText(App.getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AppCOER.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     public static void showDialogMessage(String title, String message, DialogInterface.OnClickListener listener){

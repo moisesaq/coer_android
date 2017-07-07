@@ -13,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.customtabs.CustomTabsIntent;
@@ -22,12 +21,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import java.util.regex.Pattern;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.ui.App;
+import moises.com.appcoer.ui.AppCOER;
 
 public class GlobalManager {
 
@@ -71,7 +68,7 @@ public class GlobalManager {
     public String getOwnerEmail() {
         String possibleEmail = null;
         Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
-        if (ActivityCompat.checkSelfPermission(App.getContext(), Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(AppCOER.getContext(), Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
             return "";
         }
 

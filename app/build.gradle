@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'me.tatarka.retrolambda'
 apply from: "$project.rootDir/tools/versions.gradle"
 
 /** Load keystore */
@@ -18,9 +18,9 @@ android {
         versionCode releaseVersionCode
         versionName releaseVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        jackOptions {
+        /*jackOptions {
             enabled true
-        }
+        }*/
     }
 
     buildTypes {
@@ -83,6 +83,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:' + espressoVersion, {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module:'jsr305'
     })
 
     compile 'com.android.support:appcompat-v7:' + appCompatVersion
@@ -125,9 +126,12 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + butterKnifeVersion
 
     /** DAGGER 2 */
-    compile "com.google.dagger:dagger:" + daggerVersion
-    annotationProcessor "com.google.dagger:dagger-compiler:" + daggerVersion
-    //provided 'javax.annotation:jsr250-api:1.0'
+    /*compile "com.google.dagger:dagger:" + daggerVersion
+    annotationProcessor "com.google.dagger:dagger-compiler:" + daggerVersion*/
+    compile 'com.google.dagger:dagger:2.11'
+    compile 'com.google.dagger:dagger-android:2.11'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
 
     /** RX JAVA */
     compile 'io.reactivex.rxjava2:rxjava:' + rxJavaVersion

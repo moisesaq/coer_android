@@ -24,7 +24,7 @@ ext {
 
     picassoVersion = '2.5.2'
 
-    butterKnifeVersion = '8.5.1'
+    butterKnifeVersion = '8.6.0'
     daggerVersion = '2.10'
     rxJavaVersion = '2.0.1'
     rxBindingVersion = '2.0.0'

@@ -13,7 +13,7 @@ import com.getkeepsafe.taptargetview.TapTargetView;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.User;
-import moises.com.appcoer.ui.App;
+import moises.com.appcoer.ui.AppCOER;
 
 public class UserGuide {
 
@@ -95,14 +95,14 @@ public class UserGuide {
     }
 
     private void guideSeen(StageGuide stageGuide, boolean status){
-        SharedPreferences preferences = App.getContext().getSharedPreferences(USER_GUIDE, Context.MODE_PRIVATE);
+        SharedPreferences preferences = AppCOER.getContext().getSharedPreferences(USER_GUIDE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(stageGuide.getStage(), status);
         editor.apply();
     }
 
     private boolean isGuideSeen(StageGuide stageGuide){
-        SharedPreferences preferences = App.getContext().getSharedPreferences(USER_GUIDE, Context.MODE_PRIVATE);
+        SharedPreferences preferences = AppCOER.getContext().getSharedPreferences(USER_GUIDE, Context.MODE_PRIVATE);
         return preferences.getBoolean(stageGuide.getStage(), false);
     }
 
@@ -111,8 +111,8 @@ public class UserGuide {
     }
 
     public enum StageGuide {
-        STAGE_1("stage1", App.getContext().getString(R.string.guide_stage_1), App.getContext().getString(R.string.guide_stage_description_1)),
-        STAGE_2("stage2", App.getContext().getString(R.string.guide_stage_2), App.getContext().getString(R.string.guide_stage_description_2)),
+        STAGE_1("stage1", AppCOER.getContext().getString(R.string.guide_stage_1), AppCOER.getContext().getString(R.string.guide_stage_description_1)),
+        STAGE_2("stage2", AppCOER.getContext().getString(R.string.guide_stage_2), AppCOER.getContext().getString(R.string.guide_stage_description_2)),
         STAGE_3("stage3", "Title stage 3", "Description stage 3"),
         STAGE_4("stage4", "Title stage 4", "Description stage 4");
 
