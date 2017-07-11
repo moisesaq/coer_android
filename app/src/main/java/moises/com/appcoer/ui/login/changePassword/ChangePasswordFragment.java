@@ -10,7 +10,7 @@ import android.widget.Button;
 import java.util.List;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
+import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
@@ -65,7 +65,7 @@ public class ChangePasswordFragment extends BaseLoginFragment implements View.On
             return;
         }
         GlobalManager.showProgressDialog();
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        ApiService apiClient = RestApiAdapter.getInstance().startConnection();
         Call<List<User>> listCall = apiClient.changePassword(mNewPassword.getText(), mEmail.getText(), Session.getInstance().getUser().getApiToken());
         listCall.enqueue(new Callback<List<User>>() {
             @Override

@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
+import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.tools.Utils;
@@ -66,7 +66,7 @@ public class DateDialog extends DialogFragment implements DatePickerDialog.OnDat
     private void loadBusyDates(){
         if(idRoom == 0)
             return;
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        ApiService apiClient = RestApiAdapter.getInstance().startConnection();
         Call<List<String>> listCall = apiClient.getRoomBusyDate(idRoom, Session.getInstance().getUser().getApiToken());
         listCall.enqueue(new Callback<List<String>>() {
             @Override

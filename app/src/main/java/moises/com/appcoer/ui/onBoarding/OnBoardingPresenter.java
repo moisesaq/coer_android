@@ -3,7 +3,7 @@ package moises.com.appcoer.ui.onBoarding;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import moises.com.appcoer.ui.AppCOER;
+import moises.com.appcoer.ui.CoerApplication;
 
 public class OnBoardingPresenter implements OnBoardingContract.ActivityPresenter{
 
@@ -29,12 +29,12 @@ public class OnBoardingPresenter implements OnBoardingContract.ActivityPresenter
     }
 
     public static Boolean isOnBoardingCompleted(){
-        SharedPreferences sharedPreferences = AppCOER.getContext().getSharedPreferences(OnBoardingActivity.class.getSimpleName(), Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = CoerApplication.getContext().getSharedPreferences(OnBoardingActivity.class.getSimpleName(), Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean("on_boarding", false);
     }
 
     private void onBoardingCompleted(){
-        SharedPreferences sharedPreferences = AppCOER.getContext().getSharedPreferences(OnBoardingActivity.class.getSimpleName(), Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = CoerApplication.getContext().getSharedPreferences(OnBoardingActivity.class.getSimpleName(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =sharedPreferences.edit();
         editor.putBoolean("on_boarding", true);
         editor.apply();

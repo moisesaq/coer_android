@@ -3,7 +3,6 @@ package moises.com.appcoer.ui.home.news.detail;
 import android.util.Log;
 
 import moises.com.appcoer.api.API;
-import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.News;

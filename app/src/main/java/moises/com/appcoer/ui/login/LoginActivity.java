@@ -9,6 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.LogEvent;
@@ -18,9 +24,11 @@ import moises.com.appcoer.ui.home.MainActivity;
 import moises.com.appcoer.ui.login.changePassword.ChangePasswordFragment;
 import moises.com.appcoer.ui.login.resetPassword.ResetPasswordDialog;
 
-public class LoginActivity extends AppCompatActivity implements
-        OnLoginFragmentListener,
-        ChangePasswordFragment.OnChangePasswordFragmentListener{
+public class LoginActivity extends AppCompatActivity implements HasSupportFragmentInjector,
+        OnLoginFragmentListener, ChangePasswordFragment.OnChangePasswordFragmentListener{
+
+    @Inject DispatchingAndroidInjector<Fragment> injector;
+    @Inject LoginContract.View loginFragmentView;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, LoginActivity.class);
@@ -29,21 +37,21 @@ public class LoginActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         GlobalManager.setActivityGlobal(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        showFragment(LoginFragment.newInstance(), false);
+        showFragment(loginFragmentView.getFragment(), false);
     }
 
     private void showFragment(Fragment fragment, boolean stack){
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        if(stack)
-            ft.addToBackStack(fragment.getClass().getSimpleName());
-        ft.replace(R.id.activity_login, fragment);
-        ft.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(stack ? fragment.getClass().getSimpleName() : null)
+                .replace(R.id.activity_login, fragment)
+                .commit();
     }
 
     @Override
@@ -94,4 +102,8 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return injector;
+    }
 }

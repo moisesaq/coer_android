@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
+import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.Session;
@@ -39,7 +39,6 @@ import moises.com.appcoer.ui.home.news.list.NewsListFragment;
 import moises.com.appcoer.ui.home.payments.PaymentsFragment;
 import moises.com.appcoer.ui.home.process.list.ProcessListFragment;
 import moises.com.appcoer.ui.home.reservations.ReservationsFragment;
-import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 import moises.com.appcoer.ui.login.LoginActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -251,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showBills(){
         GlobalManager.showProgressDialog();
         if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
-            ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+            ApiService apiClient = RestApiAdapter.getInstance().startConnection();
             Call<Bill> billCall = apiClient.getBill(Session.getInstance().getUser().getApiToken());
             billCall.enqueue(new Callback<Bill>() {
                 @Override

@@ -1,5 +1,7 @@
 package moises.com.appcoer.ui.login;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -13,6 +15,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     private final LoginContract.View loginView;
     private final CompositeDisposable compositeDisposable;
 
+    @Inject
     public LoginPresenter(LoginContract.View loginView){
         this.loginView = loginView;
         loginView.setPresenter(this);

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +18,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
-import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.model.Process;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.view.LoadingView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProcessFragment extends BaseFragment implements ProcessContract.View{
     private static final String ARG_PARAM1 = "process";

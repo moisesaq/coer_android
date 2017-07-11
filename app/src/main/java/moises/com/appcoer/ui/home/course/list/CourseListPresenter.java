@@ -1,12 +1,10 @@
 package moises.com.appcoer.ui.home.course.list;
 
-import android.util.Log;
 import android.view.View;
 
 import java.util.List;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.CourseList;

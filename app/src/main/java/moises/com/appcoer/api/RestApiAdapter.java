@@ -24,7 +24,7 @@ public class RestApiAdapter {
         return new RestApiAdapter();
     }
 
-    public ApiClient startConnection(){
+    public ApiService startConnection(){
         OkHttpClient.Builder httBuilder = new OkHttpClient.Builder();
 
         /*Retrofit.Builder builder = new Retrofit.Builder()
@@ -40,7 +40,7 @@ public class RestApiAdapter {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        return retrofit.create(ApiClient.class);
+        return retrofit.create(ApiService.class);
     }
 
     public static Observable<User> login(String userName, String password){

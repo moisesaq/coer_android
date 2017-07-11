@@ -24,7 +24,7 @@ import android.util.Patterns;
 import java.util.regex.Pattern;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.ui.AppCOER;
+import moises.com.appcoer.ui.CoerApplication;
 
 public class GlobalManager {
 
@@ -68,7 +68,7 @@ public class GlobalManager {
     public String getOwnerEmail() {
         String possibleEmail = null;
         Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
-        if (ActivityCompat.checkSelfPermission(AppCOER.getContext(), Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(CoerApplication.getContext(), Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
             return "";
         }
 

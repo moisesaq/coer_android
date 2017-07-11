@@ -1,6 +1,6 @@
 package moises.com.appcoer.ui.home.menu;
 
-import moises.com.appcoer.api.ApiClient;
+import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Enrollment;
@@ -43,7 +43,7 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     private void getEnrollment(){
         loadingEnrollment = true;
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        ApiService apiClient = RestApiAdapter.getInstance().startConnection();
         Call<Enrollment> enrollmentCall = apiClient.getEnrollmentDate();
         enrollmentCall.enqueue(new retrofit2.Callback<Enrollment>() {
             @Override
@@ -62,7 +62,7 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     private void getImportantNews() {
         loadingNews = true;
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        ApiService apiClient = RestApiAdapter.getInstance().startConnection();
         User user = Session.getInstance().getUser();
         Call<NewsList> newsListCall = apiClient.getNews(1, null, 1,
                 user == null ? null : Session.getInstance().getUser().getApiToken());

@@ -5,7 +5,7 @@ import android.util.Log;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import moises.com.appcoer.api.API;
-import moises.com.appcoer.api.ApiClient;
+import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.Course;
 import retrofit2.Call;
@@ -41,7 +41,7 @@ public class CoursePresenter implements CourseContract.Presenter{
     }
 
     private void getCourseUpdated(Course course){
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        ApiService apiClient = RestApiAdapter.getInstance().startConnection();
         String urlCourse = String.format("%s%s%s", API.COURSES, "/", course.getId());
         Call<Course> courseCall = apiClient.getCourseDescription(urlCourse);
         courseCall.enqueue(new Callback<Course>() {

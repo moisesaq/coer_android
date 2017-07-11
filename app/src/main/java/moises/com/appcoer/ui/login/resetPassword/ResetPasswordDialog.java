@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
+import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.view.InputTextView;
@@ -64,7 +64,7 @@ public class ResetPasswordDialog extends DialogFragment implements View.OnClickL
 
     private void resetPassword(String email){
         Utils.showToastMessage(getString(R.string.sending));
-        ApiClient apiClient = RestApiAdapter.getInstance().startConnection();
+        ApiService apiClient = RestApiAdapter.getInstance().startConnection();
         Call<ResponseBody> call = apiClient.resetPassword(email);
         call.enqueue(new Callback<ResponseBody>() {
             @Override

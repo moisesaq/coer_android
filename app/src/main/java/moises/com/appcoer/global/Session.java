@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 import moises.com.appcoer.model.User;
-import moises.com.appcoer.ui.AppCOER;
+import moises.com.appcoer.ui.CoerApplication;
 
 public class Session {
     //Shared Preferences file name
@@ -39,21 +39,21 @@ public class Session {
 
     /*SHARED PREFERENCES SESSION*/
     private void saveUser(User user){
-        SharedPreferences sharedPref = AppCOER.getContext().getSharedPreferences(SESSION, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = CoerApplication.getContext().getSharedPreferences(SESSION, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(USER_DATA, user == null ? "" : user.toString());
         editor.apply();
     }
 
     private User getCurrentUser(){
-        SharedPreferences sharedPreferences = AppCOER.getContext().getSharedPreferences(SESSION, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = CoerApplication.getContext().getSharedPreferences(SESSION, Context.MODE_PRIVATE);
         String userJson = sharedPreferences.getString(USER_DATA, "");
         return userJson.isEmpty() ? null : new Gson().fromJson(userJson, User.class);
     }
 
     public static void clearSession(){
         Session.getInstance().setUser(null);
-        SharedPreferences sharedPreferences = AppCOER.getContext().getSharedPreferences(SESSION, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = CoerApplication.getContext().getSharedPreferences(SESSION, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(USER_DATA);
         editor.apply();

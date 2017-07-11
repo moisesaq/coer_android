@@ -28,7 +28,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
-public interface ApiClient {
+public interface ApiService {
 
     @POST(API.LOGIN)
     Call<User> login(@Query("username") String userName, @Query("password") String password);

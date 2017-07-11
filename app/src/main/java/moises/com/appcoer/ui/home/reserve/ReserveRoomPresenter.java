@@ -4,7 +4,6 @@ import android.view.View;
 import java.util.List;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.Session;
 import moises.com.appcoer.model.Reservation;

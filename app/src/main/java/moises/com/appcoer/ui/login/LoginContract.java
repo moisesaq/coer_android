@@ -1,12 +1,14 @@
 package moises.com.appcoer.ui.login;
 
+import android.support.v4.app.Fragment;
+
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.ui.base.BasePresenter;
 import moises.com.appcoer.ui.base.BaseView;
 
 public class LoginContract {
 
-    interface View extends BaseView<Presenter> {
+    public interface View extends BaseView<Presenter> {
         void showLoading(boolean show);
 
         void showLoginError(String msg);
@@ -22,7 +24,7 @@ public class LoginContract {
         void loginSuccess(User user);
     }
 
-    interface Presenter extends BasePresenter {
+    public interface Presenter extends BasePresenter {
         void startLogin();
     }
 }

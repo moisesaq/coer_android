@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,10 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.ApiClient;
-import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
-import moises.com.appcoer.global.Session;
 import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.ui.adapters.ReservationListAdapter;
@@ -33,9 +28,6 @@ import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.dialogs.ReserveDetailDialog;
 import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 import moises.com.appcoer.ui.view.LoadingView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ReservationsFragment extends BaseFragment implements ReservationListAdapter.CallBack, ReservationsContract.View{
 

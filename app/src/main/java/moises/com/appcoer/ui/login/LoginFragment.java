@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.support.AndroidSupportInjection;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import moises.com.appcoer.R;
@@ -24,9 +27,10 @@ import moises.com.appcoer.ui.view.InputTextView;
 
 public class LoginFragment extends BaseLoginFragment implements LoginContract.View{
     public static final String TAG = LoginFragment.class.getSimpleName();
-
     private static final String USER_NAME = "username";
     private static final String PASSWORD = "password";
+
+    @Inject LoginContract.Presenter loginPresenter;
 
     @BindView(R.id.itv_user_name) protected InputTextView itvUserName;
     @BindView(R.id.itv_password) protected InputTextView itvPassword;
@@ -34,17 +38,26 @@ public class LoginFragment extends BaseLoginFragment implements LoginContract.Vi
 
     private OnLoginFragmentListener listener;
 
-    private LoginContract.Presenter loginPresenter;
-
     public static LoginFragment newInstance() {
         return new LoginFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        AndroidSupportInjection.inject(this);
+        if (context instanceof OnLoginFragmentListener) {
+            listener = (OnLoginFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnLoginFragmentListener");
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        new LoginPresenter(this);
+        //new LoginPresenter(this);
     }
 
     @Override
@@ -138,16 +151,6 @@ public class LoginFragment extends BaseLoginFragment implements LoginContract.Vi
     @Override
     public void loginSuccess(User user) {
         listener.onLoginSuccessful(user);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnLoginFragmentListener) {
-            listener = (OnLoginFragmentListener) context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement OnLoginFragmentListener");
-        }
     }
 
     @Override
