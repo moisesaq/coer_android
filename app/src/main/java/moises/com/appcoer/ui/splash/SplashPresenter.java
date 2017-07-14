@@ -2,15 +2,17 @@ package moises.com.appcoer.ui.splash;
 
 import android.os.CountDownTimer;
 
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionHandler;
 import moises.com.appcoer.ui.onBoarding.OnBoardingPresenter;
 
-public class SplashPresenter implements SplashContract.ActivityPresenter{
+public class SplashPresenter implements SplashContract.Presenter {
 
-    private SplashContract.ActivityView activityView;
+    private SplashContract.View splashView;
+    private SessionHandler session;
 
-    public SplashPresenter(SplashContract.ActivityView activityView){
-        this.activityView = activityView;
+    public SplashPresenter(SplashContract.View splashView, SessionHandler session){
+        this.splashView = splashView;
+        this.session = session;
     }
 
     @Override
@@ -32,14 +34,17 @@ public class SplashPresenter implements SplashContract.ActivityPresenter{
     }
 
     private void recoverSession(){
-        //TODO Remote this set IFs
-        if(Session.getInstance().getUser() != null){
-            activityView.startMainActivity();
-        }else if (OnBoardingPresenter.isOnBoardingCompleted()){
-            activityView.startLoginActivity();
-        }else {
-            activityView.startOnBoardingActivity();
+        if(session.getUser() != null){
+            splashView.startMainActivity();
+            return;
         }
+
+        if (!OnBoardingPresenter.isOnBoardingCompleted()){
+            splashView.startOnBoardingActivity();
+            return;
+        }
+
+        splashView.startLoginActivity();
     }
 
     @Override

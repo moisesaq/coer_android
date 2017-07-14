@@ -29,7 +29,7 @@
             android:orientation="horizontal"
             android:layout_margin="@dimen/margin_min_global">
 
-            <moises.com.appcoer.ui.view.InputTextView
+            <moises.com.appcoer.ui.splashView.InputTextView
                 android:id="@+id/itv_user_name"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -40,7 +40,7 @@
                 android:inputType="textEmailAddress"
                 android:layout_marginRight="@dimen/margin_min_global"/>
 
-            <moises.com.appcoer.ui.view.InputTextView
+            <moises.com.appcoer.ui.splashView.InputTextView
                 android:id="@+id/itv_password"
                 android:layout_width="0dp"
                 android:layout_weight="1"

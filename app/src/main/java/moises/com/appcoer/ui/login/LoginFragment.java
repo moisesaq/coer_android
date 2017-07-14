@@ -86,27 +86,9 @@ public class LoginFragment extends BaseLoginFragment implements LoginContract.Vi
         }
     }
 
-    private void startLogin(String userName, String password){
-        GlobalManager.showProgressDialog();
-        RestApiAdapter.login(userName, password)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        user -> {
-                            listener.onLoginSuccessful(user);
-                            GlobalManager.dismissProgressDialog();
-                        },
-                        error -> {
-                            Utils.showDialogMessage("", getString(R.string.message_something_went_wrong), null);
-                            GlobalManager.dismissProgressDialog();
-                            Log.d(TAG, "ERROR >>> " + error.toString());
-                        });
-    }
-
     /**
      * IMPLEMENTATION LOGIN CONTRACT VIEW
      * */
-
     @Override
     public void setPresenter(LoginContract.Presenter presenter) {
         if(presenter != null) loginPresenter = presenter;
@@ -151,6 +133,7 @@ public class LoginFragment extends BaseLoginFragment implements LoginContract.Vi
     @Override
     public void loginSuccess(User user) {
         listener.onLoginSuccessful(user);
+        //Log.i(TAG, " SUCCESS >>> " + user.toString());
     }
 
     @Override
@@ -165,4 +148,5 @@ public class LoginFragment extends BaseLoginFragment implements LoginContract.Vi
         savedInstanceState.putString(PASSWORD, itvPassword.getText());
         super.onSaveInstanceState(savedInstanceState);
     }
+
 }

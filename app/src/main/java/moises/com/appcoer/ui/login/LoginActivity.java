@@ -3,8 +3,6 @@ package moises.com.appcoer.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,9 +16,9 @@ import dagger.android.support.HasSupportFragmentInjector;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.LogEvent;
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.User;
-import moises.com.appcoer.ui.home.MainActivity;
+import moises.com.appcoer.ui.main.MainActivity;
 import moises.com.appcoer.ui.login.changePassword.ChangePasswordFragment;
 import moises.com.appcoer.ui.login.resetPassword.ResetPasswordDialog;
 
@@ -60,10 +58,10 @@ public class LoginActivity extends AppCompatActivity implements HasSupportFragme
         GlobalManager.setActivityGlobal(this);
     }
 
-    /*LOGIN FRAGMENT LISTENER*/
+    /** IMPLEMENTATION LOGIN FRAGMENT LISTENER */
     @Override
     public void onLoginSuccessful(User user) {
-        Session.getInstance().setUser(user);
+        SessionManager.getInstance(this).setUser(user);
         LogEvent.logEventFirebaseAnalytic(this, LogEvent.EVENT_START_SESSION);
         if(user.getFirstTime() == 1){
             showFragment(ChangePasswordFragment.newInstance(), true);
@@ -89,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements HasSupportFragme
 
     @Override
     public void onChangePasswordSuccessful(User user) {
-        Session.getInstance().setUser(user);
+        SessionManager.getInstance(this).setUser(user);
         goToMainActivity(true);
     }
 

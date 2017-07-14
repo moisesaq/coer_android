@@ -16,9 +16,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
+import dagger.android.support.AndroidSupportInjection;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.Enrollment;
 import moises.com.appcoer.model.News;
@@ -28,7 +32,7 @@ import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 
 public class MenuFragment extends BaseFragment implements MenuContract.View{
 
-    private MenuContract.Presenter menuPresenter;
+    @Inject protected MenuContract.Presenter menuPresenter;
 
     protected @BindView(R.id.tv_date_enrollment) TextView tvDateEnrollment;
     protected @BindView(R.id.tv_description_enrollment) TextView tvDescriptionEnrollment;
@@ -40,23 +44,34 @@ public class MenuFragment extends BaseFragment implements MenuContract.View{
     private OnMenuFragmentListener listener;
     private View view;
     private News news;
+    private Unbinder unbinder;
 
     public static MenuFragment newInstance() {
         return new MenuFragment();
     }
 
     @Override
+    public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
+        if (context instanceof OnMenuFragmentListener) {
+            listener = (OnMenuFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnMenuFragmentListener");
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        new MenuPresenter(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(view == null){
             view = inflater.inflate(R.layout.fragment_menu, container, false);
-            ButterKnife.bind(this, view);
+            unbinder = ButterKnife.bind(this, view);
         }
         setTitle(getString(R.string.app_name));
         return view;
@@ -103,8 +118,6 @@ public class MenuFragment extends BaseFragment implements MenuContract.View{
      * */
     @Override
     public void setPresenter(MenuContract.Presenter presenter) {
-        if(presenter != null) menuPresenter = presenter;
-        else throw new RuntimeException("Menu presenter can not be null");
     }
 
     @Override
@@ -138,16 +151,6 @@ public class MenuFragment extends BaseFragment implements MenuContract.View{
     private String getCustomDate(String textDate){
         Date date = Utils.parseStringToDate(textDate, Utils.DATE_FORMAT_INPUT);
         return Utils.getCustomizedDate(Utils.DATE_FORMAT_DAY, date);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnMenuFragmentListener) {
-            listener = (OnMenuFragmentListener) context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement OnMenuFragmentListener");
-        }
     }
 
     @Override

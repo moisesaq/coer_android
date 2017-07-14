@@ -13,7 +13,7 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseLoginFragment;
@@ -66,7 +66,8 @@ public class ChangePasswordFragment extends BaseLoginFragment implements View.On
         }
         GlobalManager.showProgressDialog();
         ApiService apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<List<User>> listCall = apiClient.changePassword(mNewPassword.getText(), mEmail.getText(), Session.getInstance().getUser().getApiToken());
+        Call<List<User>> listCall = apiClient.changePassword(
+                mNewPassword.getText(), mEmail.getText(), SessionManager.getInstance(getActivity()).getUser().getApiToken());
         listCall.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {

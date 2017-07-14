@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.home;
+package moises.com.appcoer.ui.main;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,11 +20,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.global.GlobalManager;
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionHandler;
+import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.Bill;
 import moises.com.appcoer.model.Course;
@@ -33,6 +43,7 @@ import moises.com.appcoer.model.User;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.home.course.list.CourseListFragment;
 import moises.com.appcoer.ui.home.hotel.HotelFragment;
+import moises.com.appcoer.ui.home.menu.MenuContract;
 import moises.com.appcoer.ui.home.menu.MenuFragment;
 import moises.com.appcoer.ui.home.news.detail.NewsFragment;
 import moises.com.appcoer.ui.home.news.list.NewsListFragment;
@@ -44,12 +55,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCoursesFragmentListener,
-                                                                    MenuFragment.OnMenuFragmentListener{
-    private TextView mFullName;
-    private TextView mEmail;
-    private Toolbar toolbar;
-    private DrawerLayout drawer;
+public class MainActivity extends AppCompatActivity implements
+        MainContract.View, NavigationView.OnNavigationItemSelectedListener,
+        CourseListFragment.OnCoursesFragmentListener, MenuFragment.OnMenuFragmentListener,
+        HasSupportFragmentInjector{
+
+    @Inject DispatchingAndroidInjector<Fragment> injector;
+    @Inject SessionHandler session;
+    @Inject MenuContract.View menuView;
+
+    protected TextView tvFullName;
+    protected TextView tvEmail;
+    @BindView(R.id.toolbar) protected Toolbar toolbar;
+    @BindView(R.id.drawer_layout) protected DrawerLayout drawer;
+    @BindView(R.id.nav_view) protected NavigationView navigationView;
+
+    private Unbinder unbinder;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, MainActivity.class);
@@ -58,25 +79,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         GlobalManager.setActivityGlobal(this);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setupNavMenu(toolbar);
-        showFragment(MenuFragment.newInstance(), false);
+        setupNavMenu();
+        showFragment(menuView.getFragment(), false);
     }
 
-    private void setupNavMenu(Toolbar toolbar){
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+    private void setupNavMenu(){
+        unbinder = ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        mFullName = (TextView)headerView.findViewById(R.id.tv_fullname);
-        mEmail = (TextView)headerView.findViewById(R.id.tv_email);
+        tvFullName = (TextView)headerView.findViewById(R.id.tv_fullname);
+        tvEmail = (TextView)headerView.findViewById(R.id.tv_email);
         loadUser();
         showUserGuide();
     }
@@ -86,7 +107,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showUserGuide(){
-        UserGuide.getInstance(GlobalManager.getActivityGlobal()).showStageWithToolbar(UserGuide.StageGuide.STAGE_1, toolbar, new UserGuide.CallBack() {
+        UserGuide.getInstance(GlobalManager.getActivityGlobal())
+                .showStageWithToolbar(UserGuide.StageGuide.STAGE_1, toolbar,
+                        new UserGuide.CallBack() {
             @Override
             public void onUserGuideOnClick() {
                 openNavigationView();
@@ -95,25 +118,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void loadUser(){
-        User user = Session.getInstance().getUser();
+        User user = SessionManager.getInstance(this).getUser();
         if(user == null)
             return;
-        mFullName.setText(user.getFullName() != null ? user.getFullName() : "");
-        mEmail.setText(user.getEmail() != null ? user.getEmail() : "");
+        tvFullName.setText(user.getFullName() != null ? user.getFullName() : "");
+        tvEmail.setText(user.getEmail() != null ? user.getEmail() : "");
     }
 
     public void showFragment(Fragment fragment, boolean stack){
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        if(stack)
-            ft.addToBackStack(fragment.getClass().getSimpleName());
-        ft.replace(R.id.content_main, fragment);
-        ft.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(stack ? fragment.getClass().getSimpleName() : null)
+                .replace(R.id.content_main, fragment)
+                .commit();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0){
@@ -143,10 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.nav_account) {
-            // Handle the camera action
-        } else if (id == R.id.nav_reserves) {
+        if (id == R.id.nav_reserves) {
             showMyReservations();
         } else if (id == R.id.nav_news) {
             showFragment(NewsListFragment.newInstance(false), true);
@@ -160,16 +178,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showBills();
         }else if(id == R.id.nav_logout){
             logout();
-            //showFragment(TestFragment.newInstance(), true);
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void showMyReservations(){
-        if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
+        if(SessionManager.getInstance(this).getUser() != null &&
+                SessionManager.getInstance(this).getUser().getApiToken() != null){
             showFragment(ReservationsFragment.newInstance(), true);
         }else{
             showMessageNeedSignUp();
@@ -177,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void logout(){
-        if(Session.getInstance().getUser() == null){
+        if(SessionManager.getInstance(this).getUser() == null){
             finish();
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -191,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Session.clearSession();
+                    SessionManager.getInstance(MainActivity.this).clearSession();
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
@@ -200,11 +216,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    /*FRAGMENT COURSE LISTENER*/
+    /** IMPLEMENTATION FRAGMENT COURSE LISTENER */
 
     @Override
     public void onCourseClick(Course course) {
-
     }
 
     @Override
@@ -212,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         showFragment(NewsFragment.newInstance(news), true);
     }
 
-    /*FRAGMENT MENU LISTENER*/
+    /** IMPLEMENTATION FRAGMENT MENU LISTENER */
     @Override
     public void onNewsClick() {
         showFragment(NewsListFragment.newInstance(true), true);
@@ -225,7 +240,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onLodgingClick(int id) {
-        if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
+        if(SessionManager.getInstance(this).getUser() != null &&
+                SessionManager.getInstance(this).getUser().getApiToken() != null){
             showFragment(HotelFragment.newInstance(id), true);
         }else{
             showMessageNeedSignUp();
@@ -249,9 +265,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void showBills(){
         GlobalManager.showProgressDialog();
-        if(Session.getInstance().getUser() != null && Session.getInstance().getUser().getApiToken() != null){
+        if(SessionManager.getInstance(this).getUser() != null && SessionManager.getInstance(this).getUser().getApiToken() != null){
             ApiService apiClient = RestApiAdapter.getInstance().startConnection();
-            Call<Bill> billCall = apiClient.getBill(Session.getInstance().getUser().getApiToken());
+            Call<Bill> billCall = apiClient.getBill(SessionManager.getInstance(this).getUser().getApiToken());
             billCall.enqueue(new Callback<Bill>() {
                 @Override
                 public void onResponse(Call<Bill> call, Response<Bill> response) {
@@ -288,5 +304,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Fragment getFragment(String tag){
         return getSupportFragmentManager().findFragmentByTag(tag);
+    }
+
+    /** IMPLEMENTATION CONTRACT VIEW */
+    @Override
+    public void startOnBoardingActivity() {
+
+    }
+
+    @Override
+    public void showBill(Bill bill) {
+
+    }
+
+    @Override
+    public void showBillFailed() {
+
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return injector;
     }
 }

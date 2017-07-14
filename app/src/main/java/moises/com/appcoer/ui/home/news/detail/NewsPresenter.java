@@ -4,7 +4,7 @@ import android.util.Log;
 
 import moises.com.appcoer.api.API;
 import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.News;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +33,7 @@ public class NewsPresenter implements NewsContract.Presenter{
         String urlNews = String.format("%s%s%s", API.NEWS, "/", newsId);
         Call<News> newsCall = RestApiAdapter.getInstance().startConnection().getNewsDescription(
                 urlNews,
-                Session.getInstance().getUser() == null ? null : Session.getInstance().getUser().getApiToken());
+                SessionManager.getInstance(newsView.getFragment().getActivity()).getUser() == null ? null : SessionManager.getInstance(newsView.getFragment().getActivity()).getUser().getApiToken());
         newsCall.enqueue(new Callback<News>() {
             @Override
             public void onResponse(Call<News> call, Response<News> response) {

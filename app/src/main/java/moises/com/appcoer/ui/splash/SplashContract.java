@@ -2,7 +2,7 @@ package moises.com.appcoer.ui.splash;
 
 public interface SplashContract {
 
-    interface ActivityView{
+    interface View {
         void startOnBoardingActivity();
 
         void startLoginActivity();
@@ -10,7 +10,7 @@ public interface SplashContract {
         void startMainActivity();
     }
 
-    interface ActivityPresenter{
+    interface Presenter {
         void onActivityCreated();
 
         void onActivityDestroyed();

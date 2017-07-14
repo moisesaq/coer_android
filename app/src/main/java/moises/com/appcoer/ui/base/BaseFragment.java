@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.ui.home.MainActivity;
+import moises.com.appcoer.ui.main.MainActivity;
 
 public class BaseFragment extends Fragment{
 

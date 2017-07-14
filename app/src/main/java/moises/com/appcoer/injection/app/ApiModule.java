@@ -1,5 +1,7 @@
 package moises.com.appcoer.injection.app;
 
+import android.content.Context;
+
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -10,7 +12,10 @@ import dagger.Module;
 import dagger.Provides;
 import moises.com.appcoer.BuildConfig;
 import moises.com.appcoer.api.ApiService;
+import moises.com.appcoer.global.session.SessionHandler;
+import moises.com.appcoer.global.session.SessionManager;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -38,12 +43,27 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(){
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor){
         return new OkHttpClient.Builder()
+                .addInterceptor(httpLoggingInterceptor)
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return httpLoggingInterceptor;
+    }
+
+    @Provides
+    @Singleton
+    SessionHandler providerSessionManager(Context context){
+        return new SessionManager(context);
     }
 
 }

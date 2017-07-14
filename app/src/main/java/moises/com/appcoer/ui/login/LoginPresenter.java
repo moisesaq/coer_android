@@ -7,17 +7,21 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import moises.com.appcoer.R;
+import moises.com.appcoer.api.DataHandler;
+import moises.com.appcoer.api.DataManager;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.model.User;
 
 public class LoginPresenter implements LoginContract.Presenter{
 
     private final LoginContract.View loginView;
+    private final DataHandler dataManager;
     private final CompositeDisposable compositeDisposable;
 
     @Inject
-    public LoginPresenter(LoginContract.View loginView){
+    public LoginPresenter(LoginContract.View loginView, DataHandler dataManager){
         this.loginView = loginView;
+        this.dataManager = dataManager;
         loginView.setPresenter(this);
         compositeDisposable = new CompositeDisposable();
     }
@@ -38,7 +42,7 @@ public class LoginPresenter implements LoginContract.Presenter{
         String username = loginView.getUsername();
         String password = loginView.getPassword();
 
-        return RestApiAdapter.login(username, password)
+        return dataManager.login(username, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::success, this::failed);

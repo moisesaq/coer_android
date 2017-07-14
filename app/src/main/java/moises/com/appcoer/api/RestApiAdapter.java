@@ -44,7 +44,7 @@ public class RestApiAdapter {
     }
 
     public static Observable<User> login(String userName, String password){
-        return getInstance().startConnection().startLogin(userName, password);
+        return getInstance().startConnection().startLogin(userName, password).toObservable();
     }
 
     public static Observable<Course> getCourseDescription(String url){

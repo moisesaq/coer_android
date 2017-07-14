@@ -15,7 +15,7 @@ import java.util.List;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.tools.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,7 +67,8 @@ public class DateDialog extends DialogFragment implements DatePickerDialog.OnDat
         if(idRoom == 0)
             return;
         ApiService apiClient = RestApiAdapter.getInstance().startConnection();
-        Call<List<String>> listCall = apiClient.getRoomBusyDate(idRoom, Session.getInstance().getUser().getApiToken());
+        Call<List<String>> listCall = apiClient.getRoomBusyDate(idRoom,
+                SessionManager.getInstance(getActivity()).getUser().getApiToken());
         listCall.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {

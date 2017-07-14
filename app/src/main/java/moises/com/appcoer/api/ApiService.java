@@ -3,6 +3,7 @@ package moises.com.appcoer.api;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import moises.com.appcoer.model.Bill;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.model.CourseList;
@@ -34,7 +35,16 @@ public interface ApiService {
     Call<User> login(@Query("username") String userName, @Query("password") String password);
 
     @POST(API.LOGIN)
-    Observable<User> startLogin(@Query("username") String userName, @Query("password") String password);
+    Single<User> startLogin(@Query("username") String username, @Query("password") String password);
+
+    @FormUrlEncoded
+    @PUT(API.CHANGE_PASSWORD)
+    @Headers("Accept: application/json")
+    Call<List<User>> changePassword(@Field("new_password") String newPassword, @Field("email") String email, @Query("api_token") String apiToken);
+
+    @FormUrlEncoded
+    @PUT(API.RESET_PASSWORD)
+    Call<ResponseBody> resetPassword(@Field("email") String email);
 
 
     @GET(API.NEWS)
@@ -64,15 +74,6 @@ public interface ApiService {
 
     @GET(API.METHOD_PAYMENTS)
     Call<List<MethodPayment>> getMethodPayments();
-
-    @FormUrlEncoded
-    @PUT(API.CHANGE_PASSWORD)
-    @Headers("Accept: application/json")
-    Call<List<User>> changePassword(@Field("new_password") String newPassword, @Field("email") String email, @Query("api_token") String apiToken);
-
-    @FormUrlEncoded
-    @PUT(API.RESET_PASSWORD)
-    Call<ResponseBody> resetPassword(@Field("email") String email);
 
     @POST(API.RESERVES)
     @Headers({"Content-Type: application/json", "Accept: application/json"})

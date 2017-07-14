@@ -8,6 +8,7 @@ import dagger.Provides;
 import dagger.android.AndroidInjector;
 import dagger.android.support.FragmentKey;
 import dagger.multibindings.IntoMap;
+import moises.com.appcoer.api.DataManager;
 import moises.com.appcoer.injection.util.ScopeFragment;
 import moises.com.appcoer.ui.login.LoginContract;
 import moises.com.appcoer.ui.login.LoginFragment;
@@ -24,7 +25,9 @@ public abstract class LoginFragmentModule {
 
     @Provides
     @ScopeFragment
-    static LoginContract.Presenter provideLoginFragmentPresenter(LoginContract.View loginFragmentView){
-        return new LoginPresenter(loginFragmentView);
+    static LoginContract.Presenter provideLoginFragmentPresenter(
+            LoginContract.View loginFragmentView,
+            DataManager dataManager){
+        return new LoginPresenter(loginFragmentView, dataManager);
     }
 }

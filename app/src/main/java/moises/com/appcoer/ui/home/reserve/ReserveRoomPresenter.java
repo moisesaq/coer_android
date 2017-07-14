@@ -5,7 +5,7 @@ import java.util.List;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
 import retrofit2.Call;
@@ -45,7 +45,7 @@ public class ReserveRoomPresenter implements ReserveRoomContract.Presenter{
     private void getRooms(int hotelId){
         reserveRoomView.showProgress(View.VISIBLE);
         Call<List<Room>> listCall = RestApiAdapter.getInstance().startConnection()
-                .getRoomList(hotelId, Session.getInstance().getUser().getApiToken());
+                .getRoomList(hotelId, SessionManager.getInstance(reserveRoomView.getFragment().getActivity()).getUser().getApiToken());
         listCall.enqueue(new Callback<List<Room>>() {
             @Override
             public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
@@ -64,7 +64,8 @@ public class ReserveRoomPresenter implements ReserveRoomContract.Presenter{
     private void loadBusyDates(Room room){
         reserveRoomView.showProgress(View.VISIBLE);
         Call<List<String>> listCall = RestApiAdapter.getInstance().startConnection()
-                .getRoomBusyDate(room.getId(), Session.getInstance().getUser().getApiToken());
+                .getRoomBusyDate(room.getId(), SessionManager.getInstance(
+                        reserveRoomView.getFragment().getActivity()).getUser().getApiToken());
         listCall.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
@@ -87,7 +88,8 @@ public class ReserveRoomPresenter implements ReserveRoomContract.Presenter{
     private void reserveRoom(final Reservation reservation){
         reserveRoomView.showLoading(true);
         Call<Reservation> reservationCall = RestApiAdapter.getInstance().startConnection()
-                .reserveRoom(reservation.getRoomId(), Session.getInstance().getUser().getApiToken(),
+                .reserveRoom(reservation.getRoomId(), SessionManager.getInstance(
+                        reserveRoomView.getFragment().getActivity()).getUser().getApiToken(),
                         reservation);
         reservationCall.enqueue(new Callback<Reservation>() {
             @Override

@@ -4,7 +4,7 @@ import java.util.List;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.Hotel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +25,8 @@ public class HotelPresenter implements HotelContract.Presenter{
 
     @Override
     public void getHotelDescription(int hotelId){
-        Call<List<Hotel>> lodgingListCall = RestApiAdapter.getInstance().startConnection().getLodgingList(Session.getInstance().getUser().getApiToken());
+        Call<List<Hotel>> lodgingListCall = RestApiAdapter.getInstance()
+                .startConnection().getLodgingList(SessionManager.getInstance(hotelView.getFragment().getActivity()).getUser().getApiToken());
         lodgingListCall.enqueue(new Callback<List<Hotel>>() {
             @Override
             public void onResponse(Call<List<Hotel>> call, Response<List<Hotel>> response) {

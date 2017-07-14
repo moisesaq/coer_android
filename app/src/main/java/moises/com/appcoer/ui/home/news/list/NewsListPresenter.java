@@ -6,7 +6,7 @@ import java.util.List;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.Session;
+import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.model.NewsList;
 import moises.com.appcoer.model.User;
@@ -37,7 +37,7 @@ public class NewsListPresenter implements NewsListContract.Presenter{
 
     private void getNews(final int page) {
         showProgress(page);
-        User user = Session.getInstance().getUser();
+        User user = SessionManager.getInstance(newsListView.getFragment().getActivity()).getUser();
         Call<NewsList> newsListCall = RestApiAdapter.getInstance().startConnection()
                 .getNews(null, page, 0, user == null ? null : user.getApiToken());
         newsListCall.enqueue(new Callback<NewsList>() {
