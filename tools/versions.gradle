@@ -1,31 +1,9 @@
 ext {
     // Sdk configuration
-    compileVersion = 25
-    buildVersion = '25.0.3'
-    minVersion = 16
-    targetVersion = 25
-    releaseVersionCode = 1
-    releaseVersionName = '1.0'
-
-    // Dependencies
-    espressoVersion = '2.2.2'
-    junitVersion = '4.12'
-    appCompatVersion = '25.3.1'
-    firebaseVersion = '9.6.1'
-    tapTargetViewVersion = '1.6.1'
-    circleImageViewVersion = '0.9.+@aar'
-    floatingButtonWithMenuVersion = "1.6.4"
-    customDatePickerVersion = '3.1.3'
-    chromeTabsVersion = '25.3.1'
-
-    retrofitVersion = '2.2.0'
-    loggingInterceptorVersion = '3.5.0'
-    retrofitRxJava2AdapterVersion = '1.0.0'
-
-    picassoVersion = '2.5.2'
-
-    butterKnifeVersion = '8.6.0'
-    daggerVersion = '2.10'
-    rxJavaVersion = '2.0.1'
-    rxBindingVersion = '2.0.0'
+    defaultVersionCode = 1
+    defaultVersionName = '1.0'
+    freeVersionCode = 1
+    freeVersionName = "1.0"
+    premiunVersionCode = 1
+    premiunVersionName = "1.0"
 }
