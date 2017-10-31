@@ -8,7 +8,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "moises.com.appcoer"
@@ -99,13 +99,13 @@ dependencies {
     compile 'com.android.support:customtabs:26.1.0'
 
     /** CRASH REPORTING */
-    compile 'com.google.firebase:firebase-crash:11.4.0'
+    compile 'com.google.firebase:firebase-crash:11.4.2'
 
     /** VIEW PAGER INDICATOR */
     compile 'me.relex:circleindicator:1.1.8@aar'
 
     /** TAP TARGET VIEW */
-    compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
+    compile 'com.getkeepsafe.taptargetview:taptargetview:1.10.0'
 
     /** CIRCLE IMAGE VIEW */
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
