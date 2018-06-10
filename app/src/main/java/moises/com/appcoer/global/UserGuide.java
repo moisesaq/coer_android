@@ -12,7 +12,7 @@ import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 
 import moises.com.appcoer.R;
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 import moises.com.appcoer.ui.CoerApplication;
 
 public class UserGuide {

@@ -1,4 +1,4 @@
-package moises.com.appcoer.model;
+package moises.com.appcoer.model.login;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;

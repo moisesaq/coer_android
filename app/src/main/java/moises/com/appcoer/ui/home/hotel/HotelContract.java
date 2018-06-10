@@ -6,7 +6,7 @@ import moises.com.appcoer.ui.base.BaseView;
 
 public interface HotelContract {
 
-    interface View extends BaseView<Presenter>{
+    interface View extends BaseView<Presenter> {
         void showLoading(boolean show);
 
         void showHotelDetail(Hotel hotel);
@@ -14,7 +14,7 @@ public interface HotelContract {
         void showMessageError(int stringId);
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter {
         void getHotelDescription(int hotelId);
     }
 }

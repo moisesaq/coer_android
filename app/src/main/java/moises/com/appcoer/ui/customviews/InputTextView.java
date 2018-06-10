@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.view;
+package moises.com.appcoer.ui.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -28,13 +28,17 @@ import io.reactivex.disposables.Disposable;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.SavedState;
 
-public class InputTextView extends LinearLayout{
+public class InputTextView extends LinearLayout {
     private static final int MIN_TEXT_LINE = 1;
 
-    @BindView(R.id.image_view) protected ImageView imageView;
-    @BindView(R.id.text_input_layout) protected TextInputLayout textInputLayout;
-    @BindView(R.id.edit_text) protected EditText editText;
-    @BindView(R.id.image_button) protected ImageButton imageButton;
+    @BindView(R.id.image_view)
+    protected ImageView imageView;
+    @BindView(R.id.text_input_layout)
+    protected TextInputLayout textInputLayout;
+    @BindView(R.id.edit_text)
+    protected EditText editText;
+    @BindView(R.id.image_button)
+    protected ImageButton imageButton;
 
     private Callback callback;
 
@@ -52,7 +56,7 @@ public class InputTextView extends LinearLayout{
     }
 
     private void setUpView() {
-        LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.view_input_text, this, true);
         ButterKnife.bind(this, view);
         compositeDisposable.add(getSubscriptionFromEditText());
@@ -104,81 +108,87 @@ public class InputTextView extends LinearLayout{
         typedArray.recycle();
     }
 
-    public void onDestroy() { compositeDisposable.dispose(); }
-
     /**
      * Getters & Setters
      */
-    public String getText(){
+    public String getText() {
         return editText.getText().toString();
     }
 
-    public void setImageIcon(Drawable imageIcon){
-        if(imageIcon != null){
+    public void setImageIcon(Drawable imageIcon) {
+        if (imageIcon != null) {
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageDrawable(imageIcon);
         }
     }
 
-    public void setImageIconAction(Drawable imageIcon){
-        if(imageIcon != null){
+    public void setImageIconAction(Drawable imageIcon) {
+        if (imageIcon != null) {
             imageButton.setVisibility(View.VISIBLE);
             imageButton.setImageDrawable(imageIcon);
         }
     }
 
-    public void setText(@NonNull String text){
-        editText.setText(text);
+    public void setText(String text) {
+        if (text != null)
+            editText.setText(text);
     }
 
-    public void setHint(@NonNull String text){ textInputLayout.setHint(text); }
+    public void setHint(String text) {
+        if (text != null)
+            textInputLayout.setHint(text);
+    }
 
-    public void setError(@NonNull String error){
+    public void setError(@NonNull String error) {
         textInputLayout.setError(error);
     }
 
-    public void setInputType(int inputType){
+    public void setInputType(int inputType) {
         editText.setInputType(inputType);
     }
 
-    public void setErrorEnabled(boolean enabled){
+    public void setErrorEnabled(boolean enabled) {
         textInputLayout.setErrorEnabled(enabled);
     }
 
-    public void setMaxLengthEnabled(boolean enabled){
+    public void setMaxLengthEnabled(boolean enabled) {
         textInputLayout.setCounterEnabled(enabled);
     }
 
-    public void setMaxLength(int maxLength){
+    public void setMaxLength(int maxLength) {
         textInputLayout.setCounterMaxLength(maxLength);
     }
 
     public void setLines(int lines) {
-        if(lines >= MIN_TEXT_LINE)
+        if (lines >= MIN_TEXT_LINE)
             setLinesAttributes(lines);
     }
 
     private void setLinesAttributes(int lines) {
         editText.setLines(lines);
-        editText.setGravity(Gravity.START|Gravity.TOP);
+        editText.setGravity(Gravity.START | Gravity.TOP);
     }
 
     @Override
-    public void setEnabled(boolean value){ editText.setEnabled(value); }
+    public void setEnabled(boolean value) {
+        editText.setEnabled(value);
+    }
 
     @Override
-    public void setFocusable(boolean focusable){
+    public void setFocusable(boolean focusable) {
         editText.setFocusable(focusable);
     }
 
-    public void clearField(){ editText.getText().clear(); }
+    public void clearField() {
+        editText.getText().clear();
+    }
 
-    public void setIdEditText(int id){
+    public void setIdEditText(int id) {
         this.editText.setId(id);
     }
 
     @OnClick(R.id.image_button)
-    public void onClick(View view) {
+    public void onClick() {
         callback.onActionIconClick(this);
     }
 
@@ -193,7 +203,7 @@ public class InputTextView extends LinearLayout{
         }
     }
 
-    public boolean isPasswordValid(){
+    public boolean isPasswordValid() {
         try {
             return checkEmptyAndLengthAndReturn();
         } catch (ExceptionInvalidInput exception) {
@@ -224,7 +234,7 @@ public class InputTextView extends LinearLayout{
         return true;
     }
 
-    private boolean checkEmptyAndPhoneAndReturn() throws ExceptionInvalidInput{
+    private boolean checkEmptyAndPhoneAndReturn() throws ExceptionInvalidInput {
         String phone = editText.getText().toString().trim();
         checkEmpty(phone);
         checkPhone(phone);
@@ -245,12 +255,12 @@ public class InputTextView extends LinearLayout{
     }
 
     private void checkEmpty(String text) throws ExceptionInvalidInput {
-        if(text.isEmpty())
+        if (text.isEmpty())
             throw new ExceptionInvalidInput(getStringToShow(R.string.is_empty));
     }
 
     private void checkLength(String text) throws ExceptionInvalidInput {
-        if(textInputLayout.isCounterEnabled() && textIsGreaterThanMax(text))
+        if (textInputLayout.isCounterEnabled() && textIsGreaterThanMax(text))
             throw new ExceptionInvalidInput(getStringToShow(R.string.is_invalid));
     }
 
@@ -259,12 +269,12 @@ public class InputTextView extends LinearLayout{
     }
 
     private void checkPhone(String phone) throws ExceptionInvalidInput {
-        if(!Patterns.PHONE.matcher(phone).matches())
+        if (!Patterns.PHONE.matcher(phone).matches())
             throw new ExceptionInvalidInput(getStringToShow(R.string.is_invalid));
     }
 
     private void checkEmail(String email) throws ExceptionInvalidInput {
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
             throw new ExceptionInvalidInput(getStringToShow(R.string.is_invalid));
     }
 
@@ -272,21 +282,21 @@ public class InputTextView extends LinearLayout{
         return textInputLayout.getHint() + " " + getResources().getString(resourceId);
     }
 
-    public void addCallback(Callback callback){
+    public void addCallback(Callback callback) {
         this.callback = callback;
     }
 
-    public EditText getEditText(){
+    public EditText getEditText() {
         return editText;
     }
 
-    public interface Callback{
+    public interface Callback {
         void onActionIconClick(View view);
     }
 
     /**
      * Save State
-    * */
+     */
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
@@ -296,7 +306,7 @@ public class InputTextView extends LinearLayout{
     }
 
     private SavedState saveHierarchyStateOfEachChild(SavedState ss) {
-        for(int i = 0; i < getChildCount(); i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).saveHierarchyState(ss.childrenStates);
         }
 
@@ -311,7 +321,7 @@ public class InputTextView extends LinearLayout{
     }
 
     private void restoreHierarchyStateOfEachChild(SavedState ss) {
-        for(int i = 0; i < getChildCount(); i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).restoreHierarchyState(ss.childrenStates);
         }
     }

@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_medium_global"
+        android:padding="@dimen/padding_medium"
         android:orientation="vertical"
         android:gravity="start"
         android:visibility="gone">
@@ -48,7 +48,7 @@
             android:text="@string/amount_people"
             android:textStyle="normal"
             android:textColor="@color/colorPrimaryText"
-            android:padding="@dimen/padding_min_global"
+            android:padding="@dimen/padding_min"
             android:layout_gravity="center_vertical"
             android:visibility="gone"/>
 
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_medium_global"
+        android:padding="@dimen/padding_medium"
         android:gravity="right">
 
         <Button

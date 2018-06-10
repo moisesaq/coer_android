@@ -10,7 +10,7 @@ import java.util.List;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.Process;
-import moises.com.appcoer.ui.view.TextImageView;
+import moises.com.appcoer.ui.customviews.TextImageView;
 
 public class ProcessListAdapter extends RecyclerView.Adapter<ProcessListAdapter.NewsViewHolder>{
     private List<Process> processList;

@@ -1,11 +1,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white">
 
-    <moises.com.appcoer.ui.view.LoadingView
+    <moises.com.appcoer.ui.customviews.LoadingView
         android:id="@+id/loading_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom|end"
-        android:padding="@dimen/padding_medium_global"
+        android:padding="@dimen/padding_medium"
         fab:menu_animationDelayPerItem="55"
         fab:menu_backgroundColor="@color/blackTransparent"
         fab:menu_buttonSpacing="0dp"

@@ -3,7 +3,7 @@ package moises.com.appcoer.api;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 
 public class DataManager implements DataHandler{
     private ApiService apiService;

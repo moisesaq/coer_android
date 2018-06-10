@@ -2,17 +2,13 @@ package moises.com.appcoer.ui.onBoarding;
 
 public interface OnBoardingContract {
 
-    interface ActivityView{
-        void initialize();
+    interface View {
 
         void startLoginActivity();
     }
 
-    interface ActivityPresenter{
-        void onActivityCreated();
+    interface Presenter {
 
         void completeOnBoarding();
-
-        void onActivityDestroyed();
     }
 }

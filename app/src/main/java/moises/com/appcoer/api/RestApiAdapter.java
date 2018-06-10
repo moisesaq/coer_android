@@ -3,7 +3,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import io.reactivex.Observable;
 import moises.com.appcoer.model.Course;
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

@@ -26,5 +26,5 @@
         style="@style/TextViewMedium"
         android:textStyle="normal"
         android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/padding_min_global"/>
+        android:paddingLeft="@dimen/padding_min"/>
 </LinearLayout>

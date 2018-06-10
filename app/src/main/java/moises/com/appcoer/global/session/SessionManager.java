@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 
 public class SessionManager implements SessionHandler{
     private static final String SESSION = "session_preferences";

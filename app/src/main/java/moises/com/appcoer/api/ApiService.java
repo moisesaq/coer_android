@@ -15,7 +15,7 @@ import moises.com.appcoer.model.Enrollment;
 import moises.com.appcoer.model.Process;
 import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;

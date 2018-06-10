@@ -9,7 +9,7 @@ import moises.com.appcoer.global.session.SessionHandler;
 import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.Enrollment;
 import moises.com.appcoer.model.NewsList;
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 import retrofit2.Call;
 import retrofit2.Response;
 

@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/padding_medium_global">
+        android:padding="@dimen/padding_medium">
 
         <TextView
             android:id="@+id/tv_state"
@@ -18,7 +18,7 @@
             android:text="Pending"
             android:layout_gravity="end"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_full_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             app:text2="@string/name"
             app:iconImage="@drawable/svg_account_circle_gray"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             app:text2="@string/email"
             app:iconImage="@drawable/svg_email"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             app:text2="@string/phone"
             app:iconImage="@drawable/svg_phone"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_lodging"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             app:text2="@string/lodging"
             app:iconImage="@drawable/svg_home_modern_gray"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_room"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             app:text2="@string/room"
             app:iconImage="@drawable/svg_hotel_gray"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_amount_people"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             app:text2="@string/amount_people"
             app:iconImage="@drawable/svg_account_multiple"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_created_at"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             app:iconImage="@drawable/svg_calendar_check"
             android:visibility="gone"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_dates_stay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             app:text2="@string/dates_stay"
             app:iconImage="@drawable/svg_calendar"/>
 
-        <moises.com.appcoer.ui.view.TextImageView
+        <moises.com.appcoer.ui.customviews.TextImageView
             android:id="@+id/tiv_additional_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

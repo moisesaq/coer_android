@@ -19,11 +19,11 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/logo"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_medium_global"
+            android:layout_margin="@dimen/margin_medium"
             app:siBorderWidth="2dp"
             app:siBorderColor="@color/colorPrimaryLight"/>
 
-        <moises.com.appcoer.ui.view.InputTextView
+        <moises.com.appcoer.ui.customviews.InputTextView
             android:id="@+id/itv_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,9 +31,9 @@
             moi:hint="@string/registration_number"
             android:text=""
             android:inputType="textEmailAddress"
-            android:layout_marginTop="@dimen/margin_min_global"/>
+            android:layout_marginTop="@dimen/margin_min"/>
 
-        <moises.com.appcoer.ui.view.InputTextView
+        <moises.com.appcoer.ui.customviews.InputTextView
             android:id="@+id/itv_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,13 +45,13 @@
         <Button
             android:id="@+id/b_login"
             style="@style/ButtonCustom"
-            android:layout_marginTop="@dimen/margin_max_global"
+            android:layout_marginTop="@dimen/margin_max"
             android:text="@string/log_in" />
 
         <Button
             android:id="@+id/b_guest"
             style="@style/ButtonCustom"
-            android:layout_marginTop="@dimen/margin_max_global"
+            android:layout_marginTop="@dimen/margin_max"
             android:text="@string/guest" />
 
         <TextView
@@ -59,7 +59,7 @@
             style="@style/TextViewSmall"
             android:text="@string/forgot_password"
             android:textColor="@color/colorSecondaryText"
-            android:layout_marginTop="@dimen/margin_medium_global"
+            android:layout_marginTop="@dimen/margin_medium"
             android:background="?selectableItemBackground"
             android:layout_gravity="center_horizontal"/>
 

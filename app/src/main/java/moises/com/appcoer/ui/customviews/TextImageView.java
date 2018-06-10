@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.view;
+package moises.com.appcoer.ui.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;

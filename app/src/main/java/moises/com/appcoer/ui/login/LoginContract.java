@@ -1,8 +1,6 @@
 package moises.com.appcoer.ui.login;
 
-import android.support.v4.app.Fragment;
-
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 import moises.com.appcoer.ui.base.BasePresenter;
 import moises.com.appcoer.ui.base.BaseView;
 

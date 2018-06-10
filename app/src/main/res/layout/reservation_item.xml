@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:padding="@dimen/padding_medium_global"
-    android:background="@drawable/background_transparent">
+    android:padding="@dimen/padding_medium"
+    android:background="@drawable/bg_transparent">
 
     <TextView
         android:id="@+id/tv_state"

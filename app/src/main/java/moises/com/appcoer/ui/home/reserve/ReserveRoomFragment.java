@@ -35,7 +35,7 @@ import moises.com.appcoer.ui.adapters.SpinnerRoomsAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.dialogs.AmountPeopleDialog;
 import moises.com.appcoer.ui.dialogs.DateCustomDialog;
-import moises.com.appcoer.ui.view.InputTextView;
+import moises.com.appcoer.ui.customviews.InputTextView;
 
 //TODO Improve all
 public class ReserveRoomFragment extends BaseFragment implements

@@ -18,7 +18,7 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.model.MethodPayment;
 import moises.com.appcoer.ui.adapters.MethodPaymentsAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
-import moises.com.appcoer.ui.view.LoadingView;
+import moises.com.appcoer.ui.customviews.LoadingView;
 
 public class PaymentsFragment extends BaseFragment implements PaymentsContract.View{
     @BindView(R.id.recycler_view) protected RecyclerView recyclerView;

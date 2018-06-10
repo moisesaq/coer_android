@@ -8,9 +8,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.DataHandler;
-import moises.com.appcoer.api.DataManager;
-import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 
 public class LoginPresenter implements LoginContract.Presenter{
 

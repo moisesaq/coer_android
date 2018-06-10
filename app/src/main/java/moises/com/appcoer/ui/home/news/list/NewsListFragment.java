@@ -21,7 +21,7 @@ import moises.com.appcoer.tools.EndlessRecyclerOnScrollListener;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.adapters.NewsListAdapter;
 import moises.com.appcoer.ui.home.news.detail.NewsFragment;
-import moises.com.appcoer.ui.view.LoadingView;
+import moises.com.appcoer.ui.customviews.LoadingView;
 
 public class NewsListFragment extends BaseFragment implements NewsListAdapter.CallBack, NewsListContract.View{
 

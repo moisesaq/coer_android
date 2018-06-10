@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.Reservation;
-import moises.com.appcoer.ui.view.TextImageView;
+import moises.com.appcoer.ui.customviews.TextImageView;
 
 public class ReserveDetailDialog extends DialogFragment{
 

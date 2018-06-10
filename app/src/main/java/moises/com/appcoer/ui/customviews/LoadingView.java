@@ -1,7 +1,6 @@
-package moises.com.appcoer.ui.view;
+package moises.com.appcoer.ui.customviews;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;

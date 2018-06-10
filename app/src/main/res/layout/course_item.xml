@@ -5,8 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:padding="@dimen/padding_min_global"
-    android:background="@drawable/background_transparent">
+    android:padding="@dimen/padding_min"
+    android:background="@drawable/bg_transparent">
 
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/riv_course"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/padding_min_global">
+        android:padding="@dimen/padding_min">
 
         <TextView
             android:id="@+id/tv_title"

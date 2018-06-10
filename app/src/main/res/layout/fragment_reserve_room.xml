@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/padding_max_global">
+        android:padding="@dimen/padding_max">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                     android:id="@+id/tv_hotel_title"
                     style="@style/TextViewSmall"
                     android:text="@string/lodging_timbues"
-                    android:padding="@dimen/padding_min_global"
+                    android:padding="@dimen/padding_min"
                     android:gravity="center_horizontal"
                     android:textStyle="bold"/>
 
@@ -35,6 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinner_rooms" />
+
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleHorizontal"
@@ -53,7 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <moises.com.appcoer.ui.view.InputTextView
+            <moises.com.appcoer.ui.customviews.InputTextView
                 android:id="@+id/itv_from_date"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -63,7 +64,7 @@
                 moi:iconAction="@drawable/svg_pencil"
                 android:inputType="text"/>
 
-            <moises.com.appcoer.ui.view.InputTextView
+            <moises.com.appcoer.ui.customviews.InputTextView
                 android:id="@+id/itv_to_date"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -78,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <moises.com.appcoer.ui.view.InputTextView
+            <moises.com.appcoer.ui.customviews.InputTextView
                 android:id="@+id/itv_name"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -88,7 +89,7 @@
                 android:text=""
                 android:inputType="textCapSentences"/>
 
-            <moises.com.appcoer.ui.view.InputTextView
+            <moises.com.appcoer.ui.customviews.InputTextView
                 android:id="@+id/itv_last_name"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -99,7 +100,7 @@
         </LinearLayout>
 
 
-        <moises.com.appcoer.ui.view.InputTextView
+        <moises.com.appcoer.ui.customviews.InputTextView
             android:id="@+id/itv_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,14 +108,14 @@
             moi:hint="@string/email"
             android:text=""
             android:inputType="textEmailAddress"
-            android:layout_marginTop="@dimen/margin_min_global"/>
+            android:layout_marginTop="@dimen/margin_min"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <moises.com.appcoer.ui.view.InputTextView
+            <moises.com.appcoer.ui.customviews.InputTextView
                 android:id="@+id/itv_phone"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -123,9 +124,9 @@
                 moi:hint="@string/phone"
                 android:text=""
                 android:inputType="phone"
-                android:layout_marginTop="@dimen/margin_min_global"/>
+                android:layout_marginTop="@dimen/margin_min"/>
 
-            <moises.com.appcoer.ui.view.InputTextView
+            <moises.com.appcoer.ui.customviews.InputTextView
                 android:id="@+id/itv_amount_people"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -135,11 +136,11 @@
                 moi:iconAction="@drawable/svg_pencil"
                 android:text=""
                 android:inputType="number"
-                android:layout_marginTop="@dimen/margin_min_global"/>
+                android:layout_marginTop="@dimen/margin_min"/>
 
         </LinearLayout>
 
-        <moises.com.appcoer.ui.view.InputTextView
+        <moises.com.appcoer.ui.customviews.InputTextView
             android:id="@+id/itv_additional_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,7 +149,7 @@
             android:text=""
             android:inputType="textCapSentences"
             android:lines="3"
-            android:layout_marginTop="@dimen/margin_min_global"/>
+            android:layout_marginTop="@dimen/margin_min"/>
 
         <TextView
             style="@style/TextViewSmall"
@@ -159,7 +160,7 @@
         <Button
             android:id="@+id/btn_confirm"
             style="@style/ButtonCustom"
-            android:layout_marginTop="@dimen/margin_max_global"
+            android:layout_marginTop="@dimen/margin_max"
             android:text="@string/reserve" />
 
     </LinearLayout>

@@ -1,4 +1,4 @@
-package moises.com.appcoer.ui.login.resetPassword;
+package moises.com.appcoer.ui.login.forgotPassword;
 
 
 import android.app.Dialog;
@@ -10,24 +10,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import moises.com.appcoer.R;
 import moises.com.appcoer.api.ApiService;
 import moises.com.appcoer.api.RestApiAdapter;
 import moises.com.appcoer.tools.Utils;
-import moises.com.appcoer.ui.view.InputTextView;
+import moises.com.appcoer.ui.customviews.InputTextView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ResetPasswordDialog extends DialogFragment implements View.OnClickListener{
+public class ForgotPasswordDialog extends DialogFragment {
 
-    public static final String TAG = ResetPasswordDialog.class.getSimpleName();
+    public static final String TAG = ForgotPasswordDialog.class.getSimpleName();
 
-    private InputTextView mEmail;
+    private Unbinder unbinder;
 
-    public static ResetPasswordDialog newInstance(){
-        return new ResetPasswordDialog();
+    @BindView(R.id.itv_email)
+    protected InputTextView itvEmail;
+
+    public static ForgotPasswordDialog newInstance() {
+        return new ForgotPasswordDialog();
     }
 
     @NonNull
@@ -36,42 +43,34 @@ public class ResetPasswordDialog extends DialogFragment implements View.OnClickL
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setTitle(R.string.title_reset_password);
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        View view = inflater.inflate(R.layout.dialog_reset_password, null);
-        mEmail = (InputTextView) view.findViewById(R.id.itv_email);
-
-        Button cancel = (Button)view.findViewById(R.id.b_cancel);
-        cancel.setOnClickListener(this);
-        Button restore = (Button)view.findViewById(R.id.b_restore);
-        restore.setOnClickListener(this);
+        View view = inflater.inflate(R.layout.dialog_forgot_password, null);
+        unbinder = ButterKnife.bind(this, view);
         dialog.setView(view);
 
         return dialog.create();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.b_cancel:
-                this.dismiss();
-                break;
-            case R.id.b_restore:
-                if(mEmail.isEmailValid()){
-                    resetPassword(mEmail.getText());
-                }
-                break;
-        }
+    @OnClick(R.id.btn_cancel)
+    public void onCancelClick() {
+        dismiss();
     }
 
-    private void resetPassword(String email){
+    @OnClick(R.id.btn_restore)
+    public void onRestoreClick() {
+        if (itvEmail.isEmailValid())
+            resetPassword(itvEmail.getText());
+    }
+
+    private void resetPassword(String email) {
         Utils.showToastMessage(getString(R.string.sending));
         ApiService apiClient = RestApiAdapter.getInstance().startConnection();
         Call<ResponseBody> call = apiClient.resetPassword(email);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Utils.showToastMessage(getString(R.string.message_reset_password_successful));
-                }else{
+                } else {
                     Utils.showToastMessage(getString(R.string.message_reset_password_failed));
                 }
                 dismiss();
@@ -83,5 +82,11 @@ public class ResetPasswordDialog extends DialogFragment implements View.OnClickL
                 dismiss();
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

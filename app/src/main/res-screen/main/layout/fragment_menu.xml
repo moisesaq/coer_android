@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/margin_medium_global">
+        android:padding="@dimen/margin_medium">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:padding="@dimen/padding_max_global"
+                        android:padding="@dimen/padding_max"
                         android:orientation="vertical">
 
                         <TextView
@@ -77,7 +77,7 @@
             android:id="@+id/cv_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_min_global"
+            android:layout_marginTop="@dimen/margin_min"
             card_view:cardCornerRadius="3dp"
             card_view:cardElevation="5dp"
             card_view:cardUseCompatPadding="false"
@@ -96,7 +96,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/padding_max_global"
+                    android:padding="@dimen/padding_max"
                     android:background="@color/colorAccentTransparent"
                     android:orientation="vertical">
                     <TextView

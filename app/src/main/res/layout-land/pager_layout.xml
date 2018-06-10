@@ -30,7 +30,7 @@
                 android:text="Quick orders"
                 android:textColor="@color/colorPrimaryText"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/margin_medium_global"/>
+                android:layout_margin="@dimen/margin_medium"/>
             <TextView
                 android:id="@+id/subtitleOnBoarding"
                 style="@style/TextViewTechnoSmall"
@@ -40,7 +40,7 @@
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:lines="2"
-                android:layout_margin="@dimen/margin_medium_global"/>
+                android:layout_margin="@dimen/margin_medium"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

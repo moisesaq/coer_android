@@ -24,7 +24,7 @@ import moises.com.appcoer.tools.EndlessRecyclerOnScrollListener;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.adapters.CourseListAdapter;
 import moises.com.appcoer.ui.home.course.detail.CourseFragment;
-import moises.com.appcoer.ui.view.LoadingView;
+import moises.com.appcoer.ui.customviews.LoadingView;
 
 public class CourseListFragment extends BaseFragment implements CourseListAdapter.CallBack, CourseListContract.View{
 

@@ -27,7 +27,7 @@ import moises.com.appcoer.ui.adapters.ReservationListAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.dialogs.ReserveDetailDialog;
 import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
-import moises.com.appcoer.ui.view.LoadingView;
+import moises.com.appcoer.ui.customviews.LoadingView;
 
 public class ReservationsFragment extends BaseFragment implements ReservationListAdapter.CallBack, ReservationsContract.View{
 

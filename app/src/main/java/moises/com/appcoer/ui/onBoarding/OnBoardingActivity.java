@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -21,46 +19,45 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.ui.base.IntroduceItem;
 import moises.com.appcoer.ui.login.LoginActivity;
 
-public class OnBoardingActivity extends AppCompatActivity implements OnBoardingContract.ActivityView{
+public class OnBoardingActivity extends AppCompatActivity implements OnBoardingContract.View {
 
-    OnBoardingContract.ActivityPresenter onBoardingPresenter;
+    OnBoardingContract.Presenter onBoardingPresenter;
 
-    @BindView(R.id.indicator) protected CircleIndicator mCircleIndicator;
-    @BindView(R.id.vp_on_boarding) protected ViewPager mViewPager;
-    @BindView(R.id.b_started) protected Button mStated;
+    @BindView(R.id.indicator)
+    protected CircleIndicator mCircleIndicator;
+    @BindView(R.id.vp_on_boarding)
+    protected ViewPager mViewPager;
+    @BindView(R.id.b_started)
+    protected Button mStated;
 
-    @BindColor(android.R.color.white) int white;
+    @BindColor(android.R.color.white)
+    int white;
 
-    public static void startActivity(Context context){
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, OnBoardingActivity.class);
         context.startActivity(intent);
     }
 
     @Override
-    public void onCreate( Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_boarding);
         ButterKnife.bind(this);
         setUp();
         onBoardingPresenter = new OnBoardingPresenter(this);
-        onBoardingPresenter.onActivityCreated();
-    }
-
-    @OnClick(R.id.b_started)
-    public void onClick(View v) {
-        onBoardingPresenter.completeOnBoarding();
-    }
-
-    @Override
-    public void initialize() {
         setUp();
     }
 
-    private void setUp(){
+    private void setUp() {
         IntroducePageAdapter adapter = new IntroducePageAdapter(getItemsOnBoarding());
         adapter.setColorText(white);
         mViewPager.setAdapter(adapter);
         mCircleIndicator.setViewPager(mViewPager);
+    }
+
+    @OnClick(R.id.b_started)
+    public void onStartClick() {
+        onBoardingPresenter.completeOnBoarding();
     }
 
     @Override
@@ -68,7 +65,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingC
         LoginActivity.startActivity(this);
     }
 
-    private List<IntroduceItem> getItemsOnBoarding(){
+    private List<IntroduceItem> getItemsOnBoarding() {
         List<IntroduceItem> list = new ArrayList<>();
         list.add(new IntroduceItem(R.mipmap.onboarding_news, R.string.on_boarding_title1, R.string.on_boarding_description1));
         list.add(new IntroduceItem(R.mipmap.onboarding_course, R.string.on_boarding_title2, R.string.on_boarding_description2));

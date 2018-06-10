@@ -20,7 +20,7 @@ import moises.com.appcoer.model.Process;
 import moises.com.appcoer.ui.adapters.ProcessListAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.home.process.detail.ProcessFragment;
-import moises.com.appcoer.ui.view.LoadingView;
+import moises.com.appcoer.ui.customviews.LoadingView;
 
 public class ProcessListFragment extends BaseFragment implements ProcessListAdapter.CallBack, ProcessListContract.View{
 

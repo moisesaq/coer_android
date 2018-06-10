@@ -1,7 +1,7 @@
 package moises.com.appcoer.api;
 
 import io.reactivex.Observable;
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 
 public interface DataHandler {
 

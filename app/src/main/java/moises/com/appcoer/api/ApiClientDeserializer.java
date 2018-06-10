@@ -9,7 +9,7 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 
 public class ApiClientDeserializer {
 

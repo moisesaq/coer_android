@@ -1,6 +1,6 @@
 package moises.com.appcoer.global.session;
 
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 
 public interface SessionHandler {
 

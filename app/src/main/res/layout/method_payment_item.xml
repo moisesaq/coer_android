@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/background_transparent">
+        android:background="@drawable/bg_transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,21 +26,21 @@
                 android:layout_width="120dp"
                 android:layout_height="80dp"
                 android:scaleType="fitCenter"
-                android:padding="@dimen/padding_min_global"
+                android:padding="@dimen/padding_min"
                 android:src="@mipmap/image_load"/>
 
             <TextView
                 android:id="@+id/tv_title"
                 style="@style/TextViewMedium"
                 android:text="Example"
-                android:padding="@dimen/padding_min_global"/>
+                android:padding="@dimen/padding_min"/>
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_content"
             style="@style/TextViewSmall"
-            android:padding="@dimen/padding_medium_global"
+            android:padding="@dimen/padding_medium"
             android:textStyle="normal"
             android:text="Large user information, to explain user skills and more that's interesting for other users"
             android:visibility="gone"/>

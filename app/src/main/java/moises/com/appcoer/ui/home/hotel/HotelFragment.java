@@ -22,7 +22,7 @@ import moises.com.appcoer.model.Hotel;
 import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
-import moises.com.appcoer.ui.view.LoadingView;
+import moises.com.appcoer.ui.customviews.LoadingView;
 
 public class HotelFragment extends BaseFragment implements HotelContract.View{
     private static final String ARG_PARAM1 = "hotelId";

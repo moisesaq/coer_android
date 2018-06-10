@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <moises.com.appcoer.ui.view.TextImageView
+    <moises.com.appcoer.ui.customviews.TextImageView
         android:id="@+id/tiv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         moi:text1="@string/nav_processes"
         moi:iconImage="@drawable/svg_doc_gray"
-        android:padding="@dimen/padding_medium_global"/>
+        android:padding="@dimen/padding_medium"/>
 
 </LinearLayout>

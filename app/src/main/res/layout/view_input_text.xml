@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/svg_email"
         android:layout_marginTop="5dp"
-        android:padding="@dimen/padding_min_global"
+        android:padding="@dimen/padding_min"
         android:visibility="gone"/>
 
     <android.support.design.widget.TextInputLayout

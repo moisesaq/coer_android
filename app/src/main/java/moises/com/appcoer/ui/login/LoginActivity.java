@@ -17,18 +17,20 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.global.session.SessionManager;
-import moises.com.appcoer.model.User;
+import moises.com.appcoer.model.login.User;
 import moises.com.appcoer.ui.main.MainActivity;
 import moises.com.appcoer.ui.login.changePassword.ChangePasswordFragment;
-import moises.com.appcoer.ui.login.resetPassword.ResetPasswordDialog;
+import moises.com.appcoer.ui.login.forgotPassword.ForgotPasswordDialog;
 
 public class LoginActivity extends AppCompatActivity implements HasSupportFragmentInjector,
-        OnLoginFragmentListener, ChangePasswordFragment.OnChangePasswordFragmentListener{
+        OnLoginFragmentListener, ChangePasswordFragment.OnChangePasswordFragmentListener {
 
-    @Inject DispatchingAndroidInjector<Fragment> injector;
-    @Inject LoginContract.View loginFragmentView;
+    @Inject
+    DispatchingAndroidInjector<Fragment> injector;
+    @Inject
+    LoginContract.View loginFragmentView;
 
-    public static void startActivity(Context context){
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
@@ -39,12 +41,12 @@ public class LoginActivity extends AppCompatActivity implements HasSupportFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         GlobalManager.setActivityGlobal(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         showFragment(loginFragmentView.getFragment(), false);
     }
 
-    private void showFragment(Fragment fragment, boolean stack){
+    private void showFragment(Fragment fragment, boolean stack) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(stack ? fragment.getClass().getSimpleName() : null)
@@ -53,36 +55,38 @@ public class LoginActivity extends AppCompatActivity implements HasSupportFragme
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         GlobalManager.setActivityGlobal(this);
     }
 
-    /** IMPLEMENTATION LOGIN FRAGMENT LISTENER */
+    /**
+     * IMPLEMENTATION LOGIN FRAGMENT LISTENER
+     */
     @Override
     public void onLoginSuccessful(User user) {
         SessionManager.getInstance(this).setUser(user);
         LogEvent.logEventFirebaseAnalytic(this, LogEvent.EVENT_START_SESSION);
-        if(user.getFirstTime() == 1){
+        if (user.getFirstTime() == 1) {
             showFragment(ChangePasswordFragment.newInstance(), true);
-        }else{
+        } else {
             goToMainActivity(true);
         }
     }
 
     @Override
-    public void onStartGuest() {
+    public void onStartAsGuest() {
         goToMainActivity(false);
     }
 
     @Override
     public void onForgotPasswordClick() {
-        ResetPasswordDialog.newInstance().show(getSupportFragmentManager(), ResetPasswordDialog.TAG);
+        ForgotPasswordDialog.newInstance().show(getSupportFragmentManager(), ForgotPasswordDialog.TAG);
     }
 
-    private void goToMainActivity(boolean close){
+    private void goToMainActivity(boolean close) {
         startActivity(new Intent(this, MainActivity.class));
-        if(close) finish();
+        if (close) finish();
     }
 
     @Override
@@ -93,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements HasSupportFragme
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0){
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         } else {
             finish();

@@ -21,7 +21,7 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.model.Process;
 import moises.com.appcoer.ui.base.BaseFragment;
-import moises.com.appcoer.ui.view.LoadingView;
+import moises.com.appcoer.ui.customviews.LoadingView;
 
 public class ProcessFragment extends BaseFragment implements ProcessContract.View{
     private static final String ARG_PARAM1 = "process";
