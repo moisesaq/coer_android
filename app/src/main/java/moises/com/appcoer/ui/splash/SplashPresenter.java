@@ -2,15 +2,15 @@ package moises.com.appcoer.ui.splash;
 
 import android.os.CountDownTimer;
 
-import moises.com.appcoer.global.session.SessionHandler;
+import moises.com.appcoer.global.session.SessionContract;
 import moises.com.appcoer.ui.onBoarding.OnBoardingPresenter;
 
 public class SplashPresenter implements SplashContract.Presenter {
 
     private SplashContract.View splashView;
-    private SessionHandler session;
+    private SessionContract session;
 
-    public SplashPresenter(SplashContract.View splashView, SessionHandler session){
+    public SplashPresenter(SplashContract.View splashView, SessionContract session){
         this.splashView = splashView;
         this.session = session;
     }

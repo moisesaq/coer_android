@@ -2,6 +2,7 @@ package moises.com.appcoer.ui.home.course.list;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,18 +22,21 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.model.Course;
 import moises.com.appcoer.tools.EndlessRecyclerOnScrollListener;
 import moises.com.appcoer.ui.base.BaseFragment;
-import moises.com.appcoer.ui.adapters.CourseListAdapter;
+import moises.com.appcoer.ui.adapters.CoursesAdapter;
 import moises.com.appcoer.ui.home.course.detail.CourseFragment;
 import moises.com.appcoer.ui.customviews.LoadingView;
 
-public class CourseListFragment extends BaseFragment implements CourseListAdapter.CallBack, CourseListContract.View{
+public class CourseListFragment extends BaseFragment implements CoursesAdapter.Callback, CourseListContract.View {
 
     private View view;
-    @BindView(R.id.recycler_view) protected RecyclerView recyclerView;
-    @BindView(R.id.loading_view) protected LoadingView loadingView;
-    @BindView(R.id.progressBar) protected ProgressBar progressBar;
+    @BindView(R.id.recycler_view)
+    protected RecyclerView recyclerView;
+    @BindView(R.id.loading_view)
+    protected LoadingView loadingView;
+    @BindView(R.id.progressBar)
+    protected ProgressBar progressBar;
 
-    private CourseListAdapter mCourseListAdapter;
+    private CoursesAdapter mCoursesAdapter;
     private OnCoursesFragmentListener mListener;
     private CourseListContract.Presenter courseListPresenter;
     private Unbinder unbinder;
@@ -50,7 +53,7 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(view == null){
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             unbinder = ButterKnife.bind(this, view);
             setUp();
@@ -59,14 +62,14 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
         return view;
     }
 
-    private void setUp(){
+    private void setUp() {
         //TODO Change to DI Dagger2
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
-        mCourseListAdapter = new CourseListAdapter(getContext(), new ArrayList<Course>(), this);
-        recyclerView.setAdapter(mCourseListAdapter);
+        mCoursesAdapter = new CoursesAdapter(getContext(), this);
+        recyclerView.setAdapter(mCoursesAdapter);
 
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
@@ -77,7 +80,8 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @NonNull
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         courseListPresenter.onFragmentStarted();
     }
@@ -89,10 +93,10 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
 
     /**
      * IMPLEMENTATION COURSE LIST CONTRACT
-     * */
+     */
     @Override
     public void setPresenter(CourseListContract.Presenter presenter) {
-        if(presenter != null) this.courseListPresenter = presenter;
+        if (presenter != null) this.courseListPresenter = presenter;
         else throw new RuntimeException("Course list presenter can not be null");
 
     }
@@ -104,7 +108,7 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
 
     @Override
     public void showLoading(boolean show) {
-        if(show) loadingView.showLoading(recyclerView);
+        if (show) loadingView.showLoading(recyclerView);
         else loadingView.hideLoading("", recyclerView);
     }
 
@@ -120,7 +124,7 @@ public class CourseListFragment extends BaseFragment implements CourseListAdapte
 
     @Override
     public void showCourses(List<Course> courses) {
-        mCourseListAdapter.addItems(courses);
+        mCoursesAdapter.addItems(courses);
     }
 
     @Override

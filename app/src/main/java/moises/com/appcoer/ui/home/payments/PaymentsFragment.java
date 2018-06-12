@@ -20,9 +20,11 @@ import moises.com.appcoer.ui.adapters.MethodPaymentsAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.customviews.LoadingView;
 
-public class PaymentsFragment extends BaseFragment implements PaymentsContract.View{
-    @BindView(R.id.recycler_view) protected RecyclerView recyclerView;
-    @BindView(R.id.loading_view) protected LoadingView loadingView;
+public class PaymentsFragment extends BaseFragment implements PaymentsContract.View {
+    @BindView(R.id.recycler_view)
+    protected RecyclerView recyclerView;
+    @BindView(R.id.loading_view)
+    protected LoadingView loadingView;
     private View view;
 
     private MethodPaymentsAdapter methodPaymentsAdapter;
@@ -41,7 +43,7 @@ public class PaymentsFragment extends BaseFragment implements PaymentsContract.V
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(view == null){
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             unbinder = ButterKnife.bind(this, view);
             setUp();
@@ -50,7 +52,7 @@ public class PaymentsFragment extends BaseFragment implements PaymentsContract.V
         return view;
     }
 
-    private void setUp(){
+    private void setUp() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         methodPaymentsAdapter = new MethodPaymentsAdapter(getContext());
@@ -63,7 +65,7 @@ public class PaymentsFragment extends BaseFragment implements PaymentsContract.V
      **/
     @Override
     public void setPresenter(PaymentsContract.Presenter presenter) {
-        if(presenter != null) this.paymentsPresenter = presenter;
+        if (presenter != null) this.paymentsPresenter = presenter;
         else throw new RuntimeException("Payments presenter can not be null");
     }
 
@@ -74,7 +76,7 @@ public class PaymentsFragment extends BaseFragment implements PaymentsContract.V
 
     @Override
     public void showLoading(boolean show) {
-        if(show) loadingView.showLoading(recyclerView);
+        if (show) loadingView.showLoading(recyclerView);
         else loadingView.hideLoading("", recyclerView);
     }
 

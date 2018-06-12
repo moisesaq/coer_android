@@ -7,17 +7,17 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import moises.com.appcoer.R;
-import moises.com.appcoer.api.DataHandler;
+import moises.com.appcoer.api.DataContract;
 import moises.com.appcoer.model.login.User;
 
 public class LoginPresenter implements LoginContract.Presenter{
 
     private final LoginContract.View loginView;
-    private final DataHandler dataManager;
+    private final DataContract dataManager;
     private final CompositeDisposable compositeDisposable;
 
     @Inject
-    public LoginPresenter(LoginContract.View loginView, DataHandler dataManager){
+    public LoginPresenter(LoginContract.View loginView, DataContract dataManager){
         this.loginView = loginView;
         this.dataManager = dataManager;
         loginView.setPresenter(this);

@@ -3,9 +3,9 @@ package moises.com.appcoer.ui.home.menu;
 import javax.inject.Inject;
 
 import moises.com.appcoer.api.ApiService;
-import moises.com.appcoer.api.DataHandler;
+import moises.com.appcoer.api.DataContract;
 import moises.com.appcoer.api.RestApiAdapter;
-import moises.com.appcoer.global.session.SessionHandler;
+import moises.com.appcoer.global.session.SessionContract;
 import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.Enrollment;
 import moises.com.appcoer.model.NewsList;
@@ -16,14 +16,14 @@ import retrofit2.Response;
 public class MenuPresenter implements MenuContract.Presenter {
 
     private final MenuContract.View menuView;
-    private final DataHandler dataManager;
-    private final SessionHandler session;
+    private final DataContract dataManager;
+    private final SessionContract session;
 
     private boolean loadingEnrollment;
     private boolean loadingNews;
 
     @Inject
-    public MenuPresenter(MenuContract.View menuView, DataHandler dataManager, SessionHandler session){
+    public MenuPresenter(MenuContract.View menuView, DataContract dataManager, SessionContract session){
         this.menuView = menuView;
         this.dataManager = dataManager;
         this.session = session;
@@ -36,21 +36,12 @@ public class MenuPresenter implements MenuContract.Presenter {
     }
 
     private void initialize(){
-        if(!loadingEnrollment) updateEnrollment();
+        //if(!loadingEnrollment) updateEnrollment();
         if(!loadingNews) getNewsOutstanding();
     }
 
     @Override
     public void updateEnrollment() {
-        getEnrollment();
-    }
-
-    @Override
-    public void getNewsOutstanding() {
-        getImportantNews();
-    }
-
-    private void getEnrollment(){
         loadingEnrollment = true;
         ApiService apiClient = RestApiAdapter.getInstance().startConnection();
         Call<Enrollment> enrollmentCall = apiClient.getEnrollmentDate();
@@ -67,6 +58,11 @@ public class MenuPresenter implements MenuContract.Presenter {
                 loadingEnrollment = false;
             }
         });
+    }
+
+    @Override
+    public void getNewsOutstanding() {
+        getImportantNews();
     }
 
     private void getImportantNews() {

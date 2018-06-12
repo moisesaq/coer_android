@@ -23,21 +23,26 @@ import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
 import moises.com.appcoer.global.UserGuide;
 import moises.com.appcoer.model.Reservation;
-import moises.com.appcoer.ui.adapters.ReservationListAdapter;
+import moises.com.appcoer.ui.adapters.ReservationsAdapter;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.dialogs.ReserveDetailDialog;
 import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 import moises.com.appcoer.ui.customviews.LoadingView;
 
-public class ReservationsFragment extends BaseFragment implements ReservationListAdapter.CallBack, ReservationsContract.View{
+public class ReservationsFragment extends BaseFragment implements ReservationsAdapter.Callback, ReservationsContract.View {
 
-    @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
-    @BindView(R.id.loading_view) protected LoadingView mLoadingView;
-    @BindView(R.id.fam_reserve) protected FloatingActionMenu famReserve;
-    @BindView(R.id.fab_reserve_timbues) protected FloatingActionButton fabTimbues;
-    @BindView(R.id.fab_reserve_parana) protected FloatingActionButton fabParana;
+    @BindView(R.id.recycler_view)
+    protected RecyclerView mRecyclerView;
+    @BindView(R.id.loading_view)
+    protected LoadingView mLoadingView;
+    @BindView(R.id.fam_reserve)
+    protected FloatingActionMenu famReserve;
+    @BindView(R.id.fab_reserve_timbues)
+    protected FloatingActionButton fabTimbues;
+    @BindView(R.id.fab_reserve_parana)
+    protected FloatingActionButton fabParana;
 
-    private ReservationListAdapter mReservationListAdapter;
+    private ReservationsAdapter mReservationsAdapter;
     private ReservationsContract.Presenter reservationsPresenter;
     private Unbinder unbinder;
 
@@ -59,15 +64,15 @@ public class ReservationsFragment extends BaseFragment implements ReservationLis
         return view;
     }
 
-    private void setUp(){
+    private void setUp() {
         setTitle(getString(R.string.nav_reservations), R.id.nav_reserves);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), linearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         //TODO Change to Dependency injection Dagger2
-        mReservationListAdapter = new ReservationListAdapter(this);
-        mRecyclerView.setAdapter(mReservationListAdapter);
+        mReservationsAdapter = new ReservationsAdapter(this);
+        mRecyclerView.setAdapter(mReservationsAdapter);
 
         famReserve.setVisibility(View.VISIBLE);
     }
@@ -93,7 +98,7 @@ public class ReservationsFragment extends BaseFragment implements ReservationLis
      * IMPLEMENTATION RESERVATIONS CONTRACT VIEW
      **/
     @Override
-    public void showUserGuide(){
+    public void showUserGuide() {
         UserGuide.getInstance(GlobalManager.getActivityGlobal()).showStageWithView(UserGuide.StageGuide.STAGE_2, famReserve.getMenuIconView(), new UserGuide.CallBack() {
             @Override
             public void onUserGuideOnClick() {
@@ -104,7 +109,7 @@ public class ReservationsFragment extends BaseFragment implements ReservationLis
 
     @Override
     public void showLoading(boolean show) {
-        if(show) mLoadingView.showLoading(mRecyclerView);
+        if (show) mLoadingView.showLoading(mRecyclerView);
         else mLoadingView.hideLoading("", mRecyclerView);
     }
 
@@ -115,12 +120,12 @@ public class ReservationsFragment extends BaseFragment implements ReservationLis
 
     @Override
     public void showReservations(List<Reservation> reservations) {
-        mReservationListAdapter.addItems(reservations);
+        mReservationsAdapter.addItems(reservations);
     }
 
-    @OnClick({ R.id.fab_reserve_timbues, R.id.fab_reserve_parana})
+    @OnClick({R.id.fab_reserve_timbues, R.id.fab_reserve_parana})
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.fab_reserve_timbues:
                 replaceFragment(ReserveRoomFragment.newInstance(ReserveRoomFragment.ID_TIMBUES), true);
                 famReserve.close(true);
@@ -134,7 +139,7 @@ public class ReservationsFragment extends BaseFragment implements ReservationLis
 
     @Override
     public void setPresenter(ReservationsContract.Presenter presenter) {
-        if(presenter != null) this.reservationsPresenter = presenter;
+        if (presenter != null) this.reservationsPresenter = presenter;
         else throw new RuntimeException("Reservations Presenter can not be null");
     }
 

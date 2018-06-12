@@ -2,6 +2,7 @@ package moises.com.appcoer.ui.home.reserve;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -27,7 +28,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
-import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.model.Reservation;
 import moises.com.appcoer.model.Room;
 import moises.com.appcoer.tools.Utils;
@@ -86,7 +86,7 @@ public class ReserveRoomFragment extends BaseFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reserve_room, container, false);
         unbinder = ButterKnife.bind(this, view);
         setUp();
@@ -116,7 +116,7 @@ public class ReserveRoomFragment extends BaseFragment implements
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         reserveRoomPresenter.onFragmentStarted();
         reserveRoomPresenter.loadRooms(hotelId);
@@ -288,7 +288,6 @@ public class ReserveRoomFragment extends BaseFragment implements
 
     @Override
     public void showReservationSuccess() {
-        LogEvent.logEventFirebaseAnalytic(getContext(), LogEvent.EVENT_RESERVE_ROON);
         Utils.showDialogMessage("", getString(R.string.message_reservation_successful), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

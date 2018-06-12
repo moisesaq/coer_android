@@ -11,11 +11,14 @@ import moises.com.appcoer.ui.CoerApplication;
 import moises.com.appcoer.ui.login.LoginActivity;
 
 @Singleton
-@Component(modules = { AppModule.class, ApiModule.class, SplashActivityModule.class, LoginActivityModule.class, MainActivityModule.class})
+@Component(modules = {AppModule.class, ApiModule.class, SplashActivityModule.class, LoginActivityModule.class,
+        MainActivityModule.class})
 public interface AppComponent {
     @Component.Builder
-    interface Builder{
-        @BindsInstance Builder application(CoerApplication coerApplication);
+    interface Builder {
+        @BindsInstance
+        Builder application(CoerApplication coerApplication);
+
         AppComponent build();
     }
 

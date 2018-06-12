@@ -1,9 +1,5 @@
 ext {
     // Sdk configuration
-    defaultVersionCode = 1
-    defaultVersionName = '1.0'
-    freeVersionCode = 1
-    freeVersionName = "1.0"
-    premiunVersionCode = 1
-    premiunVersionName = "1.0"
+    versionCode = 1
+    versionName = '1.0'
 }

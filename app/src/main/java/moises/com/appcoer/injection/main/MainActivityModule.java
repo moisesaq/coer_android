@@ -8,8 +8,8 @@ import dagger.Provides;
 import dagger.android.ActivityKey;
 import dagger.android.AndroidInjector;
 import dagger.multibindings.IntoMap;
-import moises.com.appcoer.api.DataHandler;
-import moises.com.appcoer.global.session.SessionHandler;
+import moises.com.appcoer.api.DataContract;
+import moises.com.appcoer.global.session.SessionContract;
 import moises.com.appcoer.injection.util.ScopeActivity;
 import moises.com.appcoer.ui.home.menu.MenuContract;
 import moises.com.appcoer.ui.home.menu.MenuFragment;
@@ -32,8 +32,8 @@ public abstract class MainActivityModule {
     @Provides
     @ScopeActivity
     static MainContract.Presenter provideMainPresenter(MainContract.View mainView,
-                                                       DataHandler dataManager,
-                                                       SessionHandler session){
+                                                       DataContract dataManager,
+                                                       SessionContract session){
         return new MainPresenter(mainView, dataManager, session);
     }
 

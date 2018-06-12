@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,13 +15,14 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="3dp"
-            card_view:cardElevation="5dp"
-            card_view:cardUseCompatPadding="false">
+            app:cardCornerRadius="3dp"
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="false">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="100dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_profile_bg"
@@ -78,9 +79,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_min"
-            card_view:cardCornerRadius="3dp"
-            card_view:cardElevation="5dp"
-            card_view:cardUseCompatPadding="false"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="false"
             android:visibility="gone">
 
             <FrameLayout
@@ -117,15 +118,15 @@
 
         <android.support.v7.widget.CardView
             style="@style/HomeCardView"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="false">
+            app:cardCornerRadius="1dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="false">
             <LinearLayout
                 android:id="@+id/ly_news"
                 style="@style/HomeLinearLayout">
                 <ImageView
                     style="@style/HomeImageView"
-                    android:src="@drawable/svg_newspaper"/>
+                    app:srcCompat="@drawable/svg_newspaper"/>
                 <TextView
                     style="@style/HomeTextView"
                     android:text="@string/last_news"/>
@@ -135,15 +136,15 @@
 
         <android.support.v7.widget.CardView
             style="@style/HomeCardView"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="false">
+            app:cardCornerRadius="1dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="false">
             <LinearLayout
                 android:id="@+id/ly_courses"
                 style="@style/HomeLinearLayout">
                 <ImageView
                     style="@style/HomeImageView"
-                    android:src="@drawable/svg_lead_pencil"/>
+                    app:srcCompat="@drawable/svg_lead_pencil"/>
                 <TextView
                     style="@style/HomeTextView"
                     android:text="@string/nav_courses"/>
@@ -152,15 +153,15 @@
 
         <android.support.v7.widget.CardView
             style="@style/HomeCardView"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="false">
+            app:cardCornerRadius="1dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="false">
             <LinearLayout
                 android:id="@+id/ly_timbues"
                 style="@style/HomeLinearLayout">
                 <ImageView
                     style="@style/HomeImageView"
-                    android:src="@drawable/svg_home_modern"/>
+                    app:srcCompat="@drawable/svg_home_modern"/>
                 <TextView
                     style="@style/HomeTextView"
                     android:text="@string/lodging_timbues"/>
@@ -169,15 +170,15 @@
 
         <android.support.v7.widget.CardView
             style="@style/HomeCardView"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="false">
+            app:cardCornerRadius="1dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="false">
             <LinearLayout
                 android:id="@+id/ly_parana"
                 style="@style/HomeLinearLayout">
                 <ImageView
                     style="@style/HomeImageView"
-                    android:src="@drawable/svg_home_modern"/>
+                    app:srcCompat="@drawable/svg_home_modern"/>
                 <TextView
                     style="@style/HomeTextView"
                     android:text="@string/lodging_panana"/>
@@ -186,15 +187,15 @@
 
         <android.support.v7.widget.CardView
             style="@style/HomeCardView"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="false">
+            app:cardCornerRadius="1dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="false">
             <LinearLayout
                 android:id="@+id/ly_method_payment"
                 style="@style/HomeLinearLayout">
                 <ImageView
                     style="@style/HomeImageView"
-                    android:src="@drawable/svg_credit_card"/>
+                    app:srcCompat="@drawable/svg_credit_card"/>
                 <TextView
                     style="@style/HomeTextView"
                     android:text="@string/nav_method_payments"/>
@@ -203,15 +204,15 @@
 
         <android.support.v7.widget.CardView
             style="@style/HomeCardView"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="false">
+            app:cardCornerRadius="1dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="false">
             <LinearLayout
                 android:id="@+id/ly_process"
                 style="@style/HomeLinearLayout">
                 <ImageView
                     style="@style/HomeImageView"
-                    android:src="@drawable/svg_doc"/>
+                    app:srcCompat="@drawable/svg_doc"/>
                 <TextView
                     style="@style/HomeTextView"
                     android:text="@string/nav_processes"/>
@@ -220,15 +221,15 @@
 
         <android.support.v7.widget.CardView
             style="@style/HomeCardView"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="false">
+            app:cardCornerRadius="1dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="false">
             <LinearLayout
                 android:id="@+id/ly_bills"
                 style="@style/HomeLinearLayout">
                 <ImageView
                     style="@style/HomeImageView"
-                    android:src="@drawable/svg_printer_settings"/>
+                    app:srcCompat="@drawable/svg_printer_settings"/>
                 <TextView
                     style="@style/HomeTextView"
                     android:text="@string/nav_bills"/>

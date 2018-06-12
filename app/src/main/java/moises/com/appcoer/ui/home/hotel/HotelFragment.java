@@ -1,5 +1,6 @@
 package moises.com.appcoer.ui.home.hotel;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,12 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.Hotel;
 import moises.com.appcoer.tools.Utils;
@@ -42,7 +40,6 @@ public class HotelFragment extends BaseFragment implements HotelContract.View{
     private int hotelId;
     private Hotel hotel;
     private HotelContract.Presenter hotelPresenter;
-    private Unbinder unbinder;
 
     public static HotelFragment newInstance(int idLodging) {
         HotelFragment fragment = new HotelFragment();
@@ -61,25 +58,24 @@ public class HotelFragment extends BaseFragment implements HotelContract.View{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(view == null){
             view = inflater.inflate(R.layout.fragment_hotel, container, false);
-            unbinder = ButterKnife.bind(this, view);
-
+            ButterKnife.bind(this, view);
         }
         setTitle(getString(R.string.app_name));
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         hotelPresenter.onFragmentStarted();
         hotelPresenter.getHotelDescription(hotelId);
     }
 
     @OnClick(R.id.btn_reserve)
-    public void onClick(View view) {
+    public void onReserveClick() {
         if(hotel != null)
             replaceFragment(ReserveRoomFragment.newInstance(hotel.getId()), true);
     }
@@ -108,21 +104,13 @@ public class HotelFragment extends BaseFragment implements HotelContract.View{
     @Override
     public void showHotelDetail(Hotel hotel) {
         this.hotel = hotel;
-        showHotelImage(hotel);
+        loadImage(hotel.getImage(), mImage);
         showDetail(hotel);
     }
 
     @Override
     public void showMessageError(int stringId) {
         loadingView.hideLoading("Error", contentDetail);
-    }
-
-    private void showHotelImage(Hotel hotel){
-        Picasso.with(getContext())
-                .load(hotel.getImage())
-                .placeholder(R.mipmap.image_load)
-                .error(R.mipmap.image_load)
-                .into(mImage);
     }
 
     private void showDetail(Hotel hotel){

@@ -6,6 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import moises.com.appcoer.R;
 import moises.com.appcoer.ui.main.MainActivity;
@@ -22,8 +26,8 @@ public class BaseFragment extends Fragment{
         mainActivity = (MainActivity)getActivity();
         setHasOptionsMenu(true);
 
-        toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
-        navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        navigationView = getActivity().findViewById(R.id.nav_view);
     }
 
     protected void setTitle(@NonNull String title){
@@ -62,5 +66,18 @@ public class BaseFragment extends Fragment{
         if(!isAdded())
             return "";
         return getString(resId);
+    }
+
+    protected void loadImage(String urlImage, ImageView imageView) {
+        if (getContext() == null)
+            return;
+        Glide.with(getContext())
+                .load(urlImage)
+                .apply(createOptions())
+                .into(imageView);
+    }
+
+    private RequestOptions createOptions() {
+        return new RequestOptions().error(R.mipmap.image_load).placeholder(R.mipmap.image_load);
     }
 }

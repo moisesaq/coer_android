@@ -3,7 +3,6 @@ package moises.com.appcoer.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
@@ -15,14 +14,14 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import moises.com.appcoer.R;
 import moises.com.appcoer.global.GlobalManager;
-import moises.com.appcoer.global.LogEvent;
 import moises.com.appcoer.global.session.SessionManager;
 import moises.com.appcoer.model.login.User;
+import moises.com.appcoer.ui.base.BaseActivity;
 import moises.com.appcoer.ui.main.MainActivity;
 import moises.com.appcoer.ui.login.changePassword.ChangePasswordFragment;
 import moises.com.appcoer.ui.login.forgotPassword.ForgotPasswordDialog;
 
-public class LoginActivity extends AppCompatActivity implements HasSupportFragmentInjector,
+public class LoginActivity extends BaseActivity implements HasSupportFragmentInjector,
         OnLoginFragmentListener, ChangePasswordFragment.OnChangePasswordFragmentListener {
 
     @Inject
@@ -47,11 +46,7 @@ public class LoginActivity extends AppCompatActivity implements HasSupportFragme
     }
 
     private void showFragment(Fragment fragment, boolean stack) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack(stack ? fragment.getClass().getSimpleName() : null)
-                .replace(R.id.activity_login, fragment)
-                .commit();
+        replaceFragment(fragment, R.id.activity_login, stack);
     }
 
     @Override
@@ -66,7 +61,6 @@ public class LoginActivity extends AppCompatActivity implements HasSupportFragme
     @Override
     public void onLoginSuccessful(User user) {
         SessionManager.getInstance(this).setUser(user);
-        LogEvent.logEventFirebaseAnalytic(this, LogEvent.EVENT_START_SESSION);
         if (user.getFirstTime() == 1) {
             showFragment(ChangePasswordFragment.newInstance(), true);
         } else {
@@ -97,11 +91,7 @@ public class LoginActivity extends AppCompatActivity implements HasSupportFragme
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            finish();
-        }
+        if (!popBackStack()) finish();
     }
 
     @Override

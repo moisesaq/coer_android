@@ -8,7 +8,7 @@ import dagger.Provides;
 import dagger.android.ActivityKey;
 import dagger.android.AndroidInjector;
 import dagger.multibindings.IntoMap;
-import moises.com.appcoer.global.session.SessionHandler;
+import moises.com.appcoer.global.session.SessionContract;
 import moises.com.appcoer.injection.util.ScopeActivity;
 import moises.com.appcoer.ui.splash.SplashActivity;
 import moises.com.appcoer.ui.splash.SplashContract;
@@ -28,7 +28,7 @@ public abstract class SplashActivityModule {
 
     @Provides
     @ScopeActivity
-    static SplashContract.Presenter provideSplashPresenter(SplashContract.View splashView, SessionHandler session){
+    static SplashContract.Presenter provideSplashPresenter(SplashContract.View splashView, SessionContract session){
         return new SplashPresenter(splashView, session);
     }
 }

@@ -11,22 +11,25 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.News;
 import moises.com.appcoer.tools.Utils;
+import moises.com.appcoer.ui.base.BaseFragment;
 
-public class NewsFragment extends Fragment implements NewsContract.View{
+public class NewsFragment extends BaseFragment implements NewsContract.View {
     private static final String ARG_PARAM1 = "news";
 
-    @BindView(R.id.iv_image_news) protected ImageView imageView;
-    @BindView(R.id.tv_title) protected TextView tvTitle;
-    @BindView(R.id.tv_date) protected TextView tvDate;
-    @BindView(R.id.wv_content) protected WebView webView;
+    @BindView(R.id.iv_image_news)
+    protected ImageView imageView;
+    @BindView(R.id.tv_title)
+    protected TextView tvTitle;
+    @BindView(R.id.tv_date)
+    protected TextView tvDate;
+    @BindView(R.id.wv_content)
+    protected WebView webView;
 
     private News news;
     private NewsContract.Presenter newsPresenter;
@@ -45,7 +48,7 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         super.onCreate(savedInstanceState);
         new NewsPresenter(this);
         if (getArguments() != null)
-            news = (News)getArguments().getSerializable(ARG_PARAM1);
+            news = (News) getArguments().getSerializable(ARG_PARAM1);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class NewsFragment extends Fragment implements NewsContract.View{
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         newsPresenter.onFragmentStarted();
     }
@@ -66,7 +69,7 @@ public class NewsFragment extends Fragment implements NewsContract.View{
      **/
     @Override
     public void setPresenter(NewsContract.Presenter presenter) {
-        if(presenter != null) this.newsPresenter = presenter;
+        if (presenter != null) this.newsPresenter = presenter;
         else throw new RuntimeException("News presenter can not be null");
     }
 
@@ -77,7 +80,7 @@ public class NewsFragment extends Fragment implements NewsContract.View{
 
     @Override
     public void showNews() {
-        showNewsImage(news);
+        loadImage(news.getImage().getSlide(), imageView);
         showNewsDetail(news);
         showNewsContent(news.getContent());
         newsPresenter.updateNews(news.getId());
@@ -88,21 +91,13 @@ public class NewsFragment extends Fragment implements NewsContract.View{
         showNewsContent(news.getContent());
     }
 
-    private void showNewsImage(News news){
-        Picasso.with(getContext())
-                .load(news.getImage().getSlide())
-                .placeholder(R.mipmap.image_load)
-                .error(R.drawable.example_coer)
-                .into(imageView);
-    }
-
-    private void showNewsDetail(News news){
+    private void showNewsDetail(News news) {
         tvTitle.setText(news.getTitle().trim());
         tvDate.setText(Utils.getCustomDate(Utils.parseStringToDate(news.getDate(), Utils.DATE_FORMAT_INPUT_2)));
     }
 
-    private void showNewsContent(String content){
-        webView.loadData(content, "text/html; charset=utf-8","UTF-8");
+    private void showNewsContent(String content) {
+        webView.loadData(content, "text/html; charset=utf-8", "UTF-8");
     }
 
     @Override

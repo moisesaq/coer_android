@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import moises.com.appcoer.model.login.User;
 
-public class SessionManager implements SessionHandler{
+public class SessionManager implements SessionContract {
     private static final String SESSION = "session_preferences";
     private static final String USER_DATA = "user_data";
 

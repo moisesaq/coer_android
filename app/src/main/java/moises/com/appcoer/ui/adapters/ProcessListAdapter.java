@@ -1,5 +1,6 @@
 package moises.com.appcoer.ui.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,58 +9,66 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.Process;
 import moises.com.appcoer.ui.customviews.TextImageView;
 
-public class ProcessListAdapter extends RecyclerView.Adapter<ProcessListAdapter.NewsViewHolder>{
-    private List<Process> processList;
-    private CallBack mCallBack;
+public class ProcessListAdapter extends RecyclerView.Adapter<ProcessListAdapter.ProcessViewHolder> {
+    private List<Process> processes = new ArrayList<>();
+    private Callback callback;
 
-    public ProcessListAdapter(CallBack callBack){
-        this.processList = new ArrayList<>();
-        mCallBack = callBack;
+    public ProcessListAdapter(Callback callback) {
+        this.callback = callback;
     }
 
+    @NonNull
     @Override
-    public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProcessViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.process_item, parent, false);
-        return new NewsViewHolder(view);
+        return new ProcessViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NewsViewHolder holder, int position) {
-        holder.mTitle.setText1(processList.get(position).getTitle());
+    public void onBindViewHolder(@NonNull ProcessViewHolder holder, int position) {
+        Process process = processes.get(position);
+        holder.bind(process);
     }
 
     @Override
     public int getItemCount() {
-        if(processList != null)
-            return processList.size();
-        return 0;
+        return processes != null ? processes.size() : 0;
     }
 
-    public void addItems(List<Process> processes){
-        processList.addAll(processes);
+    public void addItems(List<Process> processes) {
+        this.processes.addAll(processes);
         notifyDataSetChanged();
     }
 
-    public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextImageView mTitle;
-        public NewsViewHolder(View view) {
+    public class ProcessViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @BindView(R.id.tiv_title)
+        TextImageView tivTitle;
+
+        ProcessViewHolder(View view) {
             super(view);
-            mTitle = (TextImageView) view.findViewById(R.id.tiv_title);
+            ButterKnife.bind(this, view);
             view.setOnClickListener(this);
+        }
+
+        private void bind(Process process) {
+            tivTitle.setText1(process.getTitle());
         }
 
         @Override
         public void onClick(View view) {
-            if(mCallBack != null)
-                mCallBack.onProcessClick(processList.get(getAdapterPosition()));
+            if (callback != null)
+                callback.onProcessClick(processes.get(getAdapterPosition()));
         }
     }
 
-    public interface CallBack{
+    public interface Callback {
         void onProcessClick(Process process);
     }
 }

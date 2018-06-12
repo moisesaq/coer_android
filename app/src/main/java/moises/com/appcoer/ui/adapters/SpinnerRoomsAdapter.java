@@ -14,9 +14,10 @@ import java.util.List;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.Room;
 
-public class SpinnerRoomsAdapter extends ArrayAdapter<Room>{
+public class SpinnerRoomsAdapter extends ArrayAdapter<Room> {
 
     private Context mContext;
+
     public SpinnerRoomsAdapter(Context context, List<Room> roomList) {
         super(context, R.layout.room_spinner_item, roomList);
         mContext = context;
@@ -33,15 +34,15 @@ public class SpinnerRoomsAdapter extends ArrayAdapter<Room>{
         return getCustomView(position, convertView);
     }
 
-    private View getCustomView(int position, View view){
+    private View getCustomView(int position, View view) {
         ViewHolder holder;
-        if(view == null){
+        if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.room_spinner_item, null);
             holder = new ViewHolder();
-            holder.textView = (TextView)view.findViewById(R.id.tv_text_room);
+            holder.textView = view.findViewById(R.id.tv_text_room);
             view.setTag(holder);
-        }else{
-            holder = (ViewHolder)view.getTag();
+        } else {
+            holder = (ViewHolder) view.getTag();
         }
         Room room = getItem(position);
         holder.textView.setText(room.getRoomText());
@@ -67,12 +68,12 @@ public class SpinnerRoomsAdapter extends ArrayAdapter<Room>{
     @Override
     public long getItemId(int position) {
         Room room = getItem(position);
-        if(room != null)
+        if (room != null)
             return room.getId();
         return 0;
     }
 
-    public class ViewHolder{
+    public class ViewHolder {
         TextView textView;
     }
 }

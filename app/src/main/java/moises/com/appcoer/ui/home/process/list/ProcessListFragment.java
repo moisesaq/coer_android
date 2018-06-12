@@ -1,6 +1,7 @@
 package moises.com.appcoer.ui.home.process.list;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -22,7 +23,7 @@ import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.home.process.detail.ProcessFragment;
 import moises.com.appcoer.ui.customviews.LoadingView;
 
-public class ProcessListFragment extends BaseFragment implements ProcessListAdapter.CallBack, ProcessListContract.View{
+public class ProcessListFragment extends BaseFragment implements ProcessListAdapter.Callback, ProcessListContract.View{
 
     private View view;
     @BindView(R.id.recycler_view) protected RecyclerView recyclerView;
@@ -43,7 +44,7 @@ public class ProcessListFragment extends BaseFragment implements ProcessListAdap
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(view == null){
             view = inflater.inflate(R.layout.fragment_base_list, container, false);
             unbinder = ButterKnife.bind(this, view);

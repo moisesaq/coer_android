@@ -1,74 +1,77 @@
 package moises.com.appcoer.ui.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.MethodPayment;
 import moises.com.appcoer.tools.Utils;
 
-public class MethodPaymentsAdapter extends RecyclerView.Adapter<MethodPaymentsAdapter.CourseViewHolder>{
+public class MethodPaymentsAdapter extends CoerAdapter<MethodPayment> {
 
-    private Context mContext;
-    private List<MethodPayment> methodPaymentList;
+    private List<MethodPayment> payments = new ArrayList<>();
 
-    public MethodPaymentsAdapter(Context context){
-        this.mContext = context;
-        this.methodPaymentList = new ArrayList<>();
+    public MethodPaymentsAdapter(Context context) {
+        super(context);
     }
 
     @Override
-    public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.method_payment_item, parent, false);
-        return new CourseViewHolder(view);
+    public void addItems(List<MethodPayment> items) {
+        payments.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new PaymentHolder(inflateView(parent, R.layout.method_payment_item));
     }
 
     @Override
-    public void onBindViewHolder(CourseViewHolder holder, int position) {
-        MethodPayment methodPayment = methodPaymentList.get(position);
-        Picasso.with(mContext)
-                .load(methodPayment.getImage())
-                .placeholder(R.mipmap.image_load)
-                .error(R.drawable.example_course)
-                .into(holder.mImage);
-        holder.mTitle.setText(methodPayment.getTitle().trim());
-        if(!methodPayment.getContent().isEmpty()){
-            holder.mContent.setVisibility(View.VISIBLE);
-            holder.mContent.setText(Utils.fromHtml(methodPayment.getContent()));
-            holder.mContent.setMovementMethod(LinkMovementMethod.getInstance());
-        }
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        MethodPayment methodPayment = payments.get(position);
+        ((PaymentHolder) holder).bind(methodPayment);
     }
 
     @Override
     public int getItemCount() {
-        if(methodPaymentList != null)
-            return methodPaymentList.size();
-        return 0;
+        return payments != null ? payments.size() : 0;
     }
 
-    public void addItems(List<MethodPayment> methodPayments){
-        methodPaymentList.addAll(methodPayments);
-        notifyDataSetChanged();
-    }
+    class PaymentHolder extends RecyclerView.ViewHolder {
 
-    public class CourseViewHolder extends RecyclerView.ViewHolder{
-        ImageView mImage;
-        TextView mTitle, mContent;
-        public CourseViewHolder(View view) {
+        @BindView(R.id.riv_method_payment)
+        protected ImageView imageView;
+        @BindView(R.id.tv_title)
+        protected TextView tvTitle;
+        @BindView(R.id.tv_content)
+        protected TextView tvContent;
+
+        PaymentHolder(View view) {
             super(view);
-            mImage = (ImageView) view.findViewById(R.id.riv_method_payment);
-            mTitle = (TextView)view.findViewById(R.id.tv_title);
-            mContent = (TextView)view.findViewById(R.id.tv_content);
+            ButterKnife.bind(this, view);
+        }
+
+        private void bind(MethodPayment payment) {
+            loadImage(payment.getImage(), imageView);
+            tvTitle.setText(payment.getTitle().trim());
+            if (payment.getContent().isEmpty())
+                return;
+            tvContent.setVisibility(View.VISIBLE);
+            tvContent.setText(Utils.fromHtml(payment.getContent()));
+            tvContent.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 }

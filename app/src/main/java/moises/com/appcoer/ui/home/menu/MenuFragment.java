@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -21,7 +19,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
 import moises.com.appcoer.R;
 import moises.com.appcoer.model.Enrollment;
@@ -30,21 +27,27 @@ import moises.com.appcoer.tools.Utils;
 import moises.com.appcoer.ui.base.BaseFragment;
 import moises.com.appcoer.ui.home.reserve.ReserveRoomFragment;
 
-public class MenuFragment extends BaseFragment implements MenuContract.View{
+public class MenuFragment extends BaseFragment implements MenuContract.View {
 
-    @Inject protected MenuContract.Presenter menuPresenter;
+    @Inject
+    protected MenuContract.Presenter menuPresenter;
 
-    protected @BindView(R.id.tv_date_enrollment) TextView tvDateEnrollment;
-    protected @BindView(R.id.tv_description_enrollment) TextView tvDescriptionEnrollment;
-    protected @BindView(R.id.cv_news) CardView cvNews;
-    protected @BindView(R.id.iv_image_news) ImageView ivImageNews;
-    protected @BindView(R.id.tv_title_news) TextView tvNewsTitle;
-    protected @BindView(R.id.tv_description_news) TextView tvNewsDescription;
+    protected @BindView(R.id.tv_date_enrollment)
+    TextView tvDateEnrollment;
+    protected @BindView(R.id.tv_description_enrollment)
+    TextView tvDescriptionEnrollment;
+    protected @BindView(R.id.cv_news)
+    CardView cvNews;
+    protected @BindView(R.id.iv_image_news)
+    ImageView ivImageNews;
+    protected @BindView(R.id.tv_title_news)
+    TextView tvNewsTitle;
+    protected @BindView(R.id.tv_description_news)
+    TextView tvNewsDescription;
 
     private OnMenuFragmentListener listener;
     private View view;
     private News news;
-    private Unbinder unbinder;
 
     public static MenuFragment newInstance() {
         return new MenuFragment();
@@ -68,26 +71,27 @@ public class MenuFragment extends BaseFragment implements MenuContract.View{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(view == null){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_menu, container, false);
-            unbinder = ButterKnife.bind(this, view);
+            ButterKnife.bind(this, view);
         }
         setTitle(getString(R.string.app_name));
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         menuPresenter.onFragmentStarted();
     }
 
-    @OnClick({R.id.cv_news, R.id.ly_news, R.id.ly_courses, R.id.ly_timbues, R.id.ly_parana, R.id.ly_process, R.id.ly_method_payment, R.id.ly_bills})
+    @OnClick({R.id.cv_news, R.id.ly_news, R.id.ly_courses, R.id.ly_timbues, R.id.ly_parana,
+            R.id.ly_process, R.id.ly_method_payment, R.id.ly_bills})
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.cv_news:
-                if(news != null) listener.onImportantNewsClick(news);
+                if (news != null) listener.onImportantNewsClick(news);
                 break;
             case R.id.ly_news:
                 listener.onNewsClick();
@@ -115,7 +119,7 @@ public class MenuFragment extends BaseFragment implements MenuContract.View{
 
     /**
      * IMPLEMENTATION MENU CONTRACT VIEW
-     * */
+     */
     @Override
     public void setPresenter(MenuContract.Presenter presenter) {
     }
@@ -137,18 +141,14 @@ public class MenuFragment extends BaseFragment implements MenuContract.View{
         showNews();
     }
 
-    private void showNews(){
+    private void showNews() {
         cvNews.setVisibility(View.VISIBLE);
-        Picasso.with(getContext())
-                .load(news.getImage().getThumbnail())
-                .placeholder(R.mipmap.image_load)
-                .error(R.drawable.example_coer)
-                .into(ivImageNews);
+        loadImage(news.getImage().getThumbnail(), ivImageNews);
         tvNewsTitle.setText(news.getTitle().trim());
         tvNewsDescription.setText(news.getContent());
     }
 
-    private String getCustomDate(String textDate){
+    private String getCustomDate(String textDate) {
         Date date = Utils.parseStringToDate(textDate, Utils.DATE_FORMAT_INPUT);
         return Utils.getCustomizedDate(Utils.DATE_FORMAT_DAY, date);
     }
@@ -159,13 +159,19 @@ public class MenuFragment extends BaseFragment implements MenuContract.View{
         listener = null;
     }
 
-    public interface OnMenuFragmentListener{
+    public interface OnMenuFragmentListener {
         void onImportantNewsClick(News news);
+
         void onNewsClick();
+
         void onCoursesClick();
+
         void onLodgingClick(int id);
+
         void onProcessesClick();
+
         void onMethodPaymentsClick();
+
         void onBillsClick();
     }
 }

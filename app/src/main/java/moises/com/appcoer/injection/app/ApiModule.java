@@ -1,7 +1,5 @@
 package moises.com.appcoer.injection.app;
 
-import android.content.Context;
-
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -12,27 +10,25 @@ import dagger.Module;
 import dagger.Provides;
 import moises.com.appcoer.BuildConfig;
 import moises.com.appcoer.api.ApiService;
-import moises.com.appcoer.global.session.SessionHandler;
-import moises.com.appcoer.global.session.SessionManager;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class ApiModule {
+class ApiModule {
 
     private static final long DEFAULT_TIMEOUT = 30;
 
     @Provides
     @Singleton
-    ApiService provideApiService(Retrofit retrofit){
+    ApiService provideApiService(Retrofit retrofit) {
         return retrofit.create(ApiService.class);
     }
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(OkHttpClient okHttpClient){
+    Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.URL_ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -43,7 +39,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor){
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
@@ -59,11 +55,4 @@ public class ApiModule {
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return httpLoggingInterceptor;
     }
-
-    @Provides
-    @Singleton
-    SessionHandler providerSessionManager(Context context){
-        return new SessionManager(context);
-    }
-
 }
