@@ -21,13 +21,38 @@ android {
         multiDexEnabled true
     }
 
+    signingConfigs {
+        debug {
+            try {
+                keyAlias keystoreProperties['debugKeyAlias']
+                keyPassword keystoreProperties['debugKeyPassword']
+                storePassword keystoreProperties['debugStorePassword']
+                storeFile file('../keystore/debug.keystore')
+            } catch (exception) {
+                throw new InvalidUserDataException('You should define debugKeyAlias, debugKeyPassword,' +
+                        'and debugStorePassword in gradle.properties. ' + exception.toString())
+            }
+        }
+        release {
+            try {
+                keyAlias keystoreProperties['releaseKeyAlias']
+                keyPassword keystoreProperties['releaseKeyPassword']
+                storePassword keystoreProperties['releaseStorePassword']
+                storeFile file('../keystore/release.keystore')
+            } catch (exception) {
+                throw new InvalidUserDataException('You should define releaseKeyAlias, releaseKeyPassword,' +
+                        'and releaseStorePassword in gradle.properties. ' + exception.toString())
+            }
+        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
             debuggable true
             testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-debug.pro'
-            //TODO add signingConfig debug
+            signingConfig signingConfigs.debug
             buildConfigField "String", "URL_ENDPOINT", keystoreProperties['urlEndpointDebug']
             buildConfigField "String", "HEADER_AUTHORIZATION_VALUE", keystoreProperties['headerAuthorizationDebug']
         }
@@ -35,7 +60,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //TODO add signingConfig release
+            signingConfig signingConfigs.release
             buildConfigField "String", "URL_ENDPOINT", keystoreProperties['urlEndpointDebug']
             buildConfigField "String", "HEADER_AUTHORIZATION_VALUE", keystoreProperties['headerAuthorizationDebug']
         }
