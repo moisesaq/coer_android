@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 import moises.com.appcoer.model.ImageCoer;
 
-public class BaseResponse implements Serializable{
+public class BaseResponse implements Serializable {
     private int id;
     @SerializedName("titulo")
     private String title;
@@ -98,7 +98,7 @@ public class BaseResponse implements Serializable{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new Gson().toJson(this);
     }
 }

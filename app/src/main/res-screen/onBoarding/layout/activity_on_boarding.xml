@@ -40,10 +40,6 @@
         <Button
             android:id="@+id/b_started"
             style="@style/ButtonCustom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_medium"
-            android:paddingRight="@dimen/padding_medium"
             android:text="@string/get_started" />
     </LinearLayout>
 </RelativeLayout>

@@ -1,3 +1,9 @@
+# General
+-keepattributes Exceptions, Signature, LineNumberTable, *Annotation*
+-keep class moises.com.appcoer.model.** { *; }
+-keep class moises.com.appcoer.api.** { *; }
+-keep class moises.com.appcoer.global.** { *; }
+-keepclassmembers class moises.com.appcoer.model.** { *; }
 
 # ButterKnife
 -keep public class * implements butterknife.Unbinder { public <init>(**, android.view.View); }
@@ -30,3 +36,19 @@
 -dontwarn okio.**
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
+
+# Glide
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+# ShapeImageView
+-dontwarn com.github.siyamed.shapeimageview.**
+-keep class org.kxml2..io.** { *; }
+
+# Java
+-keep public class * extends java.lang.annotation.** { *; }

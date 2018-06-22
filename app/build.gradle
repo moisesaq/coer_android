@@ -14,8 +14,8 @@ android {
         applicationId "moises.com.appcoer"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode versionCode
-        versionName versionName
+        versionCode versionCodeAppCoer
+        versionName versionNameAppCoer
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -38,7 +38,7 @@ android {
                 keyAlias keystoreProperties['releaseKeyAlias']
                 keyPassword keystoreProperties['releaseKeyPassword']
                 storePassword keystoreProperties['releaseStorePassword']
-                storeFile file('../keystore/release.keystore')
+                storeFile file('../keystore/keystore_coer.jks')
             } catch (exception) {
                 throw new InvalidUserDataException('You should define releaseKeyAlias, releaseKeyPassword,' +
                         'and releaseStorePassword in gradle.properties. ' + exception.toString())
@@ -59,6 +59,7 @@ android {
 
         release {
             minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             buildConfigField "String", "URL_ENDPOINT", keystoreProperties['urlEndpointDebug']
@@ -121,8 +122,9 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
     /** Glide **/
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
 
     /** ButterKnife */
     implementation 'com.jakewharton:butterknife:8.8.1'

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,9 +65,6 @@ public class NewsFragment extends BaseFragment implements NewsContract.View {
         newsPresenter.onFragmentStarted();
     }
 
-    /**
-     * IMPLEMENTATION NEWS CONTRACT VIEW
-     **/
     @Override
     public void setPresenter(NewsContract.Presenter presenter) {
         if (presenter != null) this.newsPresenter = presenter;
@@ -80,6 +78,8 @@ public class NewsFragment extends BaseFragment implements NewsContract.View {
 
     @Override
     public void showNews() {
+        if (news.getImage() == null)
+            Toast.makeText(getContext(), "Image null", Toast.LENGTH_SHORT).show();
         loadImage(news.getImage().getSlide(), imageView);
         showNewsDetail(news);
         showNewsContent(news.getContent());

@@ -1,5 +1,5 @@
 ext {
     // Sdk configuration
-    versionCode = 2
-    versionName = '1.1'
+    versionCodeAppCoer = 2
+    versionNameAppCoer = '1.1'
 }

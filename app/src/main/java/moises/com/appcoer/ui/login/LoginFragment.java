@@ -58,7 +58,6 @@ public class LoginFragment extends BaseLoginFragment implements LoginContract.Vi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        //new LoginPresenter(this);
     }
 
     @Override
